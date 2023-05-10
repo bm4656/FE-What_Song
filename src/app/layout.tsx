@@ -1,5 +1,6 @@
-import Jotai from '@/Layout/jotai';
 import './globals.css';
+import Jotai from '@/Layout/Jotai';
+import ReactQuery from '@/Layout/ReactQuery';
 
 export const metadata = {
 	title: 'What song',
@@ -10,7 +11,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="ko">
 			<body>
-				<Jotai>{children}</Jotai>
+				<Jotai>
+					<ReactQuery>{children}</ReactQuery>
+				</Jotai>
 			</body>
 		</html>
 	);
