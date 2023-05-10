@@ -1,4 +1,5 @@
-import './globals.css';
+import './styles/globals.css';
+import './styles/reset.css';
 import Jotai from '@/Layout/Jotai';
 import ReactQuery from '@/Layout/ReactQuery';
 
