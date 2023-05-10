@@ -1,7 +1,7 @@
+import Jotai from './stateManagement/Jotai';
+import ReactQuery from './stateManagement/ReactQuery';
 import './styles/globals.css';
 import './styles/reset.css';
-import Jotai from '@/app/Layout/Jotai';
-import ReactQuery from '@/app/Layout/ReactQuery';
 
 export const metadata = {
 	title: 'What Song',
