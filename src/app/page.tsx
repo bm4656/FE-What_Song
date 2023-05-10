@@ -1,7 +1,7 @@
 'use client';
 
 import { atom, useAtom } from 'jotai';
-import { darkModeAtom } from '@/store';
+import { darkModeAtom } from '@/app/store';
 
 const countAtom = atom(0);
 

@@ -9,6 +9,14 @@
     "plugin:prettier/recommended"
   ],
   "rules": {
+    "react/no-unknown-property": [
+      2,
+      {
+        "ignore": [
+          "jsx"
+        ]
+      }
+    ],
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": ["warn", { "extensions": [".tsx"] }],
     "react/require-default-props": "off",
