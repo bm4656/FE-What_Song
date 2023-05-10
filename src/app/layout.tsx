@@ -4,8 +4,8 @@ import Jotai from '@/Layout/Jotai';
 import ReactQuery from '@/Layout/ReactQuery';
 
 export const metadata = {
-	title: 'What song',
-	description: 'What song',
+	title: 'What Song',
+	description: '🎤 음악 같이 듣기 서비스',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
