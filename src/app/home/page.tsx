@@ -4,7 +4,7 @@ export default function HomePage() {
 	return (
 		<div className="flex">
 			home
-			<Navbar tab="profile" />
+			<Navbar tab="home" />
 		</div>
 	);
 }
