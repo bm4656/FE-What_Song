@@ -1,5 +1,5 @@
-import Jotai from './stateManagement/Jotai';
-import ReactQuery from './stateManagement/ReactQuery';
+import Jotai from '../jotai/stateManagement/Jotai';
+import ReactQuery from '../jotai/stateManagement/ReactQuery';
 import './styles/globals.css';
 import './styles/reset.css';
 

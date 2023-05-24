@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import Lottie from 'lottie-react';
 import { useState } from 'react';
-import { SERVICE_URL } from '@/app/constants/ServiceUrl';
+import { SERVICE_URL } from '@/constants/ServiceUrl';
 import registerComplete from '../../../../public/lottie/registerComplete.json';
 import nicknameInput from '../../../../public/lottie/nicknameInput.json';
 

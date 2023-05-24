@@ -2,10 +2,10 @@
 
 import Lottie from 'lottie-react';
 import { useRouter } from 'next/navigation';
-import { KAKAO_OAUTH2_URL } from '../constants/login';
+import { KAKAO_OAUTH2_URL } from '../../constants/login';
 import KaKaoIcon from '../../../public/login/kakao.svg';
 import loginMain from '../../../public/lottie/loginMain.json';
-import { SERVICE_URL } from '../constants/ServiceUrl';
+import { SERVICE_URL } from '../../constants/ServiceUrl';
 
 export default function LoginPage() {
 	const router = useRouter();
