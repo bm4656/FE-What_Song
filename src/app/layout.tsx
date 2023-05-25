@@ -1,4 +1,3 @@
-import Navbar from '@/components/Navbar/Navbar';
 import Jotai from '../jotai/stateManagement/Jotai';
 import ReactQuery from '../jotai/stateManagement/ReactQuery';
 import './styles/globals.css';
