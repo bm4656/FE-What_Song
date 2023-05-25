@@ -9,7 +9,7 @@ type Props = {
 
 export default function Navbar({ tab }: Props) {
 	return (
-		<nav className="shadow-inner text-fontGray flex justify-around items-center h-40 absolute bottom-0 left-0 w-full">
+		<nav className="shadow-inner text-fontGray flex justify-around items-center h-28 absolute bottom-0 left-0 w-full">
 			<Link className="text-xl flex flex-col items-center" href="/home">
 				{tab === 'home' ? <AiFillHome className="text-4xl m-1 text-primary" /> : <AiOutlineHome className="text-4xl" />}
 				홈
