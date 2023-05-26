@@ -31,8 +31,8 @@ const data = [
 
 export default function MusicCarousel() {
 	return (
-		<section className="flex gap-4 mt-2 ml-2 bg-red-800">
-			<Carousel show={1.5} slide={1.5} swiping={true}>
+		<section className="flex mt-2 ml-6 p-2">
+			<Carousel show={1.5} slide={2} swiping={true}>
 				{data.map((room) => (
 					<MusicRoomCard musicRoom={room} key={room.id} />
 				))}
