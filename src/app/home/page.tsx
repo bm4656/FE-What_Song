@@ -1,4 +1,4 @@
-import Carousel from '@/components/Carousel';
+import MusicCarousel from '@/components/MusicCarousel';
 import Navbar from '@/components/Navbar';
 
 export default function HomePage() {
@@ -8,7 +8,7 @@ export default function HomePage() {
 				<h1 className="text-3xl font-bold ">What Song</h1>
 			</header>
 			<h2 className="text-2xl font-bold mx-5">친구들의 방</h2>
-			<Carousel />
+			<MusicCarousel />
 			<Navbar tab="home" />
 		</main>
 	);
