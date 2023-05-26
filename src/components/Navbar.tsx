@@ -18,7 +18,7 @@ const icons = {
 };
 export default function Navbar({ tab }: Props) {
 	return (
-		<nav className="shadow-inner text-zinc-400 flex justify-around items-center h-28 absolute bottom-0 left-0 w-full">
+		<nav className="shadow-inner text-zinc-400  bg-white flex justify-around items-center h-28 fixed bottom-0 w-full max-w-[50rem]">
 			<Link className="text-xl flex flex-col items-center" href="/home">
 				{tab === 'home' ? icons.homeFill : icons.home}
 				<span className={tab === 'home' ? 'text-primary' : ''}>홈</span>

@@ -18,7 +18,7 @@ export default function MusicRoomCard({ musicRoom: { title, host, view, isOwner,
 		<article className="my-4 rounded-[40px] overflow-hidden relative w-[30rem] h-[30rem] drop-shadow-md">
 			<Image src={thumnail} alt={title} layout="fill" />
 			<div className="absolute w-[30rem] h-[30rem] bottom-0 left-0 bg-gradient-to-tl from-zinc-900" />
-			<h2 className="absolute bottom-32 left-5 text-3xl font-bold text-white p-2">{title}</h2>
+			<h2 className="absolute bottom-32 left-5 text-3xl font-bold text-white p-2 w-4/5">{title}</h2>
 			<h5 className="absolute bottom-[6.4rem] left-6 text-white p-2">{host}</h5>
 			<span className="absolute bottom-[1.8rem] left-8 bg-white w-16 h-16 rounded-full flex items-center justify-center">
 				<BsPlayFill className="w-14 h-14 p-0.5 ml-1" />
