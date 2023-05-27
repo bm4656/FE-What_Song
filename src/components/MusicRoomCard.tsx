@@ -3,20 +3,15 @@ import { BsPlayFill } from 'react-icons/bs';
 import { AiFillEye } from 'react-icons/ai';
 import { CgDetailsMore } from 'react-icons/cg';
 import Link from 'next/link';
+import { Room } from '@/app/service/rooms';
 
 type Props = {
-	musicRoom: {
-		title: string;
-		host: string;
-		view: number;
-		isOwner: boolean;
-		thumnail: string;
-	};
+	musicRoom: Room;
 };
 
 export default function MusicRoomCard({ musicRoom: { title, host, view, isOwner, thumnail } }: Props) {
 	return (
-		<article className="m-4 rounded-[40px] overflow-hidden relative w-[30rem] h-[30rem] drop-shadow-md">
+		<article className="m-4 rounded-[40px] shadow-md shadow-zinc-700 overflow-hidden relative w-[30rem] h-[30rem] hover:scale-95">
 			<Image src={thumnail} alt={title} layout="fill" />
 			<Link
 				href={`music/${title}`}

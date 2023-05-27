@@ -9,7 +9,7 @@ type Props = {
 
 export default function MusicCarousel({ rooms }: Props) {
 	return (
-		<section className="flex mt-2 ml-6 p-2">
+		<section className="flex mt-2 ml-6 pl-2">
 			<ScrollingCarousel className="flex">
 				{rooms.map((room: Room) => (
 					<MusicRoomCard musicRoom={room} key={room.id} />
