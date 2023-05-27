@@ -6,7 +6,7 @@ export default async function HomePage() {
 	const rooms = await getAllRooms();
 	return (
 		<main className="overflow-y-auto absolute w-full h-full pb-28">
-			<header className="flex w-full h-20 justify-center items-center ">
+			<header className="flex w-full h-20 my-1 justify-center items-center ">
 				<h1 className="text-3xl font-bold ">What Song</h1>
 			</header>
 			<h2 className="text-3xl font-bold mx-5">친구들의 방</h2>
