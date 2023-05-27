@@ -10,11 +10,11 @@ const icons = {
 	home: <AiOutlineHome className="text-4xl" />,
 	homeFill: <AiFillHome className="text-4xl m-1 text-primary" />,
 	music: <BsMusicPlayer className="text-4xl m-2" />,
-	musicFill: <BsFillMusicPlayerFill className="text-4xl m-2" />,
+	musicFill: <BsFillMusicPlayerFill className="text-4xl m-2 text-primary" />,
 	dm: <AiOutlineMessage className="text-4xl m-2" />,
-	dmFill: <AiFillMessage className="text-4xl m-2" />,
+	dmFill: <AiFillMessage className="text-4xl m-2 text-primary" />,
 	profile: <RiUser3Line className="text-4xl m-2" />,
-	profileFill: <RiUser3Fill className="text-4xl m-2" />,
+	profileFill: <RiUser3Fill className="text-4xl m-2 text-primary" />,
 };
 export default function Navbar({ tab }: Props) {
 	return (

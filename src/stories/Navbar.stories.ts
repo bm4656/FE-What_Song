@@ -16,3 +16,21 @@ export const Primary: Story = {
 		tab: 'home',
 	},
 };
+
+export const Music: Story = {
+	args: {
+		tab: 'music',
+	},
+};
+
+export const Dm: Story = {
+	args: {
+		tab: 'dm',
+	},
+};
+
+export const Profile: Story = {
+	args: {
+		tab: 'profile',
+	},
+};
