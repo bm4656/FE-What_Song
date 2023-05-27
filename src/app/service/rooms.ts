@@ -7,7 +7,7 @@ export type Room = {
 	view: number;
 	isOwner: boolean;
 	thumnail: string;
-	id: number;
+	id?: number;
 };
 
 export async function getAllRooms(): Promise<Room[]> {
