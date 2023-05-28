@@ -11,9 +11,9 @@ type Props = {
 
 export default function MusicRoomCard2({ musicRoom: { title, host, view, thumnail }, category }: Props) {
 	return (
-		<article className="m-4 rounded-[20px] shadow-md shadow-zinc-300 overflow-hidden relative w-11/12 h-[23rem] hover:scale-105">
+		<li className="m-4 flex rounded-[20px] shadow-md shadow-zinc-300 overflow-hidden relative w-[22.5rem] h-[28rem] hover:scale-105 max-[500px]:scale-[0.8] max-[500px]:-translate-x-4 max-[500px]:m-0 max-[360px]:scale-[0.75] max-[360px]:-translate-x-9">
 			<Link href={`/music/${category}/${title}`}>
-				<div className="absolute w-11/12 h-60 left-4">
+				<div className="absolute w-80 h-80 left-4">
 					<Image
 						src={thumnail}
 						alt={title}
@@ -27,7 +27,7 @@ export default function MusicRoomCard2({ musicRoom: { title, host, view, thumnai
 					<h2 className="truncate">{title}</h2>
 				</div>
 				<h5 className="absolute bottom-4 left-6 p-2 text-xl text-neutral-400 font-bold">{host}</h5>
-				<span className="absolute bottom-[9.8rem] left-10 bg-white shadow-md w-12 h-12 rounded-full flex items-center justify-center">
+				<span className="absolute bottom-[9.7rem] left-11 bg-white shadow-lg w-14 h-14 rounded-full flex items-center justify-center">
 					<BsPlayFill className="w-14 h-14 p-0.5 ml-1" />
 				</span>
 				<span className="absolute bottom-2 right-3 w-24 h-14 rounded-3xl flex items-center justify-around p-3">
@@ -35,6 +35,6 @@ export default function MusicRoomCard2({ musicRoom: { title, host, view, thumnai
 					<p className="text-xl font-semibold mt-0.5">{view}</p>
 				</span>
 			</Link>
-		</article>
+		</li>
 	);
 }

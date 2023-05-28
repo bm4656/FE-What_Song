@@ -7,11 +7,9 @@ type Props = {
 };
 export default function MusicCardGrid({ rooms, category }: Props) {
 	return (
-		<ul className="grid grid-cols-2 gap-4 p-2 h-full">
+		<ul className="grid grid-cols-2 gap-4 p-2 place-content-center overflow-x-hidden h-full w-full max-[500px]:gap-0">
 			{rooms.map((room) => (
-				<li key={room.title}>
-					<MusicRoomCard2 musicRoom={room} category={category} />
-				</li>
+				<MusicRoomCard2 musicRoom={room} category={category} key={room.title} />
 			))}
 		</ul>
 	);
