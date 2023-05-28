@@ -21,7 +21,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<html lang="ko">
 			<body className="max-w-[50rem] mx-auto">
 				<Jotai>
-					<ReactQuery>{children}</ReactQuery>
+					<ReactQuery>
+						<main className="bg-white h-[100vh] relative">{children}</main>
+					</ReactQuery>
 				</Jotai>
 			</body>
 		</html>
