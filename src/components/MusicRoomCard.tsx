@@ -12,7 +12,9 @@ type Props = {
 export default function MusicRoomCard({ musicRoom: { title, host, view, isOwner, thumnail } }: Props) {
 	return (
 		<article className="m-4 rounded-[40px] shadow-md shadow-zinc-700 overflow-hidden relative w-[30rem] h-[30rem] hover:scale-95">
-			<Image src={thumnail} alt={title} layout="fill" />
+			<div className="w-1/2 h-1/2">
+				<Image src={thumnail} alt={title} fill />
+			</div>
 			<Link
 				href={`music/${title}`}
 				className="absolute w-[30rem] h-[30rem] bottom-0 left-0 bg-gradient-to-tl from-zinc-900"

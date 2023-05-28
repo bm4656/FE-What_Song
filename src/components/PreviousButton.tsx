@@ -10,7 +10,7 @@ export default function PreviousButton() {
 				router.back();
 			}}
 		>
-			<AiOutlineLeft className="absolute left-0 top-0 w-20 h-20 p-4" />;
+			<AiOutlineLeft className="absolute left-0 top-0 w-20 h-20 p-4" />
 		</button>
 	);
 }

@@ -1,3 +1,5 @@
+import { getAllRooms } from '@/app/service/rooms';
+import MusicCardGrid from '@/components/MusicCardGrid';
 import TitleHeader from '@/components/TitleHeader';
 
 type Props = {
@@ -5,10 +7,12 @@ type Props = {
 		slug: string;
 	};
 };
-export default function CategoryPage({ params: { slug } }: Props) {
+export default async function CategoryPage({ params: { slug } }: Props) {
+	const rooms = await getAllRooms();
 	return (
-		<section>
+		<section className="pb-10">
 			<TitleHeader title={`${slug.toUpperCase()} 리스트`} previous />
+			<MusicCardGrid rooms={rooms} category={slug} />
 		</section>
 	);
 }
