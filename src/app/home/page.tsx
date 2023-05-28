@@ -6,7 +6,7 @@ import TitleHeader from '@/components/TitleHeader';
 export default async function HomePage() {
 	const rooms = await getAllRooms();
 	return (
-		<section className="overflow-y-auto absolute w-full h-full pb-28">
+		<section className="overflow-y-auto absolute w-full h-full pb-32">
 			<TitleHeader title="What Song" notification />
 			<h2 className="text-3xl font-bold mx-5">친구들의 방</h2>
 			<MusicCarousel rooms={rooms} />
