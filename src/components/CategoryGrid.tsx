@@ -8,7 +8,7 @@ export default function CategoryGrid() {
 			<ul className="grid grid-cols-3 gap-5">
 				{categories.map((item) => (
 					<li key={item}>
-						<RoundedButton name={item} />
+						<RoundedButton name={item} color="pink" />
 					</li>
 				))}
 			</ul>

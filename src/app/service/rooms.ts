@@ -27,7 +27,7 @@ export async function getAllCategories(): Promise<Category[]> {
 
 export async function getRoomData(roomId: number): Promise<Room> {
 	// 임시 목데이터 사용 시 로직
-	const metadata = await getAllRooms().then((rooms) => rooms.find((room) => room.id == roomId));
+	const metadata = await getAllRooms().then((rooms) => rooms.find((room) => room.id?.toString() === roomId.toString()));
 	if (!metadata) throw new Error(`id: ${roomId} room is not found.`);
 	return metadata;
 }
