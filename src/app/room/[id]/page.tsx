@@ -18,7 +18,7 @@ export default async function MusicRoomPage({ params: { id } }: Props) {
 				<h2 className="text-4xl font-bold">Spicy</h2>
 				<p className="text-3xl font-semibold text-zinc-400">aespa</p>
 			</div>
-			<StreamingBar />
+			<StreamingBar isHost={isOwner} />
 			<ChattingBar />
 		</>
 	);
