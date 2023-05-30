@@ -12,7 +12,7 @@ export default async function CategoryPage({ params: { slug } }: Props) {
 	return (
 		<section className="pb-10">
 			<TitleHeader title={`${slug.toUpperCase()} 리스트`} previous />
-			<MusicCardGrid rooms={rooms} category={slug} />
+			<MusicCardGrid rooms={rooms} />
 		</section>
 	);
 }

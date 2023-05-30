@@ -6,13 +6,12 @@ import { Room } from '@/app/service/rooms';
 
 type Props = {
 	musicRoom: Room;
-	category: string;
 };
 
-export default function MusicRoomCard2({ musicRoom: { title, host, view, thumnail }, category }: Props) {
+export default function MusicRoomCard2({ musicRoom: { title, host, view, thumnail, id } }: Props) {
 	return (
 		<li className="m-4 flex rounded-[20px] shadow-md shadow-zinc-300 overflow-hidden relative w-[22.5rem] hover:shadow-primary h-[28rem] max-[490px]:scale-[0.8] max-[490px]:-translate-x-4 max-[490px]:m-0 max-[360px]:scale-[0.75] max-[360px]:-translate-x-9">
-			<Link href={`/music/${category}/${title}`}>
+			<Link href={`/room/${id}`}>
 				<div className="absolute w-80 h-80 left-4">
 					<Image
 						src={thumnail}
