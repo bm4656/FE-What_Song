@@ -1,11 +1,11 @@
-import { HiPlay, HiOutlineShare, HiOutlineUsers, HiOutlinePencilAlt, HiOutlineAdjustments } from 'react-icons/hi';
 import IconBox from './IconBox';
+import { Icons } from '@/constants/ReactIcons';
 
 const icons = [
-	{ name: '참여자', icon: <HiOutlineUsers /> },
-	{ name: '공유', icon: <HiOutlineShare /> },
-	{ name: '변경', icon: <HiOutlinePencilAlt /> },
-	{ name: '수락', icon: <HiOutlineAdjustments /> },
+	{ name: '참여자', icon: Icons.users },
+	{ name: '공유', icon: Icons.share },
+	{ name: '변경', icon: Icons.modify },
+	{ name: '수락', icon: Icons.adjustments },
 ];
 
 export default function StreamingBar({ isHost }: { isHost: boolean }) {
@@ -23,7 +23,7 @@ export default function StreamingBar({ isHost }: { isHost: boolean }) {
 				) : (
 					<>
 						<li className="bg-primary w-44 h-20 text-white rounded-full flex gap-3 justify-center items-center">
-							<HiPlay className="text-4xl" />
+							<div className="text-4xl">{Icons.playButton}</div>
 							<span className="text-2xl font-semibold">요청</span>
 						</li>
 						<IconBox name={icons[0].name}>{icons[0].icon}</IconBox>

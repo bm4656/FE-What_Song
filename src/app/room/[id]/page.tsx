@@ -13,7 +13,7 @@ export default async function MusicRoomPage({ params: { id } }: Props) {
 	return (
 		<>
 			<TitleHeader title={title} previous view={view} />
-			<MusicRecord image={thumnail} />
+			<MusicRecord image={thumnail} isHost={isOwner} />
 			<div className="flex flex-col justify-center items-center p-2 w-full">
 				<h2 className="text-4xl font-bold">Spicy</h2>
 				<p className="text-3xl font-semibold text-zinc-400">aespa</p>
