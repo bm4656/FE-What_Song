@@ -13,6 +13,9 @@ export default function Button({ name, link, onClick }: Props) {
 		if (link) {
 			router.push(link);
 		}
+		if (onClick) {
+			onClick();
+		}
 	};
 	return (
 		<div className="w-full absolute bottom-10 flex justify-center items-center">
