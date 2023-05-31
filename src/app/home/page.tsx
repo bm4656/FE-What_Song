@@ -1,7 +1,7 @@
-import MusicCarousel from '@/components/MusicCarousel';
-import Navbar from '@/components/Navbar';
+import MusicCarousel from '@/components/music/MusicCarousel';
 import { getAllRooms } from '../service/rooms';
 import TitleHeader from '@/components/TitleHeader';
+import Navbar from '@/components/bar/Navbar';
 
 export default async function HomePage() {
 	const rooms = await getAllRooms();

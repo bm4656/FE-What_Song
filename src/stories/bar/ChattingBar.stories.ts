@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import ChattingBar from '../components/ChattingBar';
+import ChattingBar from '../../components/bar/ChattingBar';
 
 const meta: Meta<typeof ChattingBar> = {
 	title: 'Example/ChattingBar',

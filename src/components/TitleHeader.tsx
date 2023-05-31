@@ -1,6 +1,6 @@
 import { AiFillEye } from 'react-icons/ai';
 import { IoNotifications } from 'react-icons/io5';
-import PreviousButton from './PreviousButton';
+import PreviousButton from './button/PreviousButton';
 
 type Props = {
 	title: string;

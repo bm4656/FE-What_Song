@@ -1,7 +1,7 @@
-import MusicRoomCard from './MusicRoomCard';
 import { Category, Room } from '@/app/service/rooms';
 import ReactCarousel from './ReactCarousel';
-import MusicCategoryCard from './MusicCategoryCard';
+import MusicCategoryCard from './card/MusicCategoryCard';
+import MusicRoomCard from './card/MusicRoomCard';
 
 type Props = {
 	rooms?: Room[];

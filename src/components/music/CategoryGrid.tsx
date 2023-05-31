@@ -1,4 +1,4 @@
-import RoundedButton from './RoundedButton';
+import RoundedButton from '../button/RoundedButton';
 
 const categories = ['K-POP', 'POP', 'J-POP', '힙합', '클래식', '공부', '잔잔', '파티'];
 

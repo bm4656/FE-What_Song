@@ -1,6 +1,6 @@
 import { getAllRooms } from '@/app/service/rooms';
-import MusicCardGrid from '@/components/MusicCardGrid';
 import TitleHeader from '@/components/TitleHeader';
+import MusicCardGrid from '@/components/music/MusicCardGrid';
 
 type Props = {
 	params: {

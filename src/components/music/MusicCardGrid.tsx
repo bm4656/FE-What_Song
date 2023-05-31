@@ -1,5 +1,5 @@
 import { Room } from '@/app/service/rooms';
-import MusicRoomCard2 from './MusicRoomCard2';
+import MusicRoomCard2 from './card/MusicRoomCard2';
 
 type Props = {
 	rooms: Room[];

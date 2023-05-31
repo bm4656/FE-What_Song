@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import MusicRecord from '../components/MusicRecord';
+import MusicRecord from '../../components/music/streaming/MusicRecord';
 
 const meta: Meta<typeof MusicRecord> = {
 	title: 'Example/MusicRecord',

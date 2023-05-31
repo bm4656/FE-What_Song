@@ -1,5 +1,5 @@
-import Button from '@/components/Button';
-import MusicRecord from '@/components/MusicRecord';
+import Button from '@/components/button/Button';
+import MusicRecord from '@/components/music/streaming/MusicRecord';
 import TitleHeader from '@/components/TitleHeader';
 
 export default function CreateSuccessPage() {

@@ -1,5 +1,5 @@
-import Navbar from '@/components/Navbar';
-import PlusButton from '@/components/PlusButton';
+import Navbar from '@/components/bar/Navbar';
+import PlusButton from '@/components/button/PlusButton';
 
 export default function MusicLayout({ children }: { children: React.ReactNode }) {
 	return (

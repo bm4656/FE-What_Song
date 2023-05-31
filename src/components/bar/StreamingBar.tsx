@@ -1,4 +1,4 @@
-import IconBox from './IconBox';
+import IconBox from '../music/streaming/IconBox';
 import { Icons } from '@/constants/ReactIcons';
 
 const icons = [

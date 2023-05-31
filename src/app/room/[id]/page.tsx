@@ -1,7 +1,7 @@
 import { getRoomData } from '@/app/service/rooms';
-import ChattingBar from '@/components/ChattingBar';
-import MusicRecord from '@/components/MusicRecord';
-import StreamingBar from '@/components/StreamingBar';
+import ChattingBar from '@/components/bar/ChattingBar';
+import StreamingBar from '@/components/bar/StreamingBar';
+import MusicRecord from '@/components/music/streaming/MusicRecord';
 import TitleHeader from '@/components/TitleHeader';
 
 type Props = {

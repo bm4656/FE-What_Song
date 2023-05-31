@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import MusicRoomCard from '../components/MusicRoomCard';
+import MusicRoomCard from '../../components/music/card/MusicRoomCard';
 
 const meta: Meta<typeof MusicRoomCard> = {
 	title: 'Example/MusicRoomCard',

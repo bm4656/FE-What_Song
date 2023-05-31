@@ -4,10 +4,10 @@ import { useRef } from 'react';
 import { HiOutlineChevronDown } from 'react-icons/hi';
 import { AiOutlineLeft } from 'react-icons/ai';
 import Image from 'next/image';
-import Button from '@/components/Button';
-import MusicRecord from '@/components/MusicRecord';
-import CategoryGrid from '@/components/CategoryGrid';
+import Button from '@/components/button/Button';
+import CategoryGrid from '@/components/music/CategoryGrid';
 import TitleHeader from '@/components/TitleHeader';
+import MusicRecord from '@/components/music/streaming/MusicRecord';
 
 export default function CreateRoomPage() {
 	const focusFirst = useRef<HTMLDivElement>(null);
