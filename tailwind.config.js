@@ -19,6 +19,7 @@ module.exports = {
 				simple: '#D8D8D8',
 				moreSimple: '#EAEAEA',
 				fontGray: '#484C52',
+				input: '#E8EEF3',
 			},
 		},
 	},

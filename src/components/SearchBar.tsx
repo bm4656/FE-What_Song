@@ -6,7 +6,7 @@ type Props = {
 export default function SearchBar({ name }: Props) {
 	return (
 		<article className="flex justify-center items-center mb-5">
-			<div className="bg-[#E8EEF3] w-[47.5rem] h-16  rounded-xl flex justify-start gap-5 items-center">
+			<div className="bg-input w-[47.5rem] h-16  rounded-xl flex justify-start gap-5 items-center">
 				<AiOutlineSearch className="text-3xl ml-5" />
 				<p className="text-2xl">{name}</p>
 			</div>

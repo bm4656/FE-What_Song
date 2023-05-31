@@ -20,6 +20,5 @@ export const Primary: Story = {
 			isOwner: false,
 			thumnail: '/assets/sample.png',
 		},
-		category: 'pop',
 	},
 };

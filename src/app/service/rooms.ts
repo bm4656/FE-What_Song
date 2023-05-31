@@ -24,3 +24,10 @@ export async function getAllCategories(): Promise<Category[]> {
 	const filePath = path.join(process.cwd(), 'public', 'category.json');
 	return readFile(filePath, 'utf-8').then<Category[]>(JSON.parse);
 }
+
+export async function getRoomData(roomId: number): Promise<Room> {
+	// 임시 목데이터 사용 시 로직
+	const metadata = await getAllRooms().then((rooms) => rooms.find((room) => room.id?.toString() === roomId.toString()));
+	if (!metadata) throw new Error(`id: ${roomId} room is not found.`);
+	return metadata;
+}

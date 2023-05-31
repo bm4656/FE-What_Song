@@ -1,38 +1,27 @@
 import Link from 'next/link';
-import { AiOutlineHome, AiFillHome, AiOutlineMessage, AiFillMessage } from 'react-icons/ai';
-import { BsMusicPlayer, BsFillMusicPlayerFill } from 'react-icons/bs';
-import { RiUser3Line, RiUser3Fill } from 'react-icons/ri';
+import { Icons } from '@/constants/ReactIcons';
 
 type Props = {
 	tab: string;
 };
-const icons = {
-	home: <AiOutlineHome className="text-4xl" />,
-	homeFill: <AiFillHome className="text-4xl m-1 text-primary" />,
-	music: <BsMusicPlayer className="text-4xl m-2" />,
-	musicFill: <BsFillMusicPlayerFill className="text-4xl m-2 text-primary" />,
-	dm: <AiOutlineMessage className="text-4xl m-2" />,
-	dmFill: <AiFillMessage className="text-4xl m-2 text-primary" />,
-	profile: <RiUser3Line className="text-4xl m-2" />,
-	profileFill: <RiUser3Fill className="text-4xl m-2 text-primary" />,
-};
+
 export default function Navbar({ tab }: Props) {
 	return (
 		<nav className="shadow-inner text-zinc-400  bg-white flex justify-around items-center h-28 fixed bottom-0 w-full max-w-[50rem]">
 			<Link className="text-xl flex flex-col items-center" href="/home">
-				{tab === 'home' ? icons.homeFill : icons.home}
+				{tab === 'home' ? Icons.homeFill : Icons.home}
 				<span className={tab === 'home' ? 'text-primary' : ''}>홈</span>
 			</Link>
 			<Link className="text-xl flex flex-col items-center" href="/music">
-				{tab === 'music' ? icons.musicFill : icons.music}
+				{tab === 'music' ? Icons.musicFill : Icons.music}
 				<span className={tab === 'music' ? 'text-primary' : ''}>뮤직</span>
 			</Link>
 			<Link className="text-xl flex flex-col items-center" href="/dm">
-				{tab === 'dm' ? icons.dmFill : icons.dm}
+				{tab === 'dm' ? Icons.dmFill : Icons.dm}
 				<span className={tab === 'dm' ? 'text-primary' : ''}>DM</span>
 			</Link>
 			<Link className="text-xl flex flex-col items-center" href="/profile">
-				{tab === 'profile' ? icons.profileFill : icons.profile}
+				{tab === 'profile' ? Icons.profileFill : Icons.profile}
 				<span className={tab === 'profile' ? 'text-primary' : ''}>프로필</span>
 			</Link>
 		</nav>
