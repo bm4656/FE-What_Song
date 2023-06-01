@@ -3,9 +3,11 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import Lottie from 'lottie-react';
 import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import { SERVICE_URL } from '@/constants/ServiceUrl';
 import registerComplete from '../../../../public/lottie/registerComplete.json';
 import nicknameInput from '../../../../public/lottie/nicknameInput.json';
+import { loginApis } from '@/app/service/login';
 
 export default function RegisterPage() {
 	const searchParams = useSearchParams();
@@ -15,6 +17,20 @@ export default function RegisterPage() {
 
 	const onNickNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setNickName(event.target.value);
+	};
+
+	const { mutate: registerMutate } = useMutation(loginApis.getRegister, {
+		onSuccess: (res) => {
+			console.log(res);
+		},
+		onError: (error) => console.log(error),
+	});
+
+	// TODO 회원가입 요청 보내기 {kakaoInfo, nickname}
+	const complete = () => {
+		// getCookie('kakaoUserInfo')
+		// registerMutate({})
+		router.replace(`${SERVICE_URL.home}`);
 	};
 	return (
 		<>
@@ -31,6 +47,7 @@ export default function RegisterPage() {
 					<Lottie className="mr-[1rem]" animationData={nicknameInput} />
 					<button
 						disabled={nickName === ''}
+						// TODO 닉네임 대입 API 호출 후 page2 이동
 						onClick={() => router.push(`${SERVICE_URL.register}?page=2`)}
 						className="disabled:bg-[#c1cbd9] text-[1.6rem] font-bold text-white absolute w-full max-w-[90%] mx-auto inset-x-0 bottom-[2rem] flex items-center justify-center rounded-[0.8rem] h-[5rem] min-h-[5rem] bg-[#428EFF]"
 					>
@@ -45,7 +62,7 @@ export default function RegisterPage() {
 					</h1>
 					<Lottie animationData={registerComplete} />
 					<button
-						onClick={() => router.push(`${SERVICE_URL.register}?page=2`)}
+						onClick={() => complete()}
 						className="text-[1.6rem] font-bold text-white absolute w-full max-w-[90%] mx-auto inset-x-0 bottom-[2rem] flex items-center justify-center rounded-[0.8rem] h-[5rem] min-h-[5rem] bg-[#428EFF]"
 					>
 						함께하기
