@@ -6,10 +6,10 @@ import { SERVICE_URL } from '@/constants/ServiceUrl';
 export type MutateTpye<T> = UseMutateFunction<AxiosResponse<any, any>, unknown, T, unknown>;
 
 const client = axios.create({
-	// baseURL: '',
 	withCredentials: true,
 	headers: {
 		'Access-Control-Allow-Credentials': true,
+		'ngrok-skip-browser-warning': true,
 		Authorization: `Bearer ${getCookie('accessToken')}`,
 	},
 });
@@ -24,7 +24,7 @@ client.interceptors.response.use(
 			response: { status },
 		} = error;
 
-		if (status === 401) {
+		if (status === 401 && !config.url.includes('oauth')) {
 			try {
 				const originalRequest = config;
 				// token refresh 요청
