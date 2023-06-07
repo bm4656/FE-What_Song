@@ -20,7 +20,7 @@ const nextConfig = {
 	async rewrites() {
 		return [
 			{
-				source: '/:path*', // 프록시를 사용할 경로
+				source: '/server/:path*', // 프록시를 사용할 경로
 				destination: 'https://745f-39-122-156-233.ngrok-free.app/:path*', // 실제 API 엔드포인트
 			},
 		];
