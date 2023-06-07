@@ -3,13 +3,13 @@
 import { useRouter } from 'next/navigation';
 import KaKaoIcon from '../../../public/login/kakao.svg';
 
-interface Props {
+type Props = {
 	content: string;
 	clickFn?: () => void;
 	link?: string;
 	bgColor?: string;
 	disabled?: boolean;
-}
+};
 
 export default function Button({ content, clickFn, link, bgColor = 'bg-[#428EFF]', disabled = false }: Props) {
 	const router = useRouter();

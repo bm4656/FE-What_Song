@@ -1,8 +1,8 @@
-interface Props {
+type Props = {
 	placeholder: string;
 	value: string;
 	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-}
+};
 
 export default function InputBar({ placeholder, value, onChange }: Props) {
 	return (
