@@ -1,27 +1,35 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import KaKaoIcon from '../../../public/login/kakao.svg';
 
-type Props = {
-	name: string;
+interface Props {
+	content: string;
+	clickFn?: () => void;
 	link?: string;
-	onClick?: () => void;
-};
-export default function Button({ name, link, onClick }: Props) {
+	bgColor?: string;
+	disabled?: boolean;
+}
+
+export default function Button({ content, clickFn, link, bgColor = 'bg-[#428EFF]', disabled = false }: Props) {
 	const router = useRouter();
-	const onButton = () => {
+	const kakaoBtn = content.includes('카카오');
+	const onClick = () => {
 		if (link) {
 			router.push(link);
 		}
-		if (onClick) {
-			onClick();
+		if (clickFn) {
+			clickFn();
 		}
 	};
 	return (
-		<div className="w-full absolute bottom-10 flex justify-center items-center">
-			<button className="w-[88%] h-20 bg-primary rounded-[10px] text-white text-2xl font-bold" onClick={onButton}>
-				{name}
-			</button>
-		</div>
+		<button
+			disabled={disabled}
+			onClick={() => onClick()}
+			className={`disabled:bg-[#c1cbd9] font-bold text-[1.6rem] absolute w-full max-w-[90%] mx-auto inset-x-0 bottom-[2rem] flex items-center justify-center rounded-[0.8rem] h-[5rem] min-h-[5rem] ${bgColor} gap-[1.2rem]`}
+		>
+			{kakaoBtn && <KaKaoIcon />}
+			<span className={`${kakaoBtn ? 'text-black' : 'text-white'}`}>{content}</span>
+		</button>
 	);
 }

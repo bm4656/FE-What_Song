@@ -3,7 +3,7 @@
 import Lottie from 'lottie-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import ButtonBar from '@/components/bar/ButtonBar';
+import Button from '@/components/button/Button';
 import { SERVICE_URL } from '@/constants/ServiceUrl';
 import nicknameInput from '../../../public/lottie/nicknameInput.json';
 import InputBar from '../bar/InputBar';
@@ -33,11 +33,11 @@ export default function NicknameInputPage() {
 	};
 
 	return (
-		<div className="bg-white h-[100vh] p-[2rem] relative">
+		<div className="wrap">
 			<PageHeaderContent content="닉네임을 입력해주세요! 🔥" mb="mb-[2.3rem]" />
 			<InputBar placeholder="닉네임을 입력해주세요." value={nickname} onChange={onNickNameChange} />
 			<Lottie className="mr-[1rem]" animationData={nicknameInput} />
-			<ButtonBar clickFn={() => SignIn()} content="다음" disabled={nickname === ''} />
+			<Button clickFn={() => SignIn()} content="다음" disabled={nickname === ''} />
 		</div>
 	);
 }
