@@ -7,6 +7,7 @@ import ButtonBar from '@/components/bar/ButtonBar';
 import { SERVICE_URL } from '@/constants/ServiceUrl';
 import nicknameInput from '../../../public/lottie/nicknameInput.json';
 import InputBar from '../bar/InputBar';
+import PageHeaderContent from '../PageHeaderContent';
 
 export default function NicknameInputPage() {
 	const router = useRouter();
@@ -33,7 +34,7 @@ export default function NicknameInputPage() {
 
 	return (
 		<div className="bg-white h-[100vh] p-[2rem] relative">
-			<h1 className="text-[2.2rem] font-bold mb-[2.3rem]">닉네임을 입력해주세요! 🔥</h1>
+			<PageHeaderContent content="닉네임을 입력해주세요! 🔥" mb="mb-[2.3rem]" />
 			<InputBar placeholder="닉네임을 입력해주세요." value={nickname} onChange={onNickNameChange} />
 			<Lottie className="mr-[1rem]" animationData={nicknameInput} />
 			<ButtonBar clickFn={() => SignIn()} content="다음" disabled={nickname === ''} />
