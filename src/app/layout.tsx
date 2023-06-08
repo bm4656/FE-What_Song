@@ -1,3 +1,4 @@
+import CookieProvider from '@/state/CookieProvider';
 import Jotai from '../state/Jotai';
 import ReactQuery from '../state/ReactQuery';
 import './styles/globals.css';
@@ -20,11 +21,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="ko">
 			<body className="max-w-[50rem] mx-auto">
-				<Jotai>
-					<ReactQuery>
-						<main className="bg-white h-[100vh] relative">{children}</main>
-					</ReactQuery>
-				</Jotai>
+				<CookieProvider>
+					<Jotai>
+						<ReactQuery>
+							<main className="bg-white h-[100vh] relative">{children}</main>
+						</ReactQuery>
+					</Jotai>
+				</CookieProvider>
 			</body>
 		</html>
 	);
