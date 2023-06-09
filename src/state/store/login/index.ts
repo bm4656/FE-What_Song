@@ -1,11 +1,11 @@
-import { atom } from 'jotai';
+import { atomWithStorage } from 'jotai/utils';
 
-type User = {
+type User = null | {
 	email: string;
-	imgURL: string;
+	imgURL: string | null;
 	memberSeq: number;
 	nickname: string;
 	oauthId: string;
 };
 
-export const UserInfoAtom = atom<User>({ email: '', imgURL: '', memberSeq: 0, nickname: '', oauthId: '' });
+export const UserInfoAtom = atomWithStorage<User>('userInfo', null);
