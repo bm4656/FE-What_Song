@@ -7,10 +7,11 @@ type Props = {
 	notification?: boolean;
 	previous?: boolean;
 	view?: number;
+	isWrap?: boolean;
 };
-export default function TitleHeader({ title, notification, previous, view }: Props) {
+export default function TitleHeader({ title, notification, previous, view, isWrap }: Props) {
 	return (
-		<header className="flex w-full h-20 my-1 justify-center items-center">
+		<header className={`flex w-full h-20 my-1 justify-center ${isWrap ? '' : 'items-center'}`}>
 			{previous && <PreviousButton />}
 			<h1 className="text-3xl font-bold">{title}</h1>
 			{notification && <IoNotifications className="text-3xl absolute right-5" />}
