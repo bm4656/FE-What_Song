@@ -1,10 +1,8 @@
-'use client';
-
-import Lottie from 'lottie-react';
 import { KAKAO_OAUTH2_URL } from '../../constants/login';
 import loginMain from '../../../public/lottie/loginMain.json';
 import Button from '@/components/button/Button';
 import PageHeaderContent from '@/components/PageHeaderContent';
+import LottieView from '@/components/LottieView';
 
 export default function LoginPage() {
 	return (
@@ -15,7 +13,7 @@ export default function LoginPage() {
 				<br /> 발견하세요! 🔭"
 				mb="mb-[20%]"
 			/>
-			<Lottie animationData={loginMain} />
+			<LottieView file={loginMain} />
 			<Button link={KAKAO_OAUTH2_URL} content="카카오 로그인/회원가입" bgColor="bg-[#FAE64D]" />
 		</div>
 	);
