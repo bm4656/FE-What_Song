@@ -1,13 +1,58 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { useSetAtom } from 'jotai';
+import { SERVICE_URL } from '@/constants/ServiceUrl';
+import { setCookie } from '@/constants/cookie';
+import { loginApis } from '@/app/service/login';
+import { UserInfoAtom } from '@/state/store/login';
 
 export default function CallbackPage() {
-	// router.push(`${SERVICE_URL.register}?page=1`)
-	useEffect(() => {
-		const code = new URL(document.location.toString()).searchParams.get('code') as string;
-		console.log('인가코드:', code);
-	}, []);
+	const router = useRouter();
+	const setUserInfo = useSetAtom(UserInfoAtom);
+	const { data } = useQuery(
+		['oauth2', 'kakao'],
+		() => loginApis.getLogin(new URL(document.location.toString()).searchParams.get('code') as string),
+		{
+			onSuccess: (res) => {
+				const accessToken = res.headers['authorization']?.split(' ')[1];
+				const refreshToken = res.headers['refresh']?.split(' ')[1];
+
+				// 회원일시 로그인 완료
+				if (accessToken && refreshToken) {
+					const accessExpires = new Date();
+					accessExpires.setDate(Date.now() + 1000 * 60 * 60 * 24); // 1일로 설정
+					const refreshExpires = new Date();
+					refreshExpires.setDate(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7일로 설정
+					setCookie('accessToken', accessToken, {
+						path: '/',
+						expires: accessExpires,
+					});
+					setCookie('refreshToken', refreshToken, {
+						path: '/',
+						expires: refreshExpires,
+					});
+					// TODO 임시로 클라이언트 상태에 저장한 상태 (프로토타입)
+					setUserInfo(res.data);
+					router.push(`${SERVICE_URL.home}`);
+				} else {
+					// 회원이 아닐시 회원가입 페이지 이동
+					const kakaoUserInfo = res.data;
+					const kakaoInfoExpires = new Date();
+					kakaoInfoExpires.setDate(Date.now() + 1000 * 60 * 60 * 24); // 1일로 설정
+					setCookie('kakaoUserInfo', kakaoUserInfo, {
+						path: '/',
+						expires: kakaoInfoExpires,
+					});
+					router.push(`${SERVICE_URL.register}?page=1`);
+				}
+			},
+			onError: (error) => {
+				console.log(error);
+			},
+		}
+	);
 
 	return <div />;
 }
