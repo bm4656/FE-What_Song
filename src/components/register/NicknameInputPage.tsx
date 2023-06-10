@@ -56,7 +56,12 @@ export default function NicknameInputPage() {
 	return (
 		<div className="wrap">
 			<PageHeaderContent content="닉네임을 입력해주세요! 🔥" mb="mb-[2.3rem]" />
-			<InputBar placeholder="닉네임을 입력해주세요." value={nickname} onChange={onNickNameChange} />
+			<InputBar
+				placeholder="닉네임을 입력해주세요."
+				value={nickname}
+				onChange={onNickNameChange}
+				styles="bg-[#F8F8FA] mb-[15%]"
+			/>
 			<LottieView file={nicknameInput} styles="mr-[1rem]" />
 			<Button clickFn={() => signUp()} content="다음" disabled={nickname === ''} />
 		</div>
