@@ -110,7 +110,6 @@ export default function CreateRoomPage() {
 							onChange={handleAceess}
 							className="bg-input rounded-[1rem] w-[98%] h-16 self-center p-4 flex justify-center items-center font-bold appearance-none checked:bg-blue-300"
 						/>
-						 
 						<label htmlFor="public" className="absolute top-5 left-[50%] -translate-x-1/2">
 							전체 공개
 						</label>
@@ -124,7 +123,6 @@ export default function CreateRoomPage() {
 							onChange={handleAceess}
 							className="bg-input rounded-[1rem] w-[98%] h-16 self-center p-4 flex justify-center items-center font-bold appearance-none checked:bg-blue-300"
 						/>
-						 
 						<label htmlFor="friend" className="absolute top-5 left-[50%] -translate-x-1/2">
 							친구 공개
 						</label>
@@ -138,7 +136,6 @@ export default function CreateRoomPage() {
 							onChange={handleAceess}
 							className="bg-input rounded-[1rem] w-[98%] h-16 self-center p-4 flex justify-center items-center font-bold appearance-none checked:bg-blue-300"
 						/>
-						 
 						<label htmlFor="private" className="absolute top-5 left-[50%] -translate-x-1/2">
 							비공개
 						</label>
