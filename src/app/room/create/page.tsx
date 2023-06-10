@@ -47,7 +47,9 @@ export default function CreateRoomPage() {
 	};
 	const onAddRoom = async () => {
 		console.log(data);
-		createMusicRoomMutate({ ...data, memberSeq: userInfo?.memberSeq });
+		if (userInfo?.memberSeq) {
+			createMusicRoomMutate({ ...data, memberSeq: userInfo.memberSeq });
+		} else createMusicRoomMutate({ ...data });
 	};
 
 	return (
@@ -108,23 +110,10 @@ export default function CreateRoomPage() {
 							name="disclosure"
 							value="PUBLIC"
 							onChange={handleAceess}
-							className="bg-input rounded-[1rem] w-[98%] h-16 self-center p-4 flex justify-center items-center font-bold appearance-none checked:bg-blue-300"
+							className="bg-input mb-3 rounded-[1rem] w-[98%] h-16 self-center p-4 flex justify-center items-center font-bold appearance-none checked:bg-blue-300"
 						/>
 						<label htmlFor="public" className="absolute top-5 left-[50%] -translate-x-1/2">
 							전체 공개
-						</label>
-					</div>
-					<div className="relative text-2xl font-bold">
-						<input
-							type="radio"
-							id="friend"
-							name="disclosure"
-							value="FRIEND"
-							onChange={handleAceess}
-							className="bg-input rounded-[1rem] w-[98%] h-16 self-center p-4 flex justify-center items-center font-bold appearance-none checked:bg-blue-300"
-						/>
-						<label htmlFor="friend" className="absolute top-5 left-[50%] -translate-x-1/2">
-							친구 공개
 						</label>
 					</div>
 					<div className="relative text-2xl font-bold">
@@ -134,9 +123,22 @@ export default function CreateRoomPage() {
 							name="disclosure"
 							value="PRIVATE"
 							onChange={handleAceess}
-							className="bg-input rounded-[1rem] w-[98%] h-16 self-center p-4 flex justify-center items-center font-bold appearance-none checked:bg-blue-300"
+							className="bg-input mb-3 rounded-[1rem] w-[98%] h-16 self-center p-4 flex justify-center items-center font-bold appearance-none checked:bg-blue-300"
 						/>
 						<label htmlFor="private" className="absolute top-5 left-[50%] -translate-x-1/2">
+							친구 공개
+						</label>
+					</div>
+					<div className="relative text-2xl font-bold">
+						<input
+							type="radio"
+							id="non"
+							name="disclosure"
+							value="NON"
+							onChange={handleAceess}
+							className="bg-input rounded-[1rem] w-[98%] h-16 self-center p-4 flex justify-center items-center font-bold appearance-none checked:bg-blue-300"
+						/>
+						<label htmlFor="non" className="absolute top-5 left-[50%] -translate-x-1/2">
 							비공개
 						</label>
 					</div>

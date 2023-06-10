@@ -13,7 +13,7 @@ export default function CreateSuccessPage() {
 					content="음악 방 생성이 완료되었어요! 🤗
 					<br /> 지금 바로 음악 같이 들으러 가볼까요?"
 				/>
-				<Button content="완료" link="/music" />
+				<Button content="완료" link="/" />
 			</article>
 		</>
 	);

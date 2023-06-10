@@ -1,5 +1,17 @@
 import client from './client';
 
+export type Room = {
+	musicRoomSeq: number;
+	roomName: string;
+	roomCode: string;
+	category: string;
+	accessAuth: string;
+	extraInfo: {
+		hostName: string;
+		view: number;
+	};
+};
+
 export const roomApis = {
 	healthCheck: async () => {
 		const res = await client.get('/server/api/v1/healthcheck');
@@ -13,5 +25,17 @@ export const roomApis = {
 	}) => {
 		const res = await client.post('/server/api/v1/musicRoom', { ...body });
 		return res;
+	},
+	getUserRooms: async (memberSeq: number) => {
+		const res = await client.get(`/server/api/v1/check/have?memberSeq=${memberSeq}`);
+		return res.data;
+	},
+	getAllRooms: async () => {
+		const res = await client.get('/server/api/v1/check/all');
+		return res.data;
+	},
+	getCategories: async () => {
+		const res = await client.get('/data/category.json');
+		return res.data;
 	},
 };
