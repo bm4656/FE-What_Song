@@ -2,6 +2,7 @@ import { UseMutateFunction } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 import { getCookie, removeCookie, setCookie } from '@/constants/cookie';
 import { SERVICE_URL } from '@/constants/ServiceUrl';
+import { accessExpires, refreshExpires } from '@/utils/login';
 
 export type MutateTpye<T> = UseMutateFunction<AxiosResponse<any, any>, unknown, T, unknown>;
 
@@ -23,28 +24,23 @@ client.interceptors.response.use(
 			config,
 			response: { status },
 		} = error;
-
+		// 토큰이 유효하지 않을 시 그리고 ouath관련 요청이 아닐시
 		if (status === 401 && !config.url.includes('oauth')) {
 			try {
 				const originalRequest = config;
 				// token refresh 요청
 				const refreshToken = getCookie('refreshToken');
-				const res = await client.get('/oauth/token/refresh', { headers: { refresh: refreshToken } });
-				const newAccessToken = res?.headers['accessToken']?.split(' ')[1];
+				const res = await client.get('/server/user/token/reissue', { headers: { refresh: refreshToken } });
+				const newAccessToken = res?.headers['authorization']?.split(' ')[1];
 				const newRefreshToken = res?.headers['refresh']?.split(' ')[1];
 				if (newAccessToken && newRefreshToken) {
 					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 					client.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
-
-					const accessExpires = new Date();
-					accessExpires.setDate(Date.now() + 1000 * 60 * 60 * 24); // 1일로 설정
-					const refreshExpires = new Date();
-					refreshExpires.setDate(Date.now() + 1000 * 60 * 60 * 24 * 7); // 7일로 설정
-					setCookie('accessToken', 'accessTokenValue', {
+					setCookie('accessToken', 'accessToken', {
 						path: '/',
 						expires: accessExpires,
 					});
-					setCookie('refreshToken', 'refreshTokenValue', {
+					setCookie('refreshToken', 'refreshToken', {
 						path: '/',
 						expires: refreshExpires,
 					});

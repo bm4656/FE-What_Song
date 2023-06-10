@@ -10,6 +10,10 @@ import { UserInfoAtom } from '@/state/store/login';
 
 export default function CompletePage() {
 	const userInfo = useAtomValue(UserInfoAtom);
+
+	// TODO 로그아웃 로직 짜기
+	// const logOut = () => {};
+
 	return (
 		<div className="wrap">
 			<PageHeaderContent
@@ -18,6 +22,7 @@ export default function CompletePage() {
 			/>
 			<LottieView file={registerComplete} />
 			<Button link={SERVICE_URL.home} content="함께하기" />
+			{/* <Button clickFn={() => logOut()} content="로그아웃 테스트" /> */}
 		</div>
 	);
 }
