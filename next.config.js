@@ -21,7 +21,7 @@ const nextConfig = {
 		return [
 			{
 				source: '/server/:path*', // 프록시를 사용할 경로
-				destination: 'https://745f-39-122-156-233.ngrok-free.app/:path*', // 실제 API 엔드포인트
+				destination: 'https://f5d7-39-122-156-233.ngrok-free.app/:path*', // 실제 API 엔드포인트
 			},
 		];
 	},
