@@ -25,7 +25,7 @@ client.interceptors.response.use(
 			response: { status },
 		} = error;
 		// 토큰이 유효하지 않을 시 그리고 ouath관련 요청이 아닐시
-		if (status === 401 && !config.url.includes('oauth')) {
+		if (status === 401) {
 			try {
 				const originalRequest = config;
 				// token refresh 요청

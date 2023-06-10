@@ -12,6 +12,8 @@ import PageHeaderContent from '../PageHeaderContent';
 import LottieView from '../LottieView';
 import { UserInfoAtom, registerInfo } from '@/state/store/login';
 import { loginApis } from '@/app/service/login';
+import { setCookie } from '@/constants/cookie';
+import { accessExpires, refreshExpires } from '@/utils/login';
 
 export default function NicknameInputPage() {
 	const router = useRouter();
@@ -25,6 +27,16 @@ export default function NicknameInputPage() {
 
 	const { mutate: registerMutate } = useMutation(loginApis.postRegister, {
 		onSuccess: (res) => {
+			const accessToken = res.headers['authorization']?.split(' ')[1];
+			const refreshToken = res.headers['refresh']?.split(' ')[1];
+			setCookie('accessToken', accessToken, {
+				path: '/',
+				expires: accessExpires,
+			});
+			setCookie('refreshToken', refreshToken, {
+				path: '/',
+				expires: refreshExpires,
+			});
 			setUserInfo(res.data);
 			setReisterInfoData({
 				id: '',
