@@ -1,16 +1,14 @@
+import { YoutubeType } from '@/app/service/youtube';
 import MusicBarCard from './card/MusicBarCard';
 
-const data = [
-	{ id: 1, musicName: 'Senorita', singer: 'Shawn Mendes' },
-	{ id: 2, musicName: 'Spicy', singer: 'aespa' },
-	{ id: 3, musicName: 'Cupid', singer: 'fifty fifty' },
-];
-
-export default function MusicBarLIst() {
+type Props = {
+	list: YoutubeType[];
+};
+export default function MusicBarList({ list }: Props) {
 	return (
 		<ul className="flex flex-col gap-4">
-			{data.map((item) => (
-				<MusicBarCard music={item} key={item.id} />
+			{list.map((item) => (
+				<MusicBarCard music={item} key={item.videoId} />
 			))}
 		</ul>
 	);
