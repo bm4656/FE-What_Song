@@ -1,4 +1,3 @@
-import client from './client';
 import server from './server';
 
 export type Room = {
@@ -15,7 +14,7 @@ export type Room = {
 
 export const roomApis = {
 	healthCheck: async () => {
-		const res = await client.get('/server/api/v1/healthcheck');
+		const res = await server.get('/api/v1/healthcheck');
 		return console.log(res);
 	},
 	createMusicRoom: async (body: {
@@ -24,23 +23,19 @@ export const roomApis = {
 		category: string;
 		accessAuth: string;
 	}) => {
-		const res = await client.post('/server/api/v1/musicRoom', { ...body });
+		const res = await server.post('/api/v1/musicRoom', { ...body });
 		return res;
 	},
 	getUserRooms: async (memberSeq: number) => {
-		const res = await client.get(`/server/api/v1/check/have?memberSeq=${memberSeq}`);
+		const res = await server.get(`/api/v1/check/have?memberSeq=${memberSeq}`);
 		return res.data;
 	},
 	getAllRooms: async () => {
-		const res = await server.get('/server/api/v1/check/all');
-		return res.data;
-	},
-	getCategories: async () => {
-		const res = await client.get('/data/category.json');
+		const res = await server.get('/api/v1/check/all');
 		return res.data;
 	},
 	getRoomData: async (roomId: number) => {
-		const res = await client.get(`/server/api/v1/check/room?musicRoomSeq=${roomId}`);
+		const res = await server.get(`/api/v1/check/room?roomSeq=${roomId}`);
 		return res.data;
 	},
 };

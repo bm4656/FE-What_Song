@@ -1,5 +1,3 @@
-'use client';
-
 import { roomApis } from '@/app/service/room';
 import ChattingBar from '@/components/bar/ChattingBar';
 import StreamingBar from '@/components/bar/StreamingBar';
@@ -11,10 +9,8 @@ type Props = {
 };
 
 export default async function MusicRoomPage({ params: { id } }: Props) {
-	const {
-		roomName,
-		extraInfo: { hostName, view },
-	} = await roomApis.getRoomData(id);
+	const { roomName, category, accessAuth } = await roomApis.getRoomData(id);
+	const view = 30;
 	const isOwner = true;
 	return (
 		<>

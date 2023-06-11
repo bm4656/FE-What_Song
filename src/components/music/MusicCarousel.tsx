@@ -1,9 +1,12 @@
 import { Room } from '@/app/service/room';
-import { Category } from '@/app/service/rooms';
 import ReactCarousel from './ReactCarousel';
 import MusicCategoryCard from './card/MusicCategoryCard';
 import MusicRoomCard from './card/MusicRoomCard';
 
+type Category = {
+	categoryName: string;
+	description: string;
+};
 type Props = {
 	rooms?: Room[];
 	categories?: Category[];
