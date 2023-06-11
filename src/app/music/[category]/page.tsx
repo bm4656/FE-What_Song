@@ -4,14 +4,15 @@ import MusicCardGrid from '@/components/music/MusicCardGrid';
 
 type Props = {
 	params: {
-		slug: string;
+		category: string;
 	};
 };
-export default async function CategoryPage({ params: { slug } }: Props) {
+
+export default async function CategoryPage({ params: { category } }: Props) {
 	const rooms = await roomApis.getAllRooms();
 	return (
 		<section className="pb-10">
-			<TitleHeader title={`${slug.toUpperCase()} 리스트`} previous />
+			<TitleHeader title={`${category.toUpperCase()} 리스트`} previous />
 			<MusicCardGrid rooms={rooms} />
 		</section>
 	);

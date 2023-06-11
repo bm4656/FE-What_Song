@@ -4,7 +4,7 @@ import { FormEvent, useState } from 'react';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { youtubeApis } from '@/app/service/youtube';
-import MusicBarList from '../music/MusicBarLIst';
+import MusicBarList from '../music/MusicBarList';
 
 type Props = {
 	placeholder: string;
@@ -37,7 +37,7 @@ export default function SearchBar({ placeholder }: Props) {
 				</form>
 				{open && (
 					<TiDeleteOutline
-						className="text-3xl absolute right-12"
+						className="text-3xl absolute right-12 cursor-pointer"
 						onClick={() => {
 							setOpen(false);
 							setSearchList([]);

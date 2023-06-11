@@ -1,13 +1,13 @@
-'use client';
-
-// import { useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import MusicCarousel from '@/components/music/MusicCarousel';
 import TitleHeader from '@/components/TitleHeader';
 import SearchBar from '@/components/bar/SearchBar';
 import { roomApis } from '../service/room';
 
 export default async function MusicPage() {
-	const allRooms = await roomApis.getAllRooms();
+	const { data: allRooms } = useQuery(['allRooms'], () => roomApis.getAllRooms(), {
+		staleTime: 1000 * 60,
+	});
 	const categories = await roomApis.getCategories();
 	return (
 		<>

@@ -1,4 +1,5 @@
 import client from './client';
+import server from './server';
 
 export type Room = {
 	musicRoomSeq: number;
@@ -31,11 +32,15 @@ export const roomApis = {
 		return res.data;
 	},
 	getAllRooms: async () => {
-		const res = await client.get('/server/api/v1/check/all');
+		const res = await server.get('/server/api/v1/check/all');
 		return res.data;
 	},
 	getCategories: async () => {
 		const res = await client.get('/data/category.json');
+		return res.data;
+	},
+	getRoomData: async (roomId: number) => {
+		const res = await client.get(`/server/api/v1/check/room?musicRoomSeq=${roomId}`);
 		return res.data;
 	},
 };
