@@ -11,16 +11,19 @@ type Props = {
 
 export default function MusicRoomCard({
 	musicRoom: {
-		roomName,
 		extraInfo: { hostName, view },
-		musicRoomSeq,
+		have: { roomName, musicRoomSeq },
 	},
 }: Props) {
 	return (
 		<article className="m-4 rounded-[40px] shadow-md shadow-zinc-700 overflow-hidden relative w-[30rem] h-[30rem] hover:scale-95">
 			<Link href={`room/${musicRoomSeq}`}>
 				<div className="w-1/2 h-1/2">
-					<Image src="https://i.ytimg.com/vi/vM8m2iSunfc/mqdefault.jpg" alt={roomName} fill />
+					<Image
+						src="https://i.pinimg.com/originals/af/99/7b/af997bd9ce063b60705e71b7c21b8198.jpg"
+						alt={roomName}
+						fill
+					/>
 				</div>
 				<div className="absolute w-[30rem] h-[30rem] bottom-0 left-0 bg-gradient-to-tl from-zinc-900" />
 				<h2 className="absolute bottom-32 left-5 text-3xl font-bold text-white p-2 w-4/5">{roomName}</h2>

@@ -11,8 +11,8 @@ import TitleHeader from '@/components/TitleHeader';
 import MusicRecord from '@/components/music/streaming/MusicRecord';
 import PageHeaderContent from '@/components/PageHeaderContent';
 import InputBar from '@/components/bar/InputBar';
-import { roomApis } from '@/app/service/room';
 import { UserInfoAtom } from '@/state/store/login';
+import { roomClients } from '@/app/service/room-client';
 
 type createRoom = {
 	memberSeq: number | undefined;
@@ -22,7 +22,7 @@ type createRoom = {
 };
 export default function CreateRoomPage() {
 	const userInfo = useAtomValue(UserInfoAtom);
-	const { mutate: createMusicRoomMutate } = useMutation(roomApis.createMusicRoom, {
+	const { mutate: createMusicRoomMutate } = useMutation(roomClients.createMusicRoom, {
 		onSuccess: (res) => {
 			console.log(res);
 		},

@@ -1,6 +1,12 @@
 import client from './client';
 
-export type YoutubeType = { videoId: string; title: string; channelName: string; thumbnailUrl: string };
+export type YoutubeType = {
+	videoId: string;
+	title: string;
+	channelName: string;
+	thumbnailUrl: string;
+	roomSeq: number;
+};
 
 export const youtubeApis = {
 	serchKeyword: async (body: { keyword: string }) => {

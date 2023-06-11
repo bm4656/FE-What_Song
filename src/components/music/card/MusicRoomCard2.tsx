@@ -10,9 +10,8 @@ type Props = {
 
 export default function MusicRoomCard2({
 	musicRoom: {
-		roomName,
+		have: { roomName, musicRoomSeq },
 		extraInfo: { hostName, view },
-		musicRoomSeq,
 	},
 }: Props) {
 	return (
