@@ -19,7 +19,7 @@ export default function MusicRoomCard2({
 			<Link href={`/room/${musicRoomSeq}`}>
 				<div className="absolute w-80 h-80 left-4">
 					<Image
-						src=""
+						src="https://i.pinimg.com/564x/f0/a1/9f/f0a19f453d9201c3226c2a6d4be786c0.jpg"
 						alt={roomName}
 						fill
 						style={{ objectFit: 'cover' }}

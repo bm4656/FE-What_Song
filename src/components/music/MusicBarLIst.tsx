@@ -23,7 +23,12 @@ export default function MusicBarList({ list, isList, roomId }: Props) {
 	return (
 		<ul className="flex flex-col gap-4">
 			{list.map((item) => (
-				<MusicBarCard key={item.videoId} music={item} onAdd={handleAdd} isList={isList} />
+				<MusicBarCard
+					key={item.videoId}
+					music={{ ...item, roomSeq: Number(roomId) }}
+					onAdd={handleAdd}
+					isList={isList}
+				/>
 			))}
 		</ul>
 	);
