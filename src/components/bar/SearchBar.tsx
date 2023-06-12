@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { youtubeApis } from '@/app/service/youtube';
-import MusicBarList from '../music/MusicBarList';
+import MusicBars from '../music/MusicBars';
 
 type Props = {
 	placeholder: string;
@@ -51,7 +51,7 @@ export default function SearchBar({ placeholder }: Props) {
 			</div>
 			{searchList[0] && (
 				<div className="bg-input w-full h-[85%] overflow-y-scroll p-7 rounded-2xl shadow-md">
-					<MusicBarList list={searchList} isList={false} roomId={param.id} />
+					<MusicBars list={searchList} isList={false} roomId={param.id} />
 				</div>
 			)}
 		</>
