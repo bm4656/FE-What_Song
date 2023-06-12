@@ -5,7 +5,7 @@ import { roomApis } from '../service/room';
 
 export default async function HomePage() {
 	// const userInfo = useAtomValue(UserInfoAtom);
-	const memberSeq = 1;
+	const memberSeq = 3;
 	const allRooms = await roomApis.getAllRooms();
 	const userRooms = await roomApis.getUserRooms(memberSeq);
 	return (

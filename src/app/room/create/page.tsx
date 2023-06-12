@@ -37,7 +37,7 @@ export default function CreateRoomPage() {
 	};
 	// 뮤직 방 생성 폼 데이터
 	const [data, setData] = useState<createRoom>({
-		memberSeq: 1,
+		memberSeq: 3,
 		roomName: '',
 		category: '',
 		accessAuth: '',
