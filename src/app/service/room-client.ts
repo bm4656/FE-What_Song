@@ -38,4 +38,8 @@ export const roomClients = {
 		const filteredList = queueList.map((item: Queue) => item.selectVideo);
 		return filteredList;
 	},
+	getRoomData: async (roomId: number) => {
+		const res = await client.get(`/server/api/v1/check/room?roomSeq=${roomId}`);
+		return res.data;
+	},
 };

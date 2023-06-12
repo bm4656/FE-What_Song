@@ -1,7 +1,7 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { youtubeApis } from '@/app/service/youtube';
@@ -12,6 +12,7 @@ type Props = {
 };
 export default function SearchBar({ placeholder }: Props) {
 	const param = useParams();
+	const router = useRouter();
 	const [keyword, setKeyword] = useState('');
 	const [searchList, setSearchList] = useState([]);
 	const [open, setOpen] = useState(false);
@@ -43,12 +44,13 @@ export default function SearchBar({ placeholder }: Props) {
 						onClick={() => {
 							setOpen(false);
 							setSearchList([]);
+							router.refresh();
 						}}
 					/>
 				)}
 			</div>
 			{searchList[0] && (
-				<div className="absolute left-8 w-11/12 h-[85%] bg-slate-50 overflow-y-scroll p-7 rounded-2xl shadow-md">
+				<div className="bg-input w-full h-[85%] overflow-y-scroll p-7 rounded-2xl shadow-md">
 					<MusicBarList list={searchList} isList={false} roomId={param.id} />
 				</div>
 			)}

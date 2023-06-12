@@ -30,8 +30,8 @@ export const roomApis = {
 		const res = await server.get('/api/v1/check/all');
 		return res.data;
 	},
-	getRoomData: async (roomId: number) => {
-		const res = await server.get(`/api/v1/check/room?roomSeq=${roomId}`);
-		return res.data;
-	},
+	// getRoomData: async (roomId: number) => {
+	// 	const res = await server.get(`/api/v1/check/room?roomSeq=${roomId}`);
+	// 	return res.data;
+	// },
 };
