@@ -1,9 +1,11 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Category } from '@/app/service/rooms';
 
 type Props = {
-	category: Category;
+	category: {
+		categoryName: string;
+		description: string;
+	};
 };
 
 export default function MusicCategoryCard({ category: { categoryName, description } }: Props) {

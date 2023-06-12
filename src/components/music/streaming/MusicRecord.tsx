@@ -4,9 +4,15 @@ import { BsPlayFill } from 'react-icons/bs';
 type Props = {
 	image: string;
 	isHost?: boolean;
+	music?: {
+		videoId: string;
+		title: string;
+		channelName: string;
+		thumbnailUrl: string;
+	};
 };
 
-export default function MusicRecord({ image, isHost }: Props) {
+export default function MusicRecord({ image, isHost, music }: Props) {
 	return (
 		<article className="relative w-full h-[38rem] flex justify-center items-center">
 			{isHost && (

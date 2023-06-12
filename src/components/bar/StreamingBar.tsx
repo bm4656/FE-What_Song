@@ -2,20 +2,20 @@ import IconBox from '../music/streaming/IconBox';
 import { Icons } from '@/constants/ReactIcons';
 
 const icons = [
-	{ name: '참여자', icon: Icons.users },
-	{ name: '공유', icon: Icons.share },
-	{ name: '변경', icon: Icons.modify },
-	{ name: '수락', icon: Icons.adjustments },
+	{ name: '참여자', icon: Icons.users, clickFn: '' },
+	{ name: '공유', icon: Icons.share, clickFn: 'share' },
+	{ name: '변경', icon: Icons.modify, clickFn: 'request' },
+	{ name: '수락', icon: Icons.adjustments, clickFn: 'request' },
 ];
 
-export default function StreamingBar({ isHost }: { isHost: boolean }) {
+export default function StreamingBar({ isHost, roomId }: { isHost: boolean; roomId: number }) {
 	return (
 		<article className="w-full h-40 flex items-center justify-center gap-5">
 			<ul className="flex gap-10">
 				{isHost ? (
 					<>
 						{icons.map((icon) => (
-							<IconBox name={icon.name} key={icon.name}>
+							<IconBox key={icon.name} name={icon.name} clickFn={`/room/${roomId}/${icon.clickFn}`}>
 								{icon.icon}
 							</IconBox>
 						))}
@@ -26,8 +26,12 @@ export default function StreamingBar({ isHost }: { isHost: boolean }) {
 							<div className="text-4xl">{Icons.playButton}</div>
 							<span className="text-2xl font-semibold">요청</span>
 						</li>
-						<IconBox name={icons[0].name}>{icons[0].icon}</IconBox>
-						<IconBox name={icons[1].name}>{icons[1].icon}</IconBox>
+						<IconBox name={icons[0].name} clickFn={icons[0].clickFn}>
+							{icons[0].icon}
+						</IconBox>
+						<IconBox name={icons[1].name} clickFn={icons[1].clickFn}>
+							{icons[1].icon}
+						</IconBox>
 					</>
 				)}
 			</ul>
