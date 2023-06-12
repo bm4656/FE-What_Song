@@ -3,7 +3,7 @@
 import { roomClients } from '@/app/service/room-client';
 import TitleHeader from '@/components/TitleHeader';
 import SearchBar from '@/components/bar/SearchBar';
-import MusicBarList from '@/components/music/MusicBarList';
+import MusicBars from '@/components/music/MusicBars';
 
 type Props = {
 	params: { id: string };
@@ -16,7 +16,7 @@ export default async function RequestPage({ params: { id } }: Props) {
 			<TitleHeader title="뮤직리스트" previous isWrap />
 			<SearchBar placeholder="추가하고 싶은 뮤직을 입력하세요..." />
 			<h2 className="text-2xl font-bold p-1">플레이리스트</h2>
-			<MusicBarList list={playList} isList roomId={id} />
+			<MusicBars list={playList} isList roomId={id} />
 		</section>
 	);
 }
