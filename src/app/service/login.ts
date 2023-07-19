@@ -1,7 +1,7 @@
 import axios from 'axios';
+import { headers } from 'next/headers';
 import client from './client';
 import server from './server';
-import { headers } from 'next/headers';
 import { getCookie } from '@/constants/cookie';
 
 export type RegisterType = {

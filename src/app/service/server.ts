@@ -1,7 +1,7 @@
+import axios from 'axios';
 import { SERVICE_URL } from '@/constants/ServiceUrl';
 import { getCookie, removeCookie, setCookie } from '@/constants/cookie';
 import { accessExpires, refreshExpires } from '@/utils/login';
-import axios from 'axios';
 
 const isServer = typeof window === 'undefined';
 const server = axios.create({
@@ -16,15 +16,14 @@ const server = axios.create({
 
 server.interceptors.request.use(async (config) => {
 	if (isServer) {
-		const { cookies } = await import('next/headers'),
-			token = cookies().get('accessToken')?.value;
+		const { cookies } = await import('next/headers');
+		const token = cookies().get('accessToken')?.value;
 		if (token) {
 			console.log(token, '서버');
 			config.headers.Authorization = `Bearer ${token}`;
 		}
 	} else {
-		const { getCookie } = await import('@/constants/cookie'),
-			token = getCookie('accessToken');
+		const token = getCookie('accessToken');
 		if (token) {
 			console.log(token);
 			config.headers.Authorization = `Bearer ${token}`;
