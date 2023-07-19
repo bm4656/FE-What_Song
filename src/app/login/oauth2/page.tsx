@@ -35,7 +35,7 @@ export default function CallbackPage() {
 					});
 					// TODO 임시로 클라이언트 상태에 저장한 상태 (프로토타입)
 					setUserInfo(res.data);
-					router.push(`${SERVICE_URL.home}`);
+					router.push(`/tokenTest`);
 				} else {
 					// 회원이 아닐시 회원가입 페이지 이동
 					const kakaoUserInfo = res.data;
