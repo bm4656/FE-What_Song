@@ -7,6 +7,7 @@ import { accessExpires, refreshExpires } from '@/utils/login';
 export type MutateTpye<T> = UseMutateFunction<AxiosResponse<any, any>, unknown, T, unknown>;
 
 const client = axios.create({
+	baseURL: 'https://111c-219-248-167-243.ngrok-free.app/',
 	withCredentials: true,
 	headers: {
 		'Access-Control-Allow-Credentials': true,
@@ -15,46 +16,46 @@ const client = axios.create({
 	},
 });
 
-// client.interceptors.response.use(
-// 	(res) => {
-// 		return res;
-// 	},
-// 	async (error) => {
-// 		const {
-// 			config,
-// 			response: { status },
-// 		} = error;
-// 		// 토큰이 유효하지 않을 시 그리고 ouath관련 요청이 아닐시
-// 		if (status === 401) {
-// 			try {
-// 				const originalRequest = config;
-// 				// token refresh 요청
-// 				const refreshToken = getCookie('refreshToken');
-// 				const res = await client.get('/server/user/token/reissue', { headers: { refresh: refreshToken } });
-// 				const newAccessToken = res?.headers['authorization']?.split(' ')[1];
-// 				const newRefreshToken = res?.headers['refresh']?.split(' ')[1];
-// 				if (newAccessToken && newRefreshToken) {
-// 					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-// 					client.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
-// 					setCookie('accessToken', 'accessToken', {
-// 						path: '/',
-// 						expires: accessExpires,
-// 					});
-// 					setCookie('refreshToken', 'refreshToken', {
-// 						path: '/',
-// 						expires: refreshExpires,
-// 					});
-// 				}
-// 				return client(originalRequest);
-// 			} catch (refreshError) {
-// 				removeCookie('accessToken');
-// 				removeCookie('refreshToken');
-// 				window.location.href = SERVICE_URL.login;
-// 				return Promise.reject(refreshError);
-// 			}
-// 		}
-// 		return Promise.reject(error);
-// 	}
-// );
+client.interceptors.response.use(
+	(res) => {
+		return res;
+	},
+	async (error) => {
+		const {
+			config,
+			response: { status },
+		} = error;
+		// 토큰이 유효하지 않을 시 그리고 ouath관련 요청이 아닐시
+		if (status === 401) {
+			try {
+				const originalRequest = config;
+				// token refresh 요청
+				const refreshToken = getCookie('refreshToken');
+				const res = await axios.get('/server/user/token/reissue', { headers: { refresh: refreshToken } });
+				const newAccessToken = res?.headers['authorization']?.split(' ')[1];
+				const newRefreshToken = res?.headers['refresh']?.split(' ')[1];
+				if (newAccessToken && newRefreshToken) {
+					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+					client.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
+					setCookie('accessToken', 'accessToken', {
+						path: '/',
+						expires: accessExpires,
+					});
+					setCookie('refreshToken', 'refreshToken', {
+						path: '/',
+						expires: refreshExpires,
+					});
+				}
+				return client(originalRequest);
+			} catch (refreshError) {
+				removeCookie('accessToken');
+				removeCookie('refreshToken');
+				window.location.href = SERVICE_URL.login;
+				return Promise.reject(refreshError);
+			}
+		}
+		return Promise.reject(error);
+	}
+);
 
 export default client;

@@ -19,6 +19,7 @@ export default function CallbackPage() {
 		() => loginApis.getLogin(new URL(document.location.toString()).searchParams.get('code') as string),
 		{
 			onSuccess: (res) => {
+				console.log(res);
 				const accessToken = res.headers['authorization']?.split(' ')[1];
 				const refreshToken = res.headers['refresh']?.split(' ')[1];
 
