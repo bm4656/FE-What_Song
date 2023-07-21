@@ -14,7 +14,8 @@ export default function LoginPage() {
 				mb="mb-[20%]"
 			/>
 			<LottieView file={loginMain} />
-			<Button link={KAKAO_OAUTH2_URL} content="카카오 로그인/회원가입" bgColor="bg-[#FAE64D]" />
+			{/* <Button link={KAKAO_OAUTH2_URL} content="카카오 로그인/회원가입" bgColor="bg-[#FAE64D]" /> */}
+			<Button link="iframe" content="iframe 테스트" bgColor="bg-[#FAE64D]" />
 		</div>
 	);
 }
