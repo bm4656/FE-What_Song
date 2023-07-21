@@ -2,7 +2,7 @@ import axios from 'axios';
 import { cookies } from 'next/headers';
 
 const server = axios.create({
-	baseURL: '/server/',
+	baseURL: 'https://www.youtube.com/watch?v=cNG-QiCDphU',
 	withCredentials: true,
 	headers: {
 		'Access-Control-Allow-Credentials': true,
