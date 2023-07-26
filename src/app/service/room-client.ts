@@ -19,10 +19,14 @@ export const roomClients = {
 		category: string;
 		accessAuth: string;
 	}) => {
-		const res = await client.post('/server/api/v1/musicRoom', { ...body });
+		const res = await client.post('/api/v1/musicRoom', { ...body });
 		return res;
 	},
-	resisterMusic: async (body: {
+	getAllRooms: async () => {
+		const res = await client.get('/api/v1/check/all');
+		return res.data;
+	},
+	registerMusic: async (body: {
 		videoId: string;
 		title: string;
 		channelName: string;
