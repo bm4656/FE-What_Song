@@ -1,4 +1,7 @@
-import { roomApis } from '@/app/service/room';
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
+import { roomClients } from '@/app/service/room-client';
 import TitleHeader from '@/components/TitleHeader';
 import MusicCardGrid from '@/components/music/MusicCardGrid';
 
@@ -9,7 +12,13 @@ type Props = {
 };
 
 export default async function CategoryPage({ params: { category } }: Props) {
-	const rooms = await roomApis.getAllRooms();
+	const { data: rooms, isFetching } = useQuery(
+		['rooms'],
+		() => {
+			return roomClients.getAllRooms();
+		},
+		{ staleTime: 1000 * 3 }
+	);
 	return (
 		<section className="pb-10">
 			<TitleHeader title={`${category.toUpperCase()} 리스트`} previous />

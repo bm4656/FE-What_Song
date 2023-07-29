@@ -1,5 +1,5 @@
 // import { useAtomValue } from 'jotai';
-import HydratedRooms from './hydratedRooms';
+import HydratedRooms from '../../components/hydrate/HydratedRooms';
 // import { UserInfoAtom } from '@/state/store/login';
 
 export default function HomePage() {
