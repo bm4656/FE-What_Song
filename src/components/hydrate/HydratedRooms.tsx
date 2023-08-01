@@ -2,7 +2,6 @@ import { dehydrate } from '@tanstack/react-query';
 import getQueryClient from '@/utils/query/getQueryClient';
 import HydrateOnClient from '@/utils/query/hydrateOnClient';
 import { roomApis } from '../../app/service/room';
-import MusicCarousel from '@/components/music/MusicCarousel';
 import Rooms from './Rooms';
 
 export default async function HydratedRooms() {
@@ -11,7 +10,6 @@ export default async function HydratedRooms() {
 	const dehydratedState = dehydrate(queryClient);
 	return (
 		<HydrateOnClient state={dehydratedState}>
-			{/* <MusicCarousel /> */}
 			<Rooms />
 		</HydrateOnClient>
 	);

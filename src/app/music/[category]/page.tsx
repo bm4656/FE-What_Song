@@ -12,7 +12,7 @@ type Props = {
 };
 
 export default async function CategoryPage({ params: { category } }: Props) {
-	const { data: rooms, isFetching } = useQuery(
+	const { data: rooms } = useQuery(
 		['rooms'],
 		() => {
 			return roomClients.getAllRooms();
