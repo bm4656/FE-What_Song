@@ -42,54 +42,46 @@ export default function IFramePage() {
 		setPlaying(music);
 	};
 
+	const onReady = (event: YouTubePlayer) => {
+		setPlayer(event.target);
+		event.target.playVideo();
+	};
+
+	const onPlay = () => {
+		if (intervalId === undefined) {
+			const newIntervalId = setInterval(updateProgressBar, 1000);
+			setIntervalId(newIntervalId);
+		}
+	};
+
+	const onPause = () => {
+		clearInterval(intervalId);
+		setIntervalId(undefined);
+	};
+
+	const onEnd = () => {
+		let nextIndex = playList.findIndex((item) => item === playing) + 1;
+		if (playList.length === nextIndex) nextIndex = 0;
+		clearInterval(intervalId);
+		setIntervalId(undefined);
+		setPlaying(playList[nextIndex]);
+	};
+
 	useEffect(() => {
 		return () => clearInterval(intervalId);
 	}, []);
 
-	// 실행, 정지, 타임라인 변경시 재생 시간 캐치
-	const onPlayerStateChange = (event: YouTubePlayer) => {
-		if (event.data === 1) {
-			// console.log('영상이 재생 중입니다.');
-		} else if (event.data === 2) {
-			// console.log('영상이 일시 중지되었습니다.');
-		} else if (event.data === 0) {
-			// console.log('영상 재생이 완료되었습니다.');
-		}
-		// 현재 재생 시간 정보
-		// 	const currentTime = event.target.getCurrentTime();
-		// 	console.log('현재 재생 시간: ' + currentTime + '초');
-	};
-
 	return (
 		<div>
 			<YouTube
-				id="iframe"
 				videoId={playing}
 				className="opacity-0 absolute"
 				opts={opts}
-				onStateChange={onPlayerStateChange}
-				onReady={(event) => {
-					setPlayer(event.target);
-					event.target.playVideo();
-				}}
-				onPlay={() => {
-					if (intervalId === undefined) {
-						const newIntervalId = setInterval(updateProgressBar, 1000);
-						setIntervalId(newIntervalId);
-					}
-				}}
+				onReady={onReady}
+				onPlay={() => onPlay()}
 				// onPlay={(event) => {}}
-				onPause={() => {
-					clearInterval(intervalId);
-					setIntervalId(undefined);
-				}}
-				onEnd={() => {
-					let nextIndex = playList.findIndex((item) => item === playing) + 1;
-					if (playList.length === nextIndex) nextIndex = 0;
-					clearInterval(intervalId);
-					setIntervalId(undefined);
-					setPlaying(playList[nextIndex]);
-				}}
+				onPause={() => onPause()}
+				onEnd={() => onEnd()}
 			/>
 			<div>재생중인 노래 : {playing}</div>
 			<div>
@@ -110,7 +102,6 @@ export default function IFramePage() {
 					style={{
 						background: `linear-gradient(to right, #428EFF 0%, #428EFF ${progress}%, #d5d4d3 ${progress}%, #d5d4d3 100%)`,
 					}}
-					step="1"
 				/>
 			</div>
 			<div>
