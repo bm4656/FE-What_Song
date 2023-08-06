@@ -2,7 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { useAtom, useSetAtom } from 'jotai';
+import { useAtom } from 'jotai';
 import { useMutation } from '@tanstack/react-query';
 import Button from '@/components/button/Button';
 import { SERVICE_URL } from '@/constants/ServiceUrl';
@@ -19,7 +19,6 @@ export default function NicknameInputPage() {
 	const router = useRouter();
 	const [nickname, setNickname] = useState<string>('');
 	const [registerInfoData, setReisterInfoData] = useAtom(registerInfo);
-	const setUserInfo = useSetAtom(UserInfoAtom);
 
 	const onNickNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setNickname(event.target.value);
@@ -37,14 +36,13 @@ export default function NicknameInputPage() {
 				path: '/',
 				expires: refreshExpires,
 			});
-			setUserInfo(res.data);
 			setReisterInfoData({
 				id: '',
 				kakao_account: {
 					email: '',
 				},
 			});
-			router.push(`${SERVICE_URL.register}?page=2`);
+			router.push(`${SERVICE_URL.register}?page=2?nickname=${nickname}`);
 		},
 		onError: (error) => console.log(error),
 	});

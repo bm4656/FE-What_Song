@@ -1,12 +1,12 @@
+import { useQuery } from '@tanstack/react-query';
 import { loginApis } from '@/app/service/login';
 import { getCookie } from '@/constants/cookie';
-import { useQuery } from '@tanstack/react-query';
 
 export default function useUser() {
 	const { data, refetch, isLoading } = useQuery(['user', 'me'], loginApis.getUserInfo, {
-		// select: (res) => res.data.data,
+		select: (res) => res.data,
 		onSuccess: (res) => {
-			console.log(res);
+			// console.log(res);
 		},
 		onError: (error) => {
 			console.log(error);

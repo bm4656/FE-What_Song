@@ -6,12 +6,11 @@ import { useSetAtom } from 'jotai';
 import { SERVICE_URL } from '@/constants/ServiceUrl';
 import { setCookie } from '@/constants/cookie';
 import { loginApis } from '@/app/service/login';
-import { UserInfoAtom, registerInfo } from '@/state/store/login';
+import { registerInfo } from '@/state/store/login';
 import { accessExpires, refreshExpires } from '@/utils/login';
 
 export default function CallbackPage() {
 	const router = useRouter();
-	const setUserInfo = useSetAtom(UserInfoAtom);
 	const setRegisterInfo = useSetAtom(registerInfo);
 
 	const { data } = useQuery(
@@ -34,7 +33,6 @@ export default function CallbackPage() {
 						expires: refreshExpires,
 					});
 					// TODO 임시로 클라이언트 상태에 저장한 상태 (프로토타입)
-					setUserInfo(res.data);
 					router.push(`${SERVICE_URL.home}`);
 				} else {
 					// 회원이 아닐시 회원가입 페이지 이동

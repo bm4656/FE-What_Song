@@ -33,6 +33,7 @@ export const loginApis = {
 	},
 	getUserInfo: async () => {
 		const res = await client.get('/api/v1/members/me');
+		console.log(res);
 		return res;
 	},
 	apiTest: async () => {

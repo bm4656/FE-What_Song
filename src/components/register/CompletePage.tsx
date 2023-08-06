@@ -1,19 +1,20 @@
 'use client';
 
-import { useAtomValue } from 'jotai';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/button/Button';
 import { SERVICE_URL } from '@/constants/ServiceUrl';
 import registerComplete from '../../../public/lottie/registerComplete.json';
 import PageHeaderContent from '../PageHeaderContent';
 import LottieView from '../LottieView';
-import { UserInfoAtom } from '@/state/store/login';
 import { loginApis } from '@/app/service/login';
 
-export default function CompletePage() {
+interface Props {
+	nickname: string;
+}
+
+export default function CompletePage({ nickname }: Props) {
 	const router = useRouter();
-	const userInfo = useAtomValue(UserInfoAtom);
 
 	const { mutate: logoutMutate } = useMutation(loginApis.Logout, {
 		onSuccess: (res) => {
@@ -26,34 +27,22 @@ export default function CompletePage() {
 		},
 	});
 
-	// const { data } = useQuery(
-	// 	['user'],
-	// 	() => loginApis.getUserInfo,
-	// 	{
-	// 		onSuccess: (res) => {
-	// 			console.log(res);
-	// 		},
-	// 		onError: (error) => {
-	// 			console.log(error);
-	// 		},
-	// 	}
-	// );
-
 	return (
 		<div className="wrap">
 			<PageHeaderContent
-				content={`${userInfo?.nickname}님 What Song과 <br /> 음악 세계 탐험에 함께하게 되었어요! 🎤`}
+				content={`${nickname}님 What Song과 <br /> 음악 세계 탐험에 함께하게 되었어요! 🎤`}
 				mb="mb-[20%]"
 			/>
 			<LottieView file={registerComplete} />
 			<Button link={SERVICE_URL.home} content="함께하기" />
 			{/* <Button clickFn={() => logoutMutate()} content="로그아웃 테스트" /> */}
-			<Button
-				clickFn={() => {
-					loginApis.getUserInfo();
+			{/* <Button
+				clickFn={async () => {
+					const res = await client.get('/api/v1/members/me');
+					console.log(res);
 				}}
-				content="유저 정보 테트"
-			/>
+				content="유저 정보 테스트"
+			/> */}
 		</div>
 	);
 }
