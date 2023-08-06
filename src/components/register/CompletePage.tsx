@@ -1,7 +1,7 @@
 'use client';
 
 import { useAtomValue } from 'jotai';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/button/Button';
 import { SERVICE_URL } from '@/constants/ServiceUrl';
@@ -26,6 +26,19 @@ export default function CompletePage() {
 		},
 	});
 
+	// const { data } = useQuery(
+	// 	['user'],
+	// 	() => loginApis.getUserInfo,
+	// 	{
+	// 		onSuccess: (res) => {
+	// 			console.log(res);
+	// 		},
+	// 		onError: (error) => {
+	// 			console.log(error);
+	// 		},
+	// 	}
+	// );
+
 	return (
 		<div className="wrap">
 			<PageHeaderContent
@@ -35,6 +48,12 @@ export default function CompletePage() {
 			<LottieView file={registerComplete} />
 			<Button link={SERVICE_URL.home} content="함께하기" />
 			{/* <Button clickFn={() => logoutMutate()} content="로그아웃 테스트" /> */}
+			<Button
+				clickFn={() => {
+					loginApis.getUserInfo();
+				}}
+				content="유저 정보 테트"
+			/>
 		</div>
 	);
 }

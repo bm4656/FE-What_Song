@@ -31,6 +31,10 @@ export const loginApis = {
 		const res = await client.post('/user/login', { ...body });
 		return res;
 	},
+	getUserInfo: async () => {
+		const res = await client.get('/api/v1/members/me');
+		return res;
+	},
 	apiTest: async () => {
 		console.log('헬스 체크');
 		const res = await client.get('/api/test');
