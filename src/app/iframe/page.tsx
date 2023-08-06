@@ -24,8 +24,8 @@ export default function IFramePage() {
 
 	const handleProgressBarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const jump = Number(event.target.value);
-		setProgress(jump);
 		const { currentPlayTime } = currentMusicInfo(player, jump);
+		setProgress(jump);
 		setPlayTime(currentPlayTime);
 	};
 
