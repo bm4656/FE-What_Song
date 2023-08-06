@@ -33,7 +33,8 @@ export default function CallbackPage() {
 						expires: refreshExpires,
 					});
 					// TODO 임시로 클라이언트 상태에 저장한 상태 (프로토타입)
-					router.push(`${SERVICE_URL.home}`);
+					// router.push(`${SERVICE_URL.home}`);
+					router.push(`${SERVICE_URL.register}?page=2&nickname=${'수빈보이'}`);
 				} else {
 					// 회원이 아닐시 회원가입 페이지 이동
 					const kakaoUserInfo = res.data;

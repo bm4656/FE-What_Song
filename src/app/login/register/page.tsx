@@ -8,7 +8,6 @@ export default function RegisterPage() {
 	const searchParams = useSearchParams();
 	const page = searchParams.get('page');
 	const nickname = searchParams.get('nickname');
-	console.log(nickname);
 	return (
 		<>
 			{page === '1' && <NicknameInputPage />}

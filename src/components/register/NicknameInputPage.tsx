@@ -42,7 +42,7 @@ export default function NicknameInputPage() {
 					email: '',
 				},
 			});
-			router.push(`${SERVICE_URL.register}?page=2?nickname=${nickname}`);
+			router.push(`${SERVICE_URL.register}?page=2&nickname=${nickname}`);
 		},
 		onError: (error) => console.log(error),
 	});
