@@ -2,8 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import YouTube, { YouTubePlayer } from 'react-youtube';
+import axios from 'axios';
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 import { opts } from '@/constants/iframe';
 import { currentMusicInfo } from '@/utils/iframe';
+import client from '../service/client';
 
 // MEMO 서버에게 썸네일, 영상 길이 받아오기
 
@@ -68,7 +71,47 @@ export default function IFramePage() {
 	};
 
 	useEffect(() => {
-		return () => clearInterval(intervalId);
+		const EventSource = EventSourcePolyfill || NativeEventSource;
+		const eventSource = new EventSource(`server/sse`, {
+			headers: {
+				'ngrok-skip-browser-warning': '69420',
+			},
+			withCredentials: true,
+		});
+		eventSource.onopen = (e) => {
+			console.log('open');
+		};
+
+		// eventSource.addEventListener('', (e: any) => {
+		//  const data = JSON.parse(e.data as string);
+		//  console.log(data);
+		// });
+
+		eventSource.onmessage = async (event) => {
+			const res = await event.data;
+			console.log(res);
+		};
+
+		eventSource.addEventListener(
+			'error',
+			function (e: any) {
+				if (e.eventPhase === EventSource.CLOSED) {
+					console.log('닫힘');
+					eventSource.close();
+				}
+				if (e.target.readyState === EventSource.CLOSED) {
+					console.log('Disconnected');
+				} else if (e.target.readyState === EventSource.CONNECTING) {
+					console.log('Connecting...');
+				}
+			},
+			false
+		);
+
+		return () => {
+			eventSource.close();
+			clearInterval(intervalId);
+		};
 	}, []);
 
 	return (
@@ -111,6 +154,21 @@ export default function IFramePage() {
 						{index + 1} : {music}
 					</button>
 				))}
+			</div>
+			<div>
+				<button
+					onClick={async () => {
+						const data = await axios.get('server/api/v1/channels/stream/room/275ef9f2-bc1a-46b3-bab7-3e5bf4ae2a26', {
+							headers: {
+								'Access-Control-Allow-Credentials': true,
+								'ngrok-skip-browser-warning': '69420',
+							},
+						});
+						console.log(data);
+					}}
+				>
+					SSE 테스트
+				</button>
 			</div>
 		</div>
 	);
