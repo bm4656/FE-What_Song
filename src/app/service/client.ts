@@ -23,7 +23,7 @@ client.interceptors.response.use(
 			response: { status },
 		} = error;
 		// 토큰이 유효하지 않을 시 그리고 ouath관련 요청이 아닐시
-		if (status === 401 && !['/user/token/reissue', 'kakao'].some((str) => config.url.includes(str))) {
+		if (status === 401 && !['/user/token/reissue', 'kakao', 'logout'].some((str) => config.url.includes(str))) {
 			try {
 				const originalRequest = config;
 				// token refresh 요청
@@ -47,7 +47,6 @@ client.interceptors.response.use(
 				}
 				return client(originalRequest);
 			} catch (refreshError) {
-				console.log(refreshError);
 				removeCookie('accessToken');
 				removeCookie('refreshToken');
 				window.location.href = SERVICE_URL.login;
