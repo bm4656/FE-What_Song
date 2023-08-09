@@ -10,7 +10,7 @@ import nicknameInput from '../../../public/lottie/nicknameInput.json';
 import InputBar from '../bar/InputBar';
 import PageHeaderContent from '../PageHeaderContent';
 import LottieView from '../LottieView';
-import { UserInfoAtom, registerInfo } from '@/state/store/login';
+import { registerInfo } from '@/state/store/login';
 import { loginApis } from '@/app/service/login';
 import { setCookie } from '@/constants/cookie';
 import { accessExpires, refreshExpires } from '@/utils/login';
