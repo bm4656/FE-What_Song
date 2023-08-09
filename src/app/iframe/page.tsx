@@ -70,49 +70,68 @@ export default function IFramePage() {
 		setPlaying(playList[nextIndex]);
 	};
 
-	useEffect(() => {
-		const EventSource = EventSourcePolyfill || NativeEventSource;
-		const eventSource = new EventSource(`server/sse`, {
-			headers: {
-				'ngrok-skip-browser-warning': '69420',
-			},
-			withCredentials: true,
-		});
-		eventSource.onopen = (e) => {
-			console.log('open');
-		};
+	// useEffect(() => {
+	// 	const EventSource = EventSourcePolyfill || NativeEventSource;
+	// 	const eventSource = new EventSource(`server/sse`, {
+	// 		headers: {
+	// 			'ngrok-skip-browser-warning': '69420',
+	// 		},
+	// 		withCredentials: true,
+	// 	});
+	// 	eventSource.onopen = (e) => {
+	// 		console.log('open');
+	// 	};
 
-		// eventSource.addEventListener('', (e: any) => {
-		//  const data = JSON.parse(e.data as string);
-		//  console.log(data);
-		// });
+	// 	// eventSource.addEventListener('', (e: any) => {
+	// 	//  const data = JSON.parse(e.data as string);
+	// 	//  console.log(data);
+	// 	// });
 
-		eventSource.onmessage = async (event) => {
-			const res = await event.data;
+	// 	eventSource.onmessage = async (event) => {
+	// 		const res = await event.data;
+	// 		console.log(res);
+	// 	};
+
+	// 	eventSource.addEventListener(
+	// 		'error',
+	// 		function (e: any) {
+	// 			if (e.eventPhase === EventSource.CLOSED) {
+	// 				console.log('닫힘');
+	// 				eventSource.close();
+	// 			}
+	// 			if (e.target.readyState === EventSource.CLOSED) {
+	// 				console.log('Disconnected');
+	// 			} else if (e.target.readyState === EventSource.CONNECTING) {
+	// 				console.log('Connecting...');
+	// 			}
+	// 		},
+	// 		false
+	// 	);
+
+	// 	return () => {
+	// 		eventSource.close();
+	// 		clearInterval(intervalId);
+	// 	};
+	// }, []);
+
+	const callSSE = () => {
+		const eventSource = new EventSource(`/api/test`);
+		eventSource.onmessage = (event) => {
+			const res = event.data;
 			console.log(res);
 		};
 
-		eventSource.addEventListener(
-			'error',
-			function (e: any) {
-				if (e.eventPhase === EventSource.CLOSED) {
-					console.log('닫힘');
-					eventSource.close();
-				}
-				if (e.target.readyState === EventSource.CLOSED) {
-					console.log('Disconnected');
-				} else if (e.target.readyState === EventSource.CONNECTING) {
-					console.log('Connecting...');
-				}
-			},
-			false
-		);
+		eventSource.addEventListener('open', (e) => {
+			console.log('오픈');
+		});
 
-		return () => {
-			eventSource.close();
-			clearInterval(intervalId);
-		};
-	}, []);
+		eventSource.addEventListener('error', (e) => {
+			if (e.eventPhase === EventSource.CLOSED) {
+				console.log('닫힘');
+				eventSource.close();
+			}
+		});
+	};
 
 	return (
 		<div>
@@ -155,20 +174,9 @@ export default function IFramePage() {
 					</button>
 				))}
 			</div>
+
 			<div>
-				<button
-					onClick={async () => {
-						const data = await axios.get('server/api/v1/channels/stream/room/275ef9f2-bc1a-46b3-bab7-3e5bf4ae2a26', {
-							headers: {
-								'Access-Control-Allow-Credentials': true,
-								'ngrok-skip-browser-warning': '69420',
-							},
-						});
-						console.log(data);
-					}}
-				>
-					SSE 테스트
-				</button>
+				<button onClick={callSSE}>GET SSE</button>
 			</div>
 		</div>
 	);
