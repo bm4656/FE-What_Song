@@ -26,6 +26,10 @@ export const roomClients = {
 		const res = await client.get('/api/v1/check/all');
 		return res.data;
 	},
+	getUserRooms: async (userId: string) => {
+		const res = await client.get(`/api/v1/check/have?memberSeq=${userId}`);
+		return res.data;
+	},
 	registerMusic: async (body: {
 		videoId: string;
 		title: string;
@@ -33,17 +37,17 @@ export const roomClients = {
 		thumbnailUrl: string;
 		roomSeq: number;
 	}) => {
-		const res = await client.post('/server/api/v1/reservation', { ...body });
+		const res = await client.post('/api/v1/reservation', { ...body });
 		return res;
 	},
 	getQueueList: async (roomId: number) => {
-		const res = await client.get(`/server/api/v1/reservation?roomSeq=${roomId}`);
+		const res = await client.get(`/api/v1/reservation?roomSeq=${roomId}`);
 		const queueList: Queue[] = res.data;
 		const filteredList = queueList.map((item: Queue) => item.selectVideo);
 		return filteredList;
 	},
 	getRoomData: async (roomId: number) => {
-		const res = await client.get(`/server/api/v1/check/room?roomSeq=${roomId}`);
+		const res = await client.get(`/api/v1/check/room?roomSeq=${roomId}`);
 		return res.data;
 	},
 };

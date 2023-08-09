@@ -3,14 +3,22 @@ import getQueryClient from '@/utils/query/getQueryClient';
 import HydrateOnClient from '@/utils/query/hydrateOnClient';
 import { roomApis } from '../../app/service/room';
 import Rooms from './Rooms';
+import UserRooms from './UserRooms';
 
-export default async function HydratedRooms() {
+type Props = {
+	type?: string;
+	memberSeq?: string;
+};
+
+export default async function HydratedRooms({ type, memberSeq }: Props) {
+	// userRoom 도 prefetch 처리 분기 해주어야함
 	const queryClient = getQueryClient();
 	await queryClient.prefetchQuery(['rooms'], roomApis.getAllRooms);
 	const dehydratedState = dehydrate(queryClient);
 	return (
 		<HydrateOnClient state={dehydratedState}>
-			<Rooms />
+			{type === 'all' && <Rooms />}
+			{type === 'have' && <UserRooms memberSeq={memberSeq || ''} />}
 		</HydrateOnClient>
 	);
 }
