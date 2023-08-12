@@ -3,10 +3,8 @@
 import { useEffect, useState } from 'react';
 import YouTube, { YouTubePlayer } from 'react-youtube';
 import axios from 'axios';
-import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill';
 import { opts } from '@/constants/iframe';
 import { currentMusicInfo } from '@/utils/iframe';
-import client from '../service/client';
 
 // MEMO 서버에게 썸네일, 영상 길이 받아오기
 
@@ -70,68 +68,11 @@ export default function IFramePage() {
 		setPlaying(playList[nextIndex]);
 	};
 
-	// useEffect(() => {
-	// 	const EventSource = EventSourcePolyfill || NativeEventSource;
-	// 	const eventSource = new EventSource(`server/sse`, {
-	// 		headers: {
-	// 			'ngrok-skip-browser-warning': '69420',
-	// 		},
-	// 		withCredentials: true,
-	// 	});
-	// 	eventSource.onopen = (e) => {
-	// 		console.log('open');
-	// 	};
-
-	// 	// eventSource.addEventListener('', (e: any) => {
-	// 	//  const data = JSON.parse(e.data as string);
-	// 	//  console.log(data);
-	// 	// });
-
-	// 	eventSource.onmessage = async (event) => {
-	// 		const res = await event.data;
-	// 		console.log(res);
-	// 	};
-
-	// 	eventSource.addEventListener(
-	// 		'error',
-	// 		function (e: any) {
-	// 			if (e.eventPhase === EventSource.CLOSED) {
-	// 				console.log('닫힘');
-	// 				eventSource.close();
-	// 			}
-	// 			if (e.target.readyState === EventSource.CLOSED) {
-	// 				console.log('Disconnected');
-	// 			} else if (e.target.readyState === EventSource.CONNECTING) {
-	// 				console.log('Connecting...');
-	// 			}
-	// 		},
-	// 		false
-	// 	);
-
-	// 	return () => {
-	// 		eventSource.close();
-	// 		clearInterval(intervalId);
-	// 	};
-	// }, []);
-
-	const callSSE = () => {
-		const eventSource = new EventSource(`/api/test`);
-		eventSource.onmessage = (event) => {
-			const res = event.data;
-			console.log(res);
+	useEffect(() => {
+		return () => {
+			clearInterval(intervalId);
 		};
-
-		eventSource.addEventListener('open', (e) => {
-			console.log('오픈');
-		});
-
-		eventSource.addEventListener('error', (e) => {
-			if (e.eventPhase === EventSource.CLOSED) {
-				console.log('닫힘');
-				eventSource.close();
-			}
-		});
-	};
+	}, []);
 
 	return (
 		<div>
@@ -174,9 +115,15 @@ export default function IFramePage() {
 					</button>
 				))}
 			</div>
-
-			<div>
-				<button onClick={callSSE}>GET SSE</button>
+			<div
+				onClick={async () => {
+					const data = await axios.post(`/server/sse`, {
+						name: '123',
+					});
+					console.log(data);
+				}}
+			>
+				테스트 버튼
 			</div>
 		</div>
 	);
