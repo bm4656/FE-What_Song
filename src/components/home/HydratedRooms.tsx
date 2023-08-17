@@ -7,10 +7,9 @@ import UserRooms from './UserRooms';
 
 type Props = {
 	type?: string;
-	memberSeq?: string;
 };
 
-export default async function HydratedRooms({ type, memberSeq }: Props) {
+export default async function HydratedRooms({ type }: Props) {
 	// userRoom 도 prefetch 처리 분기 해주어야함
 	const queryClient = getQueryClient();
 	await queryClient.prefetchQuery(['rooms'], roomApis.getAllRooms);
@@ -18,7 +17,7 @@ export default async function HydratedRooms({ type, memberSeq }: Props) {
 	return (
 		<HydrateOnClient state={dehydratedState}>
 			{type === 'all' && <Rooms />}
-			{type === 'have' && <UserRooms memberSeq={memberSeq || ''} />}
+			{type === 'have' && <UserRooms />}
 		</HydrateOnClient>
 	);
 }

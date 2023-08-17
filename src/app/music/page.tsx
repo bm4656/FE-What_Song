@@ -2,7 +2,7 @@ import MusicCarousel from '@/components/music/MusicCarousel';
 import TitleHeader from '@/components/TitleHeader';
 import SearchBar from '@/components/bar/SearchBar';
 import categories from '../../../public/data/category.json';
-import HydratedRooms from '@/components/hydrate/HydratedRooms';
+import HydratedRooms from '@/components/home/HydratedRooms';
 
 export default async function MusicPage() {
 	return (
