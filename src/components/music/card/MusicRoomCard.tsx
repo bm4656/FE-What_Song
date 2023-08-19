@@ -3,10 +3,13 @@ import { BsPlayFill } from 'react-icons/bs';
 import { AiFillEye } from 'react-icons/ai';
 import { CgDetailsMore } from 'react-icons/cg';
 import Link from 'next/link';
+import { useState } from 'react';
 import { Room } from '@/app/service/room';
+import MusicDeleteModal from '../MusicDeleteModal';
 
 type Props = {
 	musicRoom: Room;
+	isHostCard?: boolean;
 };
 
 export default function MusicRoomCard({
@@ -14,7 +17,9 @@ export default function MusicRoomCard({
 		extraInfo: { hostName, view },
 		have: { roomName, musicRoomSeq },
 	},
+	isHostCard,
 }: Props) {
+	const [modal, setModal] = useState(false);
 	return (
 		<article className="m-4 rounded-[40px] shadow-md shadow-zinc-700 overflow-hidden relative w-[30rem] h-[30rem] hover:scale-95">
 			<Link href={`room/${musicRoomSeq}`}>
@@ -35,12 +40,13 @@ export default function MusicRoomCard({
 					<AiFillEye className="w-8 h-8" />
 					<p className="text-xl font-semibold mt-0.5">{view}</p>
 				</span>
-				{/* {isOwner && (
-					<button className="absolute top-4 right-9">
-						<CgDetailsMore className="w-10 h-10 text-zinc-100" />
-					</button>
-				)} */}
 			</Link>
+			{isHostCard && (
+				<button className="absolute top-4 right-9" onClick={() => setModal((prev) => !prev)}>
+					<CgDetailsMore className="w-10 h-10 text-zinc-100" />
+				</button>
+			)}
+			{modal && <div className="absolute bg-yellow-600 w-30 h-30">삭제하기</div>}
 		</article>
 	);
 }

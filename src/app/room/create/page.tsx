@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { HiOutlineChevronUp, HiOutlineChevronDown } from 'react-icons/hi';
 import Image from 'next/image';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -11,6 +11,7 @@ import MusicRecord from '@/components/music/streaming/MusicRecord';
 import PageHeaderContent from '@/components/PageHeaderContent';
 import InputBar from '@/components/bar/InputBar';
 import { roomClients } from '@/app/service/room-client';
+import useUser from '@/hooks/useUser';
 
 type createRoom = {
 	memberSeq: number | undefined;
@@ -20,7 +21,7 @@ type createRoom = {
 };
 export default function CreateRoomPage() {
 	const queryClient = useQueryClient();
-	const { mutate: createMusicRoomMutate } = useMutation(roomClients.createMusicRoom, {
+	const { mutate: createMusicRoomMutate, isLoading } = useMutation(roomClients.createMusicRoom, {
 		onSuccess: () => {
 			queryClient.invalidateQueries(['rooms']);
 		},
@@ -33,10 +34,20 @@ export default function CreateRoomPage() {
 	const onMoveToFocus = (focus: React.RefObject<HTMLDivElement>) => {
 		focus.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 	};
+	// 유저 정보
+	const user = useUser();
+	const userSeq = user.data?.memberSeq;
+	useEffect(() => {
+		if (!user.isLoading) {
+			// 여기에서 필요한 추가 동작 수행 가능
+		}
+	}, [user.isLoading]);
+	if (isLoading) {
+		return <p>Loading...</p>;
+	}
 	// 뮤직 방 생성 폼 데이터
 	const [data, setData] = useState<createRoom>({
-		// user 정보 받아오는 api 완성 시 수정, 일단 정적 데이터
-		memberSeq: 1,
+		memberSeq: userSeq,
 		roomName: '',
 		category: '',
 		accessAuth: '',
@@ -47,6 +58,7 @@ export default function CreateRoomPage() {
 	const onAddRoom = async () => {
 		createMusicRoomMutate({ ...data });
 	};
+	console.log(data);
 	return (
 		<>
 			<article ref={focusFirst} className="flex flex-col h-full items-start mb-5 p-[2rem]">

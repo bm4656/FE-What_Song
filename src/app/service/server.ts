@@ -2,7 +2,7 @@ import axios from 'axios';
 import { cookies } from 'next/headers';
 
 const server = axios.create({
-	baseURL: 'https://bba5-106-101-130-147.ngrok-free.app/',
+	baseURL: 'https://d50e-114-205-30-236.ngrok-free.app/',
 	withCredentials: true,
 	headers: {
 		'Access-Control-Allow-Credentials': true,
