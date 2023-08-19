@@ -58,7 +58,6 @@ export default function CreateRoomPage() {
 	const onAddRoom = async () => {
 		createMusicRoomMutate({ ...data });
 	};
-	console.log(data);
 	return (
 		<>
 			<article ref={focusFirst} className="flex flex-col h-full items-start mb-5 p-[2rem]">

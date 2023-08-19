@@ -30,6 +30,10 @@ export const roomClients = {
 		const res = await client.get(`/api/v1/check/have?memberSeq=${userId}`);
 		return res.data;
 	},
+	deleteRoom: async (roomId: number) => {
+		const res = await client.delete('/api/v1/musicRoom', { data: { roomSeq: roomId } });
+		return res;
+	},
 	registerMusic: async (body: {
 		videoId: string;
 		title: string;
