@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { HiOutlineChevronUp, HiOutlineChevronDown } from 'react-icons/hi';
 import Image from 'next/image';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -37,14 +37,6 @@ export default function CreateRoomPage() {
 	// 유저 정보
 	const user = useUser();
 	const userSeq = user.data?.memberSeq;
-	useEffect(() => {
-		if (!user.isLoading) {
-			// 여기에서 필요한 추가 동작 수행 가능
-		}
-	}, [user.isLoading]);
-	if (isLoading) {
-		return <p>Loading...</p>;
-	}
 	// 뮤직 방 생성 폼 데이터
 	const [data, setData] = useState<createRoom>({
 		memberSeq: userSeq,
