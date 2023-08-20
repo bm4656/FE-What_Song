@@ -16,7 +16,7 @@ type Props = {
 
 export default function MusicBars({ list, isList, roomId }: Props) {
 	const handleAdd = (music: YoutubeType) => {
-		roomClients.resisterMusic({ ...music, roomSeq: Number(roomId) });
+		roomClients.registerMusic({ ...music, roomSeq: Number(roomId) });
 		alert('뮤직이 플레이리스트에 추가되었습니다!');
 	};
 
