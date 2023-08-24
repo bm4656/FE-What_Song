@@ -3,6 +3,7 @@ import Jotai from '../state/Jotai';
 import ReactQuery from '../state/ReactQuery';
 import './styles/globals.css';
 import './styles/reset.css';
+import './styles/progressbar.css';
 
 export const metadata = {
 	title: 'What Song',
