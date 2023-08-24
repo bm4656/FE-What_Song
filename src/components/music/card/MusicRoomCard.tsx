@@ -1,12 +1,13 @@
 import Image from 'next/image';
 import { BsPlayFill } from 'react-icons/bs';
 import { AiFillEye } from 'react-icons/ai';
-import { CgDetailsMore } from 'react-icons/cg';
 import Link from 'next/link';
 import { Room } from '@/app/service/room';
+import MusicDeleteModal from '../MusicDeleteModal';
 
 type Props = {
 	musicRoom: Room;
+	isHostCard?: boolean;
 };
 
 export default function MusicRoomCard({
@@ -14,6 +15,7 @@ export default function MusicRoomCard({
 		extraInfo: { hostName, view },
 		have: { roomName, musicRoomSeq },
 	},
+	isHostCard,
 }: Props) {
 	return (
 		<article className="m-4 rounded-[40px] shadow-md shadow-zinc-700 overflow-hidden relative w-[30rem] h-[30rem] hover:scale-95">
@@ -35,12 +37,8 @@ export default function MusicRoomCard({
 					<AiFillEye className="w-8 h-8" />
 					<p className="text-xl font-semibold mt-0.5">{view}</p>
 				</span>
-				{/* {isOwner && (
-					<button className="absolute top-4 right-9">
-						<CgDetailsMore className="w-10 h-10 text-zinc-100" />
-					</button>
-				)} */}
 			</Link>
+			{isHostCard && <MusicDeleteModal musicRoomSeq={musicRoomSeq} />}
 		</article>
 	);
 }

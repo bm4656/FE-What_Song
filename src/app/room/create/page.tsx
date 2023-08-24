@@ -3,16 +3,15 @@
 import { useRef, useState } from 'react';
 import { HiOutlineChevronUp, HiOutlineChevronDown } from 'react-icons/hi';
 import Image from 'next/image';
-import { useAtomValue } from 'jotai';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Button from '@/components/button/Button';
 import CategoryGrid from '@/components/music/CategoryGrid';
 import TitleHeader from '@/components/TitleHeader';
 import MusicRecord from '@/components/music/streaming/MusicRecord';
 import PageHeaderContent from '@/components/PageHeaderContent';
 import InputBar from '@/components/bar/InputBar';
-import { UserInfoAtom } from '@/state/store/login';
 import { roomClients } from '@/app/service/room-client';
+import useUser from '@/hooks/useUser';
 
 type createRoom = {
 	memberSeq: number | undefined;
@@ -21,10 +20,10 @@ type createRoom = {
 	accessAuth: string;
 };
 export default function CreateRoomPage() {
-	const userInfo = useAtomValue(UserInfoAtom);
-	const { mutate: createMusicRoomMutate } = useMutation(roomClients.createMusicRoom, {
-		onSuccess: (res) => {
-			console.log(res);
+	const queryClient = useQueryClient();
+	const { mutate: createMusicRoomMutate, isLoading } = useMutation(roomClients.createMusicRoom, {
+		onSuccess: () => {
+			queryClient.invalidateQueries(['rooms']);
 		},
 		onError: (error) => console.log(error),
 	});
@@ -35,9 +34,12 @@ export default function CreateRoomPage() {
 	const onMoveToFocus = (focus: React.RefObject<HTMLDivElement>) => {
 		focus.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 	};
+	// 유저 정보
+	const user = useUser();
+	const userSeq = user.data?.memberSeq;
 	// 뮤직 방 생성 폼 데이터
 	const [data, setData] = useState<createRoom>({
-		memberSeq: 3,
+		memberSeq: userSeq,
 		roomName: '',
 		category: '',
 		accessAuth: '',
@@ -46,12 +48,8 @@ export default function CreateRoomPage() {
 		setData((prev) => ({ ...prev, accessAuth: e.target.value }));
 	};
 	const onAddRoom = async () => {
-		console.log(data);
-		if (userInfo?.memberSeq) {
-			createMusicRoomMutate({ ...data, memberSeq: userInfo.memberSeq });
-		} else createMusicRoomMutate({ ...data });
+		createMusicRoomMutate({ ...data });
 	};
-
 	return (
 		<>
 			<article ref={focusFirst} className="flex flex-col h-full items-start mb-5 p-[2rem]">
