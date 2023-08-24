@@ -1,11 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubePlayer } from 'react-youtube';
 import axios from 'axios';
+import SockJS from 'sockjs-client';
+import { CompatClient, Stomp } from '@stomp/stompjs';
 import { opts } from '@/constants/iframe';
 import { currentMusicInfo } from '@/utils/iframe';
-
 // MEMO 서버에게 썸네일, 영상 길이 받아오기
 
 export default function IFramePage() {
@@ -16,67 +17,100 @@ export default function IFramePage() {
 	const [playTime, setPlayTime] = useState<string>('0:00');
 	const [progress, setProgress] = useState<number>(0);
 	const [intervalId, setIntervalId] = useState<undefined | NodeJS.Timer>(undefined);
+	const client = useRef<CompatClient>();
 
-	const updateProgressBar = () => {
-		const { progressState, currentPlayTime } = currentMusicInfo(player);
-		setProgress(progressState);
-		setPlayTime(currentPlayTime);
-	};
-
-	const handleProgressBarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-		const jump = Number(event.target.value);
-		const { currentPlayTime } = currentMusicInfo(player, jump);
-		setProgress(jump);
-		setPlayTime(currentPlayTime);
-	};
-
-	const handleMouseUp = () => {
-		const duration = player.getDuration();
-		const seekTime = (duration * progress) / 100;
-		// TODO 점프 후 서버에게 시간 데이터 보내기
-		player.seekTo(seekTime);
-	};
-
-	const musicChange = (music: string) => {
-		clearInterval(intervalId);
-		setIntervalId(undefined);
-		setPlaying(music);
-	};
-
-	const onReady = (event: YouTubePlayer) => {
-		setPlayer(event.target);
-		event.target.playVideo();
-	};
-
-	const onPlay = () => {
-		if (intervalId === undefined) {
-			const newIntervalId = setInterval(updateProgressBar, 1000);
-			setIntervalId(newIntervalId);
+	const wsConnectSubscribe = () => {
+		client.current = Stomp.over(() => {
+			const sock = new SockJS('https://cecd-114-205-30-236.ngrok-free.app/ws-stomp');
+			return sock;
+		});
+		try {
+			client.current.connect(
+				{
+					header: {
+						'ngrok-skip-browser-warning': '69420',
+					},
+				},
+				() => {
+					client.current!.subscribe(
+						`/queue/test`,
+						(data) => {
+							const newMessage = JSON.parse(data.body);
+							console.log(newMessage);
+						},
+						{}
+					);
+					client.current!.send(`/app/test`, {}, JSON.stringify({}));
+				}
+			);
+		} catch (e) {
+			console.log(e);
 		}
 	};
 
-	const onPause = () => {
-		clearInterval(intervalId);
-		setIntervalId(undefined);
-	};
-
-	const onEnd = () => {
-		let nextIndex = playList.findIndex((item) => item === playing) + 1;
-		if (playList.length === nextIndex) nextIndex = 0;
-		clearInterval(intervalId);
-		setIntervalId(undefined);
-		setPlaying(playList[nextIndex]);
-	};
-
 	useEffect(() => {
-		return () => {
-			clearInterval(intervalId);
-		};
+		wsConnectSubscribe();
 	}, []);
+	// const updateProgressBar = () => {
+	// 	const { progressState, currentPlayTime } = currentMusicInfo(player);
+	// 	setProgress(progressState);
+	// 	setPlayTime(currentPlayTime);
+	// };
+
+	// const handleProgressBarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+	// 	const jump = Number(event.target.value);
+	// 	const { currentPlayTime } = currentMusicInfo(player, jump);
+	// 	setProgress(jump);
+	// 	setPlayTime(currentPlayTime);
+	// };
+
+	// const handleMouseUp = () => {
+	// 	const duration = player.getDuration();
+	// 	const seekTime = (duration * progress) / 100;
+	// 	// TODO 점프 후 서버에게 시간 데이터 보내기
+	// 	player.seekTo(seekTime);
+	// };
+
+	// const musicChange = (music: string) => {
+	// 	clearInterval(intervalId);
+	// 	setIntervalId(undefined);
+	// 	setPlaying(music);
+	// };
+
+	// const onReady = (event: YouTubePlayer) => {
+	// 	setPlayer(event.target);
+	// 	event.target.playVideo();
+	// };
+
+	// const onPlay = () => {
+	// 	if (intervalId === undefined) {
+	// 		const newIntervalId = setInterval(updateProgressBar, 1000);
+	// 		setIntervalId(newIntervalId);
+	// 	}
+	// };
+
+	// const onPause = () => {
+	// 	clearInterval(intervalId);
+	// 	setIntervalId(undefined);
+	// };
+
+	// const onEnd = () => {
+	// 	let nextIndex = playList.findIndex((item) => item === playing) + 1;
+	// 	if (playList.length === nextIndex) nextIndex = 0;
+	// 	clearInterval(intervalId);
+	// 	setIntervalId(undefined);
+	// 	setPlaying(playList[nextIndex]);
+	// };
+
+	// useEffect(() => {
+	// 	return () => {
+	// 		clearInterval(intervalId);
+	// 	};
+	// }, []);
 
 	return (
 		<div>
-			<YouTube
+			{/* <YouTube
 				videoId={playing}
 				className="opacity-0 absolute"
 				opts={opts}
@@ -124,7 +158,7 @@ export default function IFramePage() {
 				}}
 			>
 				테스트 버튼
-			</div>
+			</div> */}
 		</div>
 	);
 }
