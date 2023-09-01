@@ -5,17 +5,37 @@ import MusicBars from './music/MusicBars';
 
 export default function RequestModal() {
 	const [modalOpen, setModalOpen] = useAtom(modalAtom);
+	const data = [
+		{
+			videoId: '11cta61wi0g',
+			title: 'NewJeans (뉴진스) &#39;Hype Boy&#39; Official MV (Performance ver.1)',
+			channelName: 'HYBE LABELS',
+			thumbnailUrl: 'https://i.ytimg.com/vi/11cta61wi0g/hqdefault.jpg',
+		},
+		{
+			videoId: '11cta61wi0g',
+			title: 'NewJeans (뉴진스) &#39;Hype Boy&#39; Official MV (Performance ver.1)',
+			channelName: 'HYBE LABELS',
+			thumbnailUrl: 'https://i.ytimg.com/vi/11cta61wi0g/hqdefault.jpg',
+		},
+	];
+	const playList = data.filter((item) => {
+		const str = /&#39;/gi;
+		return (item.title = item.title.replace(str, "'"));
+	});
+	const id = 1;
 
 	if (!modalOpen) return null;
 	return (
-		<section className="bg-red-200 w-full h-[60%]">
-			<div className="flex justify-between p-2">
-				<h1>뮤직 요청하기</h1>
-				<button onClick={() => setModalOpen(false)}>닫기</button>
-			</div>
-			<SearchBar placeholder="추가하고 싶은 뮤직을 입력하세요..." />
-			<p className="text-2xl font-bold p-1">플레이리스트</p>
-			{/* <MusicBars list={playList} isList roomId={id} /> */}
-		</section>
+		<div className="absolute w-full max-w-[50rem] inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
+			<section className="absolute bottom-0 bg-white w-full h-[60%] p-4 rounded-t-[40px] shadow-lg ">
+				<div className="flex justify-center">
+					<div className="bg-slate-200 w-10 h-1 mb-5" onClick={() => setModalOpen(false)} />
+				</div>
+				<SearchBar placeholder="추가하고 싶은 뮤직을 입력하세요..." />
+				<p className="text-2xl font-bold p-2 ml-12">플레이리스트</p>
+				<MusicBars list={playList} roomId={id} />
+			</section>
+		</div>
 	);
 }

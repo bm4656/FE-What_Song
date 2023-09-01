@@ -26,8 +26,8 @@ export default function SearchBar({ placeholder }: Props) {
 		setKeyword('');
 	};
 	return (
-		<>
-			<div className="bg-input w-full h-16 rounded-xl flex justify-start gap-5 items-center mb-5">
+		<div className="flex justify-center">
+			<div className="bg-input w-[85%] h-16 rounded-xl flex justify-start gap-5 items-center mb-5">
 				<AiOutlineSearch className="text-3xl ml-5" />
 				<form onSubmit={handleSubmit}>
 					<input
@@ -35,7 +35,7 @@ export default function SearchBar({ placeholder }: Props) {
 						placeholder={placeholder}
 						value={keyword}
 						onChange={handleChange}
-						className="text-[1.4rem] bg-input w-[38rem]"
+						className="text-[1.4rem] bg-input w-[35rem]"
 					/>
 				</form>
 				{open && (
@@ -54,6 +54,6 @@ export default function SearchBar({ placeholder }: Props) {
 					<MusicBars list={searchList} isList={false} roomId={param.id} />
 				</div>
 			)}
-		</>
+		</div>
 	);
 }

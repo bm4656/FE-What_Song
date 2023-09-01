@@ -10,11 +10,11 @@ type List = {
 };
 type Props = {
 	list: List[];
-	isList: boolean;
+	isList?: boolean;
 	roomId: string | number;
 };
 
-export default function MusicBars({ list, isList, roomId }: Props) {
+export default function MusicBars({ list, isList = false, roomId }: Props) {
 	const handleAdd = (music: YoutubeType) => {
 		roomClients.registerMusic({ ...music, roomSeq: Number(roomId) });
 		alert('뮤직이 플레이리스트에 추가되었습니다!');
