@@ -1,10 +1,15 @@
+'use client';
+
 import { useAtom } from 'jotai';
+import { useState } from 'react';
 import { modalAtom } from '@/state/store/modal';
 import SearchBar from './bar/SearchBar';
 import MusicBars from './music/MusicBars';
+import { Video } from '@/types/video';
 
 export default function RequestModal() {
 	const [modalOpen, setModalOpen] = useAtom(modalAtom);
+	const [searchList, setSearchList] = useState<Video[]>([]);
 	const data = [
 		{
 			videoId: '11cta61wi0g',
@@ -24,7 +29,9 @@ export default function RequestModal() {
 		return (item.title = item.title.replace(str, "'"));
 	});
 	const id = 1;
-
+	const searchFn = (list: Video[]) => {
+		setSearchList(list);
+	};
 	if (!modalOpen) return null;
 	return (
 		<div className="absolute w-full max-w-[50rem] inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20">
@@ -32,9 +39,11 @@ export default function RequestModal() {
 				<div className="flex justify-center">
 					<div className="bg-slate-200 w-10 h-1 mb-5" onClick={() => setModalOpen(false)} />
 				</div>
-				<SearchBar placeholder="추가하고 싶은 뮤직을 입력하세요..." />
+				<SearchBar placeholder="추가하고 싶은 뮤직을 입력하세요..." searchFn={searchFn} />
 				<p className="text-2xl font-bold p-2 ml-12">플레이리스트</p>
 				<MusicBars list={playList} roomId={id} />
+
+				<MusicBars list={searchList} roomId={id} />
 			</section>
 		</div>
 	);
