@@ -5,6 +5,7 @@ export type RegisterType = {
 	email: string;
 	nickname: string;
 	oauthId: string;
+	socialType?: 'KAKAO';
 };
 
 export const loginApis = {
