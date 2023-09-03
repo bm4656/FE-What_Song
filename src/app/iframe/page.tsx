@@ -21,7 +21,7 @@ export default function IFramePage() {
 
 	const wsConnectSubscribe = () => {
 		client.current = Stomp.over(() => {
-			const sock = new SockJS('https://cecd-114-205-30-236.ngrok-free.app/ws-stomp');
+			const sock = new SockJS('https://4505-114-205-30-236.ngrok-free.app/ws-stomp');
 			return sock;
 		});
 		try {
