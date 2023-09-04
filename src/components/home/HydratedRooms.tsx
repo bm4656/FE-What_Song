@@ -14,10 +14,5 @@ export default async function HydratedRooms({ type }: Props) {
 	const queryClient = getQueryClient();
 	await queryClient.prefetchQuery(['rooms'], roomApis.getAllRooms);
 	const dehydratedState = dehydrate(queryClient);
-	return (
-		<HydrateOnClient state={dehydratedState}>
-			{type === 'all' && <Rooms />}
-			{type === 'have' && <UserRooms />}
-		</HydrateOnClient>
-	);
+	return <HydrateOnClient state={dehydratedState}>{type === 'all' && <Rooms />}</HydrateOnClient>;
 }
