@@ -48,7 +48,12 @@ export default function NicknameInputPage() {
 	});
 
 	const signUp = async () => {
-		registerMutate({ email: registerInfoData.kakao_account.email, nickname, oauthId: registerInfoData.id });
+		registerMutate({
+			email: registerInfoData.kakao_account.email,
+			nickname,
+			oauthId: registerInfoData.id,
+			socialType: 'KAKAO',
+		});
 	};
 
 	return (

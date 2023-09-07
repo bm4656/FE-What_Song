@@ -7,7 +7,8 @@ import useUser from '@/hooks/useUser';
 
 export default function UserRooms() {
 	const user = useUser();
-	const memberSeq = user.data?.memberSeq;
+	// 토큰 이슈로 임시 1번 처리
+	const memberSeq = user.data?.memberSeq || '1';
 
 	const { data, isLoading } = useQuery(
 		['rooms', memberSeq],
@@ -16,12 +17,6 @@ export default function UserRooms() {
 		},
 		{ staleTime: 1000 * 60 * 3 }
 	);
-
-	// useEffect(() => {
-	// 	if (!user.isLoading) {
-	// 		// 여기에서 필요한 추가 동작 수행 가능
-	// 	}
-	// }, [user.isLoading]);
 
 	if (isLoading) {
 		return <p>Loading...</p>;

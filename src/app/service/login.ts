@@ -5,6 +5,7 @@ export type RegisterType = {
 	email: string;
 	nickname: string;
 	oauthId: string;
+	socialType?: 'KAKAO';
 };
 
 export const loginApis = {
@@ -33,15 +34,14 @@ export const loginApis = {
 	},
 	getUserInfo: async () => {
 		// const res = await client.get('/api/v1/members/me');
-		const res = await client.get('/member/info/refresh', {
+		const res = await client.get('/user/member/info/refresh', {
 			baseURL: '/server/',
 			withCredentials: true,
 			headers: {
 				'Access-Control-Allow-Credentials': true,
 				'ngrok-skip-browser-warning': '69420',
 				// Authorization: `Bearer ${getCookie('accessToken')}`,
-				// // refreshToken: getCookie('refreshToken'),
-				refreshToken: 'abcd7',
+				refreshToken: getCookie('refreshToken'),
 			},
 		});
 		console.log(res);
