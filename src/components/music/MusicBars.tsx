@@ -9,7 +9,7 @@ type List = {
 	thumbnailUrl: string;
 };
 type Props = {
-	list: List[];
+	list: List[] | undefined;
 	isRequest?: boolean;
 	roomId: string | number;
 };
