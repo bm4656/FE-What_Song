@@ -1,5 +1,8 @@
+import { useAtom } from 'jotai';
 import IconBox from '../music/streaming/IconBox';
 import { Icons } from '@/constants/ReactIcons';
+import RequestModal from '../RequestModal';
+import { BottomModalAtom } from '@/state/store/bottomModal';
 
 const icons = [
 	{ name: '참여자', icon: Icons.users, clickFn: '' },
@@ -9,6 +12,8 @@ const icons = [
 ];
 
 export default function StreamingBar({ isHost, roomId }: { isHost: boolean; roomId: number }) {
+	const [modalOpen, setModalOpen] = useAtom(BottomModalAtom);
+
 	return (
 		<article className="w-full h-40 flex items-center justify-center gap-5">
 			<ul className="flex gap-10">
@@ -22,7 +27,10 @@ export default function StreamingBar({ isHost, roomId }: { isHost: boolean; room
 					</>
 				) : (
 					<>
-						<li className="bg-primary w-44 h-20 text-white rounded-full flex gap-3 justify-center items-center">
+						<li
+							className="bg-primary w-44 h-20 text-white rounded-full flex gap-3 justify-center items-center cursor-pointer"
+							onClick={() => setModalOpen((prev) => !prev)}
+						>
 							<div className="text-4xl">{Icons.playButton}</div>
 							<span className="text-2xl font-semibold">요청</span>
 						</li>
@@ -35,6 +43,7 @@ export default function StreamingBar({ isHost, roomId }: { isHost: boolean; room
 					</>
 				)}
 			</ul>
+			<RequestModal />
 		</article>
 	);
 }

@@ -11,6 +11,7 @@ import { Video } from '@/types/video';
 type Props = {
 	placeholder: string;
 	searchFn: (searchResults: Video[]) => void;
+	removeFn: () => void;
 };
 const data = [
 	{
@@ -104,7 +105,7 @@ const data = [
 		thumbnailUrl: 'https://i.ytimg.com/vi/AuEQgxW3LKk/hqdefault.jpg',
 	},
 ];
-export default function SearchBar({ placeholder, searchFn }: Props) {
+export default function SearchBar({ placeholder, searchFn, removeFn }: Props) {
 	const param = useParams();
 	const router = useRouter();
 	const [keyword, setKeyword] = useState('');
@@ -113,15 +114,22 @@ export default function SearchBar({ placeholder, searchFn }: Props) {
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setKeyword(e.target.value);
 	};
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
-		// youtubeApis.serchKeyword({ keyword }).then((res) => setSearchList(res));
-		setSearchList(data);
-		searchFn(searchList);
-		setOpen(true);
-		setKeyword('');
-	};
 
+	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+
+		try {
+			const res = await youtubeApis.serchKeyword({ keyword }); // 비동기 요청 보내기
+			setSearchList(res); // 검색 결과 업데이트
+			searchFn(res); // searchFn을 호출하여 검색 결과 전달
+			setOpen(true);
+			setKeyword('');
+		} catch (error) {
+			// 오류 처리
+			console.error('검색 요청 중 오류 발생:', error);
+		}
+	};
+	// console.log('서치바', searchList[0]);
 	return (
 		<div className="flex justify-center">
 			<div className="bg-input w-[85%] h-16 rounded-xl flex justify-start gap-5 items-center mb-5">
@@ -132,7 +140,7 @@ export default function SearchBar({ placeholder, searchFn }: Props) {
 						placeholder={placeholder}
 						value={keyword}
 						onChange={handleChange}
-						className="text-[1.4rem] bg-input w-[35rem]"
+						className="text-[1.4rem] bg-input w-[30rem] min-w-full"
 					/>
 				</form>
 				{open && (
@@ -140,17 +148,12 @@ export default function SearchBar({ placeholder, searchFn }: Props) {
 						className="text-3xl absolute right-24 text-fontGray cursor-pointer"
 						onClick={() => {
 							setOpen(false);
-							setSearchList([]);
+							removeFn();
 							router.refresh();
 						}}
 					/>
 				)}
 			</div>
-			{/* {searchList[0] && ( */}
-			{/* <div className="bg-input w-full h-[85%] overflow-y-scroll p-7 rounded-2xl shadow-md">
-				<MusicBars list={searchList} isList={false} roomId={param.id} />
-			</div> */}
-			{/* )} */}
 		</div>
 	);
 }

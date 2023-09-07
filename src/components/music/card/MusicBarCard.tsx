@@ -5,7 +5,7 @@ import { YoutubeType } from '@/app/service/youtube';
 
 type Props = {
 	music: YoutubeType;
-	isList: boolean;
+	isRequest: boolean;
 	onAdd: (music: {
 		videoId: string;
 		title: string;
@@ -15,13 +15,13 @@ type Props = {
 	}) => void;
 	onDelete?: () => void;
 };
-export default function MusicBarCard({ music, isList, onAdd, onDelete }: Props) {
-	const handleAdd = () => {
+export default function MusicBarCard({ music, isRequest, onAdd, onDelete }: Props) {
+	const handleRequest = () => {
 		onAdd({ ...music });
 	};
 	return (
 		<li className="flex w-full items-center justify-center  relative">
-			<button onClick={handleAdd} className="w-[87%] h-28 px-2 flex items-center cursor-pointer">
+			<button className="w-[87%] h-28 px-2 flex items-center cursor-pointer">
 				<div className="absolute w-[6.5rem] h-[6.5rem] p-4">
 					<Image
 						src={music.thumbnailUrl}
@@ -34,8 +34,8 @@ export default function MusicBarCard({ music, isList, onAdd, onDelete }: Props) 
 				<h2 className="absolute left-[11.5rem] top-7 text-3xl font-bold truncate w-[60%]">{music.title}</h2>
 				<p className="absolute left-[11.5rem] top-16 text-xl text-zinc-400 font-semibold">{music.channelName}</p>
 			</button>
-			<button className="absolute right-14 text-3xl hover:scale-110">
-				{isList ? <FaTrashAlt className="text-secondary" /> : <BsMusicNoteList className="text-secondary" />}
+			<button className="absolute right-14 text-3xl hover:scale-110" onClick={handleRequest}>
+				{isRequest ? <FaTrashAlt className="text-secondary" /> : <BsMusicNoteList className="text-secondary" />}
 			</button>
 		</li>
 	);
