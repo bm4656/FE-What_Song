@@ -34,13 +34,13 @@ export const loginApis = {
 	},
 	getUserInfo: async () => {
 		// const res = await client.get('/api/v1/members/me');
-		const res = await client.get('/user/member/info/refresh', {
+		const res = await client.get('/api/v1/members/me ', {
 			baseURL: '/server/',
 			withCredentials: true,
 			headers: {
 				'Access-Control-Allow-Credentials': true,
 				'ngrok-skip-browser-warning': '69420',
-				// Authorization: `Bearer ${getCookie('accessToken')}`,
+				Authorization: `Bearer ${getCookie('accessToken')}`,
 				refreshToken: getCookie('refreshToken'),
 			},
 		});
