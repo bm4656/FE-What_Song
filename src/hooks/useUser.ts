@@ -12,6 +12,7 @@ export default function useUser() {
 			console.log(error);
 		},
 		enabled: Boolean(getCookie('accessToken')) || Boolean(getCookie('refreshToken')),
+		staleTime: 1000 * 6 * 5,
 	});
 	return { data, refetch, isLoading };
 }
