@@ -13,15 +13,6 @@ export const roomApis = {
 		const res = await server.get('/api/v1/healthcheck');
 		return console.log(res);
 	},
-	// createMusicRoom: async (body: {
-	// 	memberSeq: number | undefined;
-	// 	roomName: string;
-	// 	category: string;
-	// 	accessAuth: string;
-	// }) => {
-	// 	const res = await server.post('/api/v1/musicRoom', { ...body });
-	// 	return res;
-	// },
 	getUserRooms: async (memberSeq: number) => {
 		const res = await server.get(`/api/v1/check/have?memberSeq=${memberSeq}`);
 		return res.data;
@@ -30,8 +21,4 @@ export const roomApis = {
 		const res = await server.get('/api/v1/check/all');
 		return res.data;
 	},
-	// getRoomData: async (roomId: number) => {
-	// 	const res = await server.get(`/api/v1/check/room?roomSeq=${roomId}`);
-	// 	return res.data;
-	// },
 };
