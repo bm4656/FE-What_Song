@@ -4,3 +4,10 @@ export type Video = {
 	channelName: string;
 	thumbnailUrl: string;
 };
+
+export type QueueVideo = {
+	recognize: string;
+	reservationId: string;
+	roomSeq: number;
+	selectVideo: Video;
+};

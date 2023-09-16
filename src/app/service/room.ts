@@ -1,12 +1,5 @@
+import { QueueVideo } from '@/types/video';
 import server from './server';
-
-export type Room = {
-	have: { musicRoomSeq: number; roomName: string; roomCode: string; category: string; accessAuth: string };
-	extraInfo: {
-		hostName: string;
-		view: number;
-	};
-};
 
 export const roomApis = {
 	healthCheck: async () => {
@@ -19,6 +12,16 @@ export const roomApis = {
 	},
 	getAllRooms: async () => {
 		const res = await server.get('/api/v1/check/all');
+		return res.data;
+	},
+	getQueueList: async (roomId: number) => {
+		const res = await server.get(`/api/v1/reservation?roomSeq=${roomId}`);
+		const queueList: QueueVideo[] = res.data;
+		const filteredList = queueList.map((item: QueueVideo) => item.selectVideo);
+		return filteredList;
+	},
+	getRoomData: async (roomId: number) => {
+		const res = await server.get(`/api/v1/check/room?roomSeq=${roomId}`);
 		return res.data;
 	},
 };
