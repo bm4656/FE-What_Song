@@ -4,26 +4,30 @@ import React, { useEffect, useRef, useState } from 'react';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import SockJS from 'sockjs-client';
 import { RiCloudFill } from 'react-icons/ri';
-import ChattingBar from '@/components/bar/ChattingBar';
 import { getCookie } from '@/constants/cookie';
+import useUser from '@/hooks/useUser';
 
-type Message = { message: string };
+type Message = {
+	type: 'ENTER' | 'TALK';
+	roomId: string;
+	sender: string;
+	message: string;
+};
 const emoji = ['👏', '💪', '🔥', '❤️', '🤩'];
-const mock = [{ message: 'ㅋㅋㅋㅋ' }, { message: 'good' }, { message: 'wow' }];
 export default function ChattingPage() {
+	// 유저 정보
+	const user = useUser();
+	const nickname = user.data?.nickname;
 	// 불러온 메세지 내역 저장
 	const [messages, setMessages] = useState<Message[]>([]);
 	// 새로 전송할 메세지 상태
 	const [newMessage, setNewMessage] = useState('');
 
-	const mockSubscribe = () => {
-		setMessages(mock);
-	};
 	const client = useRef<CompatClient>();
 
 	const wsConnectSubscribe = () => {
 		client.current = Stomp.over(() => {
-			const sock = new SockJS('https://5a5f-2001-2d8-e2b4-1ed2-4d56-cee3-97d-d6a9.ngrok-free.app/ws-stomp');
+			const sock = new SockJS('https://ec7d-182-210-24-10.ngrok-free.app/ws-stomp');
 			return sock;
 		});
 		try {
@@ -35,7 +39,7 @@ export default function ChattingPage() {
 				() => {
 					client.current!.subscribe(
 						// `/백엔드와 협의한 api주소/{구독하고 싶은 방의 id}`,
-						`/stream/test/post`,
+						`/queue/chat/room/1`,
 						(data) => {
 							const testMessage = JSON.parse(data.body);
 							console.log(testMessage);
@@ -50,23 +54,19 @@ export default function ChattingPage() {
 	};
 	const sendHandler = (e) => {
 		e.preventDefault();
-		// client.current!.send('/백엔드와 협의한 api주소', {}, JSON.stringify(newMessage));
-		// client.current!.send(
-		// 	`/app/post/test`,
-		// 	{
-		// 			'ngrok-skip-browser-warning': '69420',
-		// 			token: `Bearer ${getCookie('accessToken')}`,
-		// 	},
-		// 	JSON.stringify({ message: 'hi' })
-		// );
-		if (newMessage !== '') {
-			setMessages([...messages, { message: newMessage }]);
-			setNewMessage('');
-		}
+		console.log(newMessage);
+		client.current!.send(
+			`/app/chat/message`,
+			{
+				'ngrok-skip-browser-warning': '69420',
+				token: `Bearer ${getCookie('accessToken')}`,
+			},
+			JSON.stringify({ type: 'TALK', roomId: '1', sender: nickname, message: newMessage })
+		);
+		setNewMessage('');
 	};
 	useEffect(() => {
 		wsConnectSubscribe();
-		mockSubscribe();
 	}, []);
 	return (
 		<section>

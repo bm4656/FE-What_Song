@@ -44,7 +44,6 @@ export const loginApis = {
 				refreshToken: getCookie('refreshToken'),
 			},
 		});
-		console.log(res);
 		return res;
 	},
 	apiTest: async () => {
