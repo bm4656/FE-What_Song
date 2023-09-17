@@ -2,21 +2,23 @@ import Image from 'next/image';
 import { BsPlayFill } from 'react-icons/bs';
 import { AiFillEye } from 'react-icons/ai';
 import Link from 'next/link';
-import { Room } from '@/app/service/room';
 import MusicDeleteModal from '../MusicDeleteModal';
+import { Room } from '@/types/room';
+import useUser from '@/hooks/useUser';
 
 type Props = {
 	musicRoom: Room;
-	isHostCard?: boolean;
 };
 
 export default function MusicRoomCard({
 	musicRoom: {
-		extraInfo: { hostName, view },
+		extraInfo: { hostName, view, hostEmail },
 		have: { roomName, musicRoomSeq },
 	},
-	isHostCard,
 }: Props) {
+	const user = useUser();
+	const userEmail = user.data?.email;
+	const isHostCard = userEmail === hostEmail;
 	return (
 		<article className="m-4 rounded-[40px] shadow-md shadow-zinc-700 overflow-hidden relative w-[30rem] h-[30rem] hover:scale-95">
 			<Link href={`room/${musicRoomSeq}`}>

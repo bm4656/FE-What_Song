@@ -1,23 +1,17 @@
 import Image from 'next/image';
 import { FaTrashAlt } from 'react-icons/fa';
 import { BsMusicNoteList } from 'react-icons/bs';
-import { YoutubeType } from '@/app/service/youtube';
+import { ResVideo, Video } from '@/types/video';
 
 type Props = {
-	music: YoutubeType;
-	isRequest: boolean;
-	onAdd: (music: {
-		videoId: string;
-		title: string;
-		channelName: string;
-		thumbnailUrl: string;
-		roomSeq: number;
-	}) => void;
+	music: ResVideo & { roomSeq: number };
+	barType: string;
+	onAdd: (music: ResVideo, addType: string) => void;
 	onDelete?: () => void;
 };
-export default function MusicBarCard({ music, isRequest, onAdd, onDelete }: Props) {
+export default function MusicBarCard({ music, barType, onAdd, onDelete }: Props) {
 	const handleRequest = () => {
-		onAdd({ ...music });
+		onAdd({ ...music }, barType);
 	};
 	return (
 		<li className="flex w-full items-center justify-center  relative">
@@ -35,7 +29,12 @@ export default function MusicBarCard({ music, isRequest, onAdd, onDelete }: Prop
 				<p className="absolute left-[11.5rem] top-16 text-xl text-zinc-400 font-semibold">{music.channelName}</p>
 			</button>
 			<button className="absolute right-14 text-3xl hover:scale-110" onClick={handleRequest}>
-				{isRequest ? <FaTrashAlt className="text-secondary" /> : <BsMusicNoteList className="text-secondary" />}
+				{barType === 'host' ? (
+					<BsMusicNoteList className="text-secondary" />
+				) : (
+					<BsMusicNoteList className="text-secondary" />
+				)}
+				{/* {barType === 'modify' && <FaTrashAlt className="text-secondary" />} */}
 			</button>
 		</li>
 	);

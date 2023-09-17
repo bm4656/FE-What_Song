@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { BsPlayFill } from 'react-icons/bs';
 import { AiFillEye } from 'react-icons/ai';
 import Link from 'next/link';
-import { Room } from '@/app/service/room';
+import { Room } from '@/types/room';
 
 type Props = {
 	musicRoom: Room;

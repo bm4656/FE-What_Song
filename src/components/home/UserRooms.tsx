@@ -7,8 +7,7 @@ import useUser from '@/hooks/useUser';
 
 export default function UserRooms() {
 	const user = useUser();
-	// 토큰 이슈로 임시 1번 처리
-	const memberSeq = user.data?.memberSeq || '1';
+	const memberSeq = user.data?.memberSeq;
 
 	const { data, isLoading } = useQuery(
 		['rooms', memberSeq],
@@ -24,7 +23,7 @@ export default function UserRooms() {
 
 	return (
 		<>
-			<MusicCarousel rooms={data} isHost />
+			<MusicCarousel rooms={data} />
 		</>
 	);
 }

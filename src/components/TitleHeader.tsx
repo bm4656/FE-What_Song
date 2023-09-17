@@ -6,7 +6,7 @@ type Props = {
 	title: string;
 	notification?: boolean;
 	previous?: boolean;
-	view?: number;
+	view?: string;
 	isWrap?: boolean;
 };
 export default function TitleHeader({ title, notification, previous, view, isWrap }: Props) {
