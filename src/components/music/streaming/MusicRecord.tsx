@@ -11,8 +11,8 @@ type Props = {
 		channelName: string;
 		thumbnailUrl: string;
 	};
-	playStatus: string;
-	player: YouTubePlayer;
+	playStatus?: string;
+	player?: YouTubePlayer;
 };
 
 export default function MusicRecord({ image, isHost, music, playStatus, player }: Props) {
