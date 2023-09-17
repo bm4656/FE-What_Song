@@ -50,11 +50,12 @@ export default function CreateRoomPage() {
 	const onAddRoom = async () => {
 		createMusicRoomMutate({ ...data });
 	};
+	// console.log(data);
 	return (
 		<>
 			<article ref={focusFirst} className="flex flex-col h-full items-start mb-5 p-[2rem]">
 				<TitleHeader title="뮤직방 생성" previous isWrap />
-				<MusicRecord image="/assets/sample.png" />
+				<MusicRecord image="/assets/cover.jpeg" />
 				<PageHeaderContent
 					content="당신의 플레이리스트의
 					<br /> 이름을 정해주세요!🔥"
@@ -72,22 +73,17 @@ export default function CreateRoomPage() {
 				<Button content="다음" clickFn={() => onMoveToFocus(focusSecond)} />
 			</article>
 			<article ref={focusSecond} className="flex flex-col relative h-full items-start my-32 p-[2rem]">
-				<TitleHeader title="뮤직방 생성" />
+				<TitleHeader title="뮤직방 생성" isWrap />
+				<div className="w-80 h-80 relative rounded-[4rem] shadow-2xl shadow-slate-700 overflow-hidden self-center m-4">
+					<Image src="/assets/cat-music.jpeg" fill alt="이미지" />
+				</div>
 				<PageHeaderContent
 					content="당신의 플레이리스트의
 					<br /> 카테고리를 알려주세요!🎧"
 					mt="mt-10"
 					mb="mb-5"
 				/>
-				<InputBar
-					value={data.category}
-					placeholder="카테고리를 알려주세요!"
-					styles="bg-input mb-[10%]"
-					onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-						setData((prev) => ({ ...prev, category: e.target.value }));
-					}}
-				/>
-				<CategoryGrid />
+				<CategoryGrid clickFn={(item) => setData((prev) => ({ ...prev, category: item }))} />
 				<HiOutlineChevronUp
 					className="absolute bottom-32 text-4xl cursor-pointer flex self-center"
 					onClick={() => onMoveToFocus(focusFirst)}
@@ -97,7 +93,7 @@ export default function CreateRoomPage() {
 			<article ref={focusLast} className="flex flex-col relative h-full items-start justify-between p-[2rem]">
 				<TitleHeader title="뮤직방 생성" isWrap />
 				<div className="w-80 h-80 relative rounded-[4rem] shadow-2xl shadow-slate-700 overflow-hidden self-center">
-					<Image src="/assets/sample.png" fill alt="이미지" />
+					<Image src="/assets/cat-music.jpeg" fill alt="이미지" />
 				</div>
 				<article className="flex flex-col w-full  py-32">
 					<PageHeaderContent content="공개 여부를 결정해주세요! ✍️ " mb="mb-4" />
