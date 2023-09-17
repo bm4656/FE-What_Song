@@ -19,7 +19,7 @@ export default function CompletePage({ nickname }: Props) {
 
 	const { mutate: logoutMutate } = useMutation(loginApis.Logout, {
 		onSuccess: (res) => {
-			if (res. === 200) {
+			if (res.status === 200) {
 				router.push(SERVICE_URL.login);
 			}
 		},
