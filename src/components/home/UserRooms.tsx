@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { roomClients } from '@/app/service/room-client';
 import MusicCarousel from '../music/MusicCarousel';
 import useUser from '@/hooks/useUser';
+import MusicCardNone from '../skeleton/MusicCardNone';
 
 export default function UserRooms() {
 	const user = useUser();
@@ -20,10 +21,5 @@ export default function UserRooms() {
 	if (isLoading) {
 		return <p>Loading...</p>;
 	}
-
-	return (
-		<>
-			<MusicCarousel rooms={data} />
-		</>
-	);
+	return <>{data[0] ? <MusicCarousel rooms={data} /> : <MusicCardNone type="user" />}</>;
 }

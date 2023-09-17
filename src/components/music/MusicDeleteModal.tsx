@@ -18,6 +18,7 @@ export default function MusicDeleteModal({ musicRoomSeq }: { musicRoomSeq: numbe
 	});
 	const onDeleteRoom = async () => {
 		deleteMusicRoomMutate(musicRoomSeq);
+		setModalOpen((prev) => !prev);
 	};
 	return (
 		<>
