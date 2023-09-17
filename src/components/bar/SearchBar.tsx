@@ -5,7 +5,6 @@ import { useParams, useRouter } from 'next/navigation';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { youtubeApis } from '@/app/service/youtube';
-import MusicBars from '../music/MusicBars';
 import { ResVideo, Video } from '@/types/video';
 
 type Props = {

@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import { BsPlayFill } from 'react-icons/bs';
+import { BsPauseFill, BsPlayFill } from 'react-icons/bs';
+import { YouTubePlayer } from 'react-youtube';
 
 type Props = {
 	image: string;
@@ -10,14 +11,20 @@ type Props = {
 		channelName: string;
 		thumbnailUrl: string;
 	};
+	playStatus: string;
+	player: YouTubePlayer;
 };
 
-export default function MusicRecord({ image, isHost, music }: Props) {
+export default function MusicRecord({ image, isHost, music, playStatus, player }: Props) {
 	return (
 		<article className="relative w-full h-[38rem] flex justify-center items-center">
 			{isHost && (
 				<span className="bg-white w-16 h-16 rounded-full flex items-center justify-center z-20 scale-105">
-					<BsPlayFill className="w-14 h-14 p-0.5 ml-1" />
+					{playStatus === 'PLAYING' ? (
+						<BsPauseFill onClick={() => player.pauseVideo()} className="cursor-pointer w-14 h-14 p-0.5 ml" />
+					) : (
+						<BsPlayFill onClick={() => player.playVideo()} className="cursor-pointer last:w-14 h-14 p-0.5 ml-1" />
+					)}
 				</span>
 			)}
 			<div className="bg-zinc-900 absolute right-44 max-[490px]:right-24 w-80 h-80 rounded-full z-0" />

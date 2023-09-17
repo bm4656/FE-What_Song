@@ -10,7 +10,17 @@ import { ResVideo } from '@/types/video';
 import { BottomModalAtom } from '@/state/store/bottomModal';
 import { roomClients } from '@/app/service/room-client';
 
-export default function RequestModal({ modalType }: { modalType: string }) {
+export default function RequestModal({
+	modalType,
+	client,
+	roomCode,
+	memberList,
+}: {
+	modalType: string;
+	client: any;
+	roomCode: string;
+	memberList: [];
+}) {
 	const params = useParams();
 	const roomId = params.id;
 	const [modalOpen, setModalOpen] = useAtom(BottomModalAtom);
@@ -42,9 +52,9 @@ export default function RequestModal({ modalType }: { modalType: string }) {
 				<SearchBar placeholder="추가하고 싶은 뮤직을 입력하세요..." searchFn={searchFn} removeFn={removeFn} />
 				<p className="text-2xl font-bold p-2 ml-12">플레이리스트</p>
 				{searchList[0] ? (
-					<MusicBars list={searchList} roomId={roomId} barType={modalType} />
+					<MusicBars list={searchList} roomId={roomId} barType={modalType} client={client} roomCode={roomCode} />
 				) : (
-					<MusicBars list={playList} roomId={roomId} barType={modalType} />
+					<MusicBars list={playList} roomId={roomId} barType={modalType} client={client} roomCode={roomCode} />
 				)}
 			</section>
 			{modalType === 'host' && (
@@ -54,7 +64,20 @@ export default function RequestModal({ modalType }: { modalType: string }) {
 						<div className="bg-slate-200 w-10 h-1 mb-5 cursor-pointer" onClick={() => setModalOpen(false)} />
 					</div>
 					<p className="text-2xl font-bold p-2 ml-12">플레이리스트 대기열</p>
-					<MusicBars list={queueList} roomId={roomId} barType={modalType} />
+					<MusicBars list={queueList} roomId={roomId} barType={modalType} client={client} roomCode={roomCode} />
+				</section>
+			)}
+			{modalType === 'users' && (
+				<section className="absolute bottom-0 bg-white w-full h-[60%] p-4 rounded-t-[40px] shadow-lg ">
+					<div className="flex justify-center">
+						{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
+						<div className="bg-slate-200 w-10 h-1 mb-5 cursor-pointer" onClick={() => setModalOpen(false)} />
+					</div>
+					{memberList?.map((member: { nickname: string }) => (
+						<div className="p-2" key={member.nickname}>
+							<span className="text-[20px]">{member.nickname}</span>
+						</div>
+					))}
 				</section>
 			)}
 			{modalType === 'modify' && (
@@ -63,8 +86,13 @@ export default function RequestModal({ modalType }: { modalType: string }) {
 						{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
 						<div className="bg-slate-200 w-10 h-1 mb-5 cursor-pointer" onClick={() => setModalOpen(false)} />
 					</div>
-					<p className="text-2xl font-bold p-2 ml-12">플레이리스트 수정</p>
-					<MusicBars list={playList} roomId={roomId} barType={modalType} />
+					<SearchBar placeholder="추가하고 싶은 뮤직을 입력하세요..." searchFn={searchFn} removeFn={removeFn} />
+					<p className="text-2xl font-bold p-2 ml-12">플레이리스트 목록</p>
+					{searchList[0] ? (
+						<MusicBars list={searchList} roomId={roomId} barType={modalType} client={client} roomCode={roomCode} />
+					) : (
+						<MusicBars list={playList} roomId={roomId} barType={modalType} client={client} roomCode={roomCode} />
+					)}
 				</section>
 			)}
 		</div>

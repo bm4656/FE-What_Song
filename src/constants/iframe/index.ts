@@ -2,7 +2,7 @@ export const opts = {
 	width: 1,
 	height: 1,
 	playerVars: {
-		autoplay: 1,
+		autoplay: 0,
 		controls: 1,
 	},
 };

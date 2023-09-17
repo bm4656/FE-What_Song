@@ -1,4 +1,10 @@
 import { YouTubePlayer } from 'react-youtube';
+import { getCookie } from '@/constants/cookie';
+
+export const SOCKET_HEADER = {
+	'Access-Control-Allow-Credentials': true,
+	Authorization: `Bearer ${getCookie('accessToken')}`,
+};
 
 export const currentMusicInfo = (player: YouTubePlayer, jump: number | null = null) => {
 	const currentTime = player.getCurrentTime();
