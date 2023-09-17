@@ -1,11 +1,11 @@
 'use client';
 
 import { useAtom } from 'jotai';
+import { useState } from 'react';
 import IconBox from '../music/streaming/IconBox';
 import { Icons } from '@/constants/ReactIcons';
 import RequestModal from '../RequestModal';
 import { BottomModalAtom } from '@/state/store/bottomModal';
-import { useState } from 'react';
 
 const icons = [
 	{ name: '참여자', icon: Icons.users, clickFn: '' },

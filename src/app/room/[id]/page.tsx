@@ -15,15 +15,14 @@ export default async function MusicRoomPage({ params: { id } }: Props) {
 	// 뮤직룸 상세 정보
 	const {
 		have: { musicRoomSeq, roomName, category, accessAuth },
-		extraInfo: { email, view },
+		extraInfo: { hostEmail, view },
 	} = await roomApis.getRoomData(Number(id));
 	// 유저 정보
 	// const user = useUser();
 	// const userEmail = user.data?.email;
 	// 방장 유무 비교
-	// const isOwner = userEmail === email;
-	const isOwner = true;
-	// const isOwner = false;
+	// const isOwner = userEmail === hostEmail;
+	const isOwner = false;
 
 	// 현재 플레이리스트
 	const playList = await roomApis.getPlayList(Number(id));
