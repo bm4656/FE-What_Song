@@ -6,11 +6,11 @@ import { AiOutlineSearch } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { youtubeApis } from '@/app/service/youtube';
 import MusicBars from '../music/MusicBars';
-import { Video } from '@/types/video';
+import { ResVideo, Video } from '@/types/video';
 
 type Props = {
 	placeholder: string;
-	searchFn?: (searchResults: Video[]) => void;
+	searchFn?: (searchResults: ResVideo[]) => void;
 	removeFn?: () => void;
 };
 const data = [

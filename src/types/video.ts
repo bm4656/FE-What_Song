@@ -13,6 +13,6 @@ export type QueueVideo = {
 };
 
 export type ResVideo = Video & {
-	reservationId?: string;
-	roomSeq: number;
+	reservationId: string;
+	roomSeq?: number;
 };

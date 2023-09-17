@@ -55,7 +55,14 @@ export const roomClients = {
 		const res = await client.get(`/api/v1/reservation/approve/list?roomSeq=${roomId}`);
 		const playList: QueueVideo[] = res.data;
 		// console.log(playList);
-		const filteredList = playList.map((item: QueueVideo) => item.selectVideo);
+		const filteredList = playList
+			.filter((item) => item.recognize === 'APPROVE')
+			.map((item) => {
+				return {
+					...item.selectVideo,
+					reservationId: item.reservationId,
+				};
+			});
 		return filteredList;
 	},
 	getRoomData: async (roomId: number) => {

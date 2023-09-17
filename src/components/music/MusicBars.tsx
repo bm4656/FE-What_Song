@@ -3,7 +3,7 @@ import { roomClients } from '@/app/service/room-client';
 import { ResVideo, Video } from '@/types/video';
 
 type Props = {
-	list: ResVideo[] | Video[] | undefined;
+	list: ResVideo[] | undefined;
 	barType: string;
 	roomId: string | number;
 };

@@ -4,7 +4,7 @@ import { BsMusicNoteList } from 'react-icons/bs';
 import { ResVideo, Video } from '@/types/video';
 
 type Props = {
-	music: (Video | ResVideo) & { roomSeq: number };
+	music: ResVideo & { roomSeq: number };
 	barType: string;
 	onAdd: (music: ResVideo, addType: string) => void;
 	onDelete?: () => void;
