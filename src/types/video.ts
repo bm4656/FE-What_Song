@@ -11,3 +11,8 @@ export type QueueVideo = {
 	roomSeq: number;
 	selectVideo: Video;
 };
+
+export type ResVideo = Video & {
+	reservationId: string;
+	roomSeq: number;
+};

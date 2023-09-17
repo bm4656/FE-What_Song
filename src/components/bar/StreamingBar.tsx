@@ -1,18 +1,22 @@
+'use client';
+
 import { useAtom } from 'jotai';
 import IconBox from '../music/streaming/IconBox';
 import { Icons } from '@/constants/ReactIcons';
 import RequestModal from '../RequestModal';
 import { BottomModalAtom } from '@/state/store/bottomModal';
+import { useState } from 'react';
 
 const icons = [
 	{ name: '참여자', icon: Icons.users, clickFn: '' },
 	{ name: '공유', icon: Icons.share, clickFn: 'share' },
-	{ name: '변경', icon: Icons.modify, clickFn: 'request' },
-	{ name: '수락', icon: Icons.adjustments, clickFn: 'request' },
+	// { name: '변경', icon: Icons.modify, clickFn: 'request' },
+	// { name: '수락', icon: Icons.adjustments, clickFn: 'request' },
 ];
 
 export default function StreamingBar({ isHost, roomId }: { isHost: boolean; roomId: number }) {
 	const [modalOpen, setModalOpen] = useAtom(BottomModalAtom);
+	const [modalType, setModalType] = useState(`${isHost ? 'host' : 'normal'}`);
 
 	return (
 		<article className="w-full h-40 flex items-center justify-center gap-5">
@@ -24,9 +28,30 @@ export default function StreamingBar({ isHost, roomId }: { isHost: boolean; room
 								{icon.icon}
 							</IconBox>
 						))}
+						<button
+							className="flex flex-col justify-center items-center cursor-pointer"
+							onClick={() => {
+								setModalOpen((prev) => !prev);
+								setModalType('modify');
+							}}
+						>
+							<div className="text-5xl">{Icons.modify}</div>
+							<span className="text-xl text-zinc-400 w-full flex justify-center items-center">변경</span>
+						</button>
+						<button
+							className="flex flex-col justify-center items-center cursor-pointer"
+							onClick={() => {
+								setModalOpen((prev) => !prev);
+								setModalType('host');
+							}}
+						>
+							<div className="text-5xl">{Icons.adjustments}</div>
+							<span className="text-xl text-zinc-400 w-full flex justify-center items-center">수락</span>
+						</button>
 					</>
 				) : (
 					<>
+						{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
 						<li
 							className="bg-primary w-44 h-20 text-white rounded-full flex gap-3 justify-center items-center cursor-pointer"
 							onClick={() => setModalOpen((prev) => !prev)}
@@ -43,7 +68,7 @@ export default function StreamingBar({ isHost, roomId }: { isHost: boolean; room
 					</>
 				)}
 			</ul>
-			<RequestModal />
+			<RequestModal modalType={modalType} />
 		</article>
 	);
 }

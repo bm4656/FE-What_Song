@@ -1,16 +1,5 @@
+import { QueueVideo } from '@/types/video';
 import client from './client';
-
-type Queue = {
-	recognize: string;
-	reservationId: string;
-	roomSeq: number;
-	selectVideo: {
-		videoId: string;
-		title: string;
-		channelName: string;
-		thumbnailUrl: string;
-	};
-};
 
 export const roomClients = {
 	createMusicRoom: async (body: {
@@ -44,10 +33,21 @@ export const roomClients = {
 		const res = await client.post('/api/v1/reservation', { ...body });
 		return res;
 	},
+	acceptRequestMusic: async (reservationId: string) => {
+		const res = await client.post('/api/v1/reservation/approve', { reservationId, recognize: 'APPROVE' });
+		return res;
+	},
 	getQueueList: async (roomId: number) => {
 		const res = await client.get(`/api/v1/reservation?roomSeq=${roomId}`);
-		const queueList: Queue[] = res.data;
-		const filteredList = queueList.map((item: Queue) => item.selectVideo);
+		const queueList: QueueVideo[] = res.data;
+		const filteredList = queueList.map((item: QueueVideo) => item.selectVideo);
+		return filteredList;
+	},
+	getPlayList: async (roomId: number) => {
+		const res = await client.get(`/api/v1/reservation/approve/list?roomSeq=${roomId}`);
+		const playList: QueueVideo[] = res.data;
+		// console.log(playList);
+		const filteredList = playList.map((item: QueueVideo) => item.selectVideo);
 		return filteredList;
 	},
 	getRoomData: async (roomId: number) => {

@@ -17,7 +17,14 @@ export const roomApis = {
 	getQueueList: async (roomId: number) => {
 		const res = await server.get(`/api/v1/reservation?roomSeq=${roomId}`);
 		const queueList: QueueVideo[] = res.data;
+		console.log(queueList);
 		const filteredList = queueList.map((item: QueueVideo) => item.selectVideo);
+		return filteredList;
+	},
+	getPlayList: async (roomId: number) => {
+		const res = await server.get(`/api/v1/reservation/approve/list?roomSeq=${roomId}`);
+		const playList: QueueVideo[] = res.data;
+		const filteredList = playList.map((item: QueueVideo) => item.selectVideo);
 		return filteredList;
 	},
 	getRoomData: async (roomId: number) => {
