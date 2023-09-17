@@ -40,7 +40,15 @@ export const roomClients = {
 	getQueueList: async (roomId: number) => {
 		const res = await client.get(`/api/v1/reservation?roomSeq=${roomId}`);
 		const queueList: QueueVideo[] = res.data;
-		const filteredList = queueList.map((item: QueueVideo) => item.selectVideo);
+		const filteredList = queueList
+			.filter((item) => item.recognize === 'NONE')
+			.map((item) => {
+				return {
+					...item.selectVideo,
+					reservationId: item.reservationId,
+					recognize: item.recognize,
+				};
+			});
 		return filteredList;
 	},
 	getPlayList: async (roomId: number) => {

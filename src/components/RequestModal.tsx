@@ -23,6 +23,7 @@ export default function RequestModal({ modalType }: { modalType: string }) {
 	const { data: queueList } = useQuery(['queueList', roomId], () => {
 		return roomClients.getQueueList(Number(roomId));
 	});
+	console.log(queueList);
 	const searchFn = (list: ResVideo[]) => {
 		// console.log('동작', list[0]);
 		setSearchList(list);
@@ -62,7 +63,7 @@ export default function RequestModal({ modalType }: { modalType: string }) {
 						{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
 						<div className="bg-slate-200 w-10 h-1 mb-5 cursor-pointer" onClick={() => setModalOpen(false)} />
 					</div>
-					<p className="text-2xl font-bold p-2 ml-12">플레이리스트</p>
+					<p className="text-2xl font-bold p-2 ml-12">플레이리스트 수정</p>
 					<MusicBars list={playList} roomId={roomId} barType={modalType} />
 				</section>
 			)}

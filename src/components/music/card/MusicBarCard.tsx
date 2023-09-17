@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import { FaTrashAlt } from 'react-icons/fa';
 import { BsMusicNoteList } from 'react-icons/bs';
-import { ResVideo } from '@/types/video';
+import { ResVideo, Video } from '@/types/video';
 
 type Props = {
-	music: ResVideo;
+	music: (Video | ResVideo) & { roomSeq: number };
 	barType: string;
 	onAdd: (music: ResVideo, addType: string) => void;
 	onDelete?: () => void;
@@ -34,6 +34,7 @@ export default function MusicBarCard({ music, barType, onAdd, onDelete }: Props)
 				) : (
 					<BsMusicNoteList className="text-secondary" />
 				)}
+				{/* {barType === 'modify' && <FaTrashAlt className="text-secondary" />} */}
 			</button>
 		</li>
 	);
