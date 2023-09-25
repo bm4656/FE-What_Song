@@ -20,7 +20,7 @@ export default function MusicRoomCard({
 	const userEmail = user.data?.email;
 	const isHostCard = userEmail === hostEmail;
 	return (
-		<article className="m-4 rounded-[40px] shadow-md shadow-zinc-700 overflow-hidden relative w-[30rem] h-[30rem] hover:scale-95">
+		<article className="m-4 rounded-[40px] shadow-md shadow-zinc-700 overflow-hidden relative w-[30rem] h-[30rem] hover:opacity-90">
 			<Link href={`room/${musicRoomSeq}`}>
 				<div className="w-1/2 h-1/2">
 					<Image
