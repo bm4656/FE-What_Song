@@ -4,11 +4,11 @@ import { useQuery } from '@tanstack/react-query';
 import { roomClients } from '@/app/service/room-client';
 import MusicCarousel from '../music/MusicCarousel';
 import useUser from '@/hooks/useUser';
+import MusicCardNone from '../skeleton/MusicCardNone';
 
 export default function UserRooms() {
 	const user = useUser();
-	// 토큰 이슈로 임시 1번 처리
-	const memberSeq = user.data?.memberSeq || '1';
+	const memberSeq = user.data?.memberSeq;
 
 	const { data, isLoading } = useQuery(
 		['rooms', memberSeq],
@@ -21,10 +21,5 @@ export default function UserRooms() {
 	if (isLoading) {
 		return <p>Loading...</p>;
 	}
-
-	return (
-		<>
-			<MusicCarousel rooms={data} isHost />
-		</>
-	);
+	return <>{data[0] ? <MusicCarousel rooms={data} /> : <MusicCardNone type="user" />}</>;
 }

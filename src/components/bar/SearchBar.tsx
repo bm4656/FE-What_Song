@@ -5,13 +5,12 @@ import { useParams, useRouter } from 'next/navigation';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { youtubeApis } from '@/app/service/youtube';
-import MusicBars from '../music/MusicBars';
-import { Video } from '@/types/video';
+import { ResVideo, Video } from '@/types/video';
 
 type Props = {
 	placeholder: string;
-	searchFn: (searchResults: Video[]) => void;
-	removeFn: () => void;
+	searchFn?: (searchResults: ResVideo[]) => void;
+	removeFn?: () => void;
 };
 const data = [
 	{
@@ -121,7 +120,8 @@ export default function SearchBar({ placeholder, searchFn, removeFn }: Props) {
 		try {
 			const res = await youtubeApis.serchKeyword({ keyword }); // 비동기 요청 보내기
 			setSearchList(res); // 검색 결과 업데이트
-			searchFn(res); // searchFn을 호출하여 검색 결과 전달
+			// eslint-disable-next-line no-unused-expressions
+			searchFn && searchFn(res); // searchFn을 호출하여 검색 결과 전달
 			setOpen(true);
 			setKeyword('');
 		} catch (error) {
@@ -148,7 +148,8 @@ export default function SearchBar({ placeholder, searchFn, removeFn }: Props) {
 						className="text-3xl absolute right-24 text-fontGray cursor-pointer"
 						onClick={() => {
 							setOpen(false);
-							removeFn();
+							// eslint-disable-next-line no-unused-expressions
+							removeFn && removeFn();
 							router.refresh();
 						}}
 					/>

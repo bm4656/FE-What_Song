@@ -1,4 +1,4 @@
-import { Room } from '@/app/service/room';
+import { Room } from '@/types/room';
 import MusicRoomCard2 from './card/MusicRoomCard2';
 
 type Props = {
