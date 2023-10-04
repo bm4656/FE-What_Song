@@ -4,6 +4,7 @@ import { useAtom } from 'jotai';
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
+import { CompatClient } from '@stomp/stompjs';
 import SearchBar from './bar/SearchBar';
 import MusicBars from './music/MusicBars';
 import { ResVideo } from '@/types/video';
@@ -12,12 +13,12 @@ import { roomClients } from '@/app/service/room-client';
 
 export default function RequestModal({
 	modalType,
-	client,
+	musicSock,
 	roomCode,
 	memberList,
 }: {
 	modalType: string;
-	client: any;
+	musicSock: CompatClient;
 	roomCode: string;
 	memberList: [];
 }) {
@@ -52,9 +53,9 @@ export default function RequestModal({
 				<SearchBar placeholder="추가하고 싶은 뮤직을 입력하세요..." searchFn={searchFn} removeFn={removeFn} />
 				<p className="text-2xl font-bold p-2 ml-12">플레이리스트</p>
 				{searchList[0] ? (
-					<MusicBars list={searchList} roomId={roomId} barType={modalType} client={client} roomCode={roomCode} />
+					<MusicBars list={searchList} roomId={roomId} barType={modalType} musicSock={musicSock} roomCode={roomCode} />
 				) : (
-					<MusicBars list={playList} roomId={roomId} barType={modalType} client={client} roomCode={roomCode} />
+					<MusicBars list={playList} roomId={roomId} barType={modalType} musicSock={musicSock} roomCode={roomCode} />
 				)}
 			</section>
 			{modalType === 'host' && (
@@ -64,7 +65,7 @@ export default function RequestModal({
 						<div className="bg-slate-200 w-10 h-1 mb-5 cursor-pointer" onClick={() => setModalOpen(false)} />
 					</div>
 					<p className="text-2xl font-bold p-2 ml-12">플레이리스트 대기열</p>
-					<MusicBars list={queueList} roomId={roomId} barType={modalType} client={client} roomCode={roomCode} />
+					<MusicBars list={queueList} roomId={roomId} barType={modalType} musicSock={musicSock} roomCode={roomCode} />
 				</section>
 			)}
 			{modalType === 'users' && (
@@ -89,9 +90,15 @@ export default function RequestModal({
 					<SearchBar placeholder="추가하고 싶은 뮤직을 입력하세요..." searchFn={searchFn} removeFn={removeFn} />
 					<p className="text-2xl font-bold p-2 ml-12">플레이리스트 목록</p>
 					{searchList[0] ? (
-						<MusicBars list={searchList} roomId={roomId} barType={modalType} client={client} roomCode={roomCode} />
+						<MusicBars
+							list={searchList}
+							roomId={roomId}
+							barType={modalType}
+							musicSock={musicSock}
+							roomCode={roomCode}
+						/>
 					) : (
-						<MusicBars list={playList} roomId={roomId} barType={modalType} client={client} roomCode={roomCode} />
+						<MusicBars list={playList} roomId={roomId} barType={modalType} musicSock={musicSock} roomCode={roomCode} />
 					)}
 				</section>
 			)}

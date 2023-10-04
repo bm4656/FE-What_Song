@@ -7,16 +7,16 @@ type Props = {
 	list: ResVideo[] | undefined;
 	barType: string;
 	roomId: string;
-	client: any;
+	musicSock: any;
 	roomCode: string;
 };
 
-export default function MusicBars({ list, barType, roomId, client, roomCode }: Props) {
+export default function MusicBars({ list, barType, roomId, musicSock, roomCode }: Props) {
 	const handleAdd = (music: ResVideo, addType: string) => {
 		if (addType === 'host') {
 			// 방장: 뮤직 대기열 수락
 			roomClients.acceptRequestMusic(music.reservationId);
-			playlistStatusSend(roomCode, roomId, client);
+			playlistStatusSend(roomCode, roomId, musicSock);
 			alert('뮤직이 플레이리스트에 추가되었습니다!');
 		} else {
 			// 뮤직 대기열 요청

@@ -2,6 +2,7 @@
 
 import { useAtom } from 'jotai';
 import { useState } from 'react';
+import { CompatClient } from '@stomp/stompjs';
 import IconBox from '../music/streaming/IconBox';
 import { Icons } from '@/constants/ReactIcons';
 import RequestModal from '../RequestModal';
@@ -18,13 +19,13 @@ const icons = [
 export default function StreamingBar({
 	roomId,
 	isOwner,
-	client,
+	musicSock,
 	roomCode,
 	memberList,
 }: {
-	roomId: number;
+	roomId: string;
 	isOwner: boolean;
-	client: any;
+	musicSock: CompatClient | any;
 	roomCode: string;
 	memberList: [];
 }) {
@@ -77,7 +78,10 @@ export default function StreamingBar({
 						{/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
 						<li
 							className="bg-primary w-44 h-20 text-white rounded-full flex gap-3 justify-center items-center cursor-pointer"
-							onClick={() => setModalOpen((prev) => !prev)}
+							onClick={() => {
+								setModalOpen((prev) => !prev);
+								setModalType('modify');
+							}}
 						>
 							<div className="text-4xl">{Icons.playButton}</div>
 							<span className="text-2xl font-semibold">요청</span>
@@ -96,12 +100,12 @@ export default function StreamingBar({
 							{icons[0].icon}
 						</IconBox>
 						{/* <IconBox name={icons[1].name} clickFn={icons[1].clickFn}>
-							{icons[1].icon}
-						</IconBox> */}
+                            {icons[1].icon}
+                        </IconBox> */}
 					</>
 				)}
 			</ul>
-			<RequestModal modalType={modalType} client={client} roomCode={roomCode} memberList={memberList} />
+			<RequestModal modalType={modalType} musicSock={musicSock} roomCode={roomCode} memberList={memberList} />
 		</article>
 	);
 }
