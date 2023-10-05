@@ -74,8 +74,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 				enterSubscribe(roomCode, musicSock, setNewMemberList);
 				// 퇴장 멤버 리스트 구독
 				leaveSubscribe(roomCode, musicSock, setNewMemberList);
-				// 입장
-				enterSend(roomCode, musicSock);
+
 				playlistStatusSend(roomCode, roomId, musicSock);
 			});
 			setSockConnecting(true);
@@ -159,6 +158,10 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 	useEffect(() => {
 		if (!sockConnecting && musicPlayer) {
 			wsConnectSubscribe();
+			// 입장
+		}
+		if (sockConnecting) {
+			enterSend(roomCode, musicSock);
 		}
 	}, [musicPlayer]);
 
@@ -173,7 +176,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 
 	// 이전 멤버와 새로운 멤버 비교, 새 맴버 있으면 시간 업데이트
 	useEffect(() => {
-		if (newMemberList.length > 0) {
+		if (newMemberList.length > memberList.length) {
 			if (isOwner) {
 				const { currentTime } = currentMusicInfo(musicPlayer);
 				musicStatusUpdate(roomCode, musicSock, playing, playStatus, currentTime);
@@ -183,9 +186,9 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 		}
 	}, [newMemberList]);
 
-	// TODO 재생중인 뮤직 상태 변경 수정하기
+	// TODO 재생중인 뮤직 상태 변경 수정하기 && musicPlayer.videoTitle
 	useEffect(() => {
-		if (playingStatus && !isOwner && sockConnecting) {
+		if (playingStatus && !isOwner) {
 			const jumpTime = Number(playingStatus.timeStamp);
 			if (playingStatus.status === 'PLAYING') {
 				musicPlayer.playVideo();
@@ -196,7 +199,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 				musicPlayer.pauseVideo();
 			}
 		}
-	}, [playingStatus, sockConnecting]);
+	}, [playingStatus]);
 
 	return (
 		<>
