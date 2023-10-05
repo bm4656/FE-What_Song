@@ -10,7 +10,6 @@ type Props = {
 };
 
 export default async function HydratedRooms({ type }: Props) {
-	// userRoom 도 prefetch 처리 분기 해주어야함
 	const queryClient = getQueryClient();
 	await queryClient.prefetchQuery(['rooms'], roomApis.getAllRooms);
 	const dehydratedState = dehydrate(queryClient);

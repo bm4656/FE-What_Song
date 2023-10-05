@@ -1,6 +1,5 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import ReactCarousel from './ReactCarousel';
 import MusicCategoryCard from './card/MusicCategoryCard';
 import MusicRoomCard from './card/MusicRoomCard';
