@@ -5,7 +5,6 @@ import { SOCKET_HEADER } from '.';
 
 // 입장시 호출 send
 export const enterSend = (roomCode: string, client: CompatClient | any) => {
-	console.log('나는 입장');
 	client.current.send(`/app/${roomCode}/room/enter`, SOCKET_HEADER, JSON.stringify({}));
 };
 

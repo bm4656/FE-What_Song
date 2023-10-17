@@ -6,9 +6,9 @@ export const SOCKET_HEADER = {
 	Authorization: `Bearer ${getCookie('accessToken')}`,
 };
 
-export const currentMusicInfo = (player: YouTubePlayer, jump: number | null = null) => {
-	const currentTime = player.getCurrentTime();
-	const duration = player.getDuration();
+export const currentMusicInfo = (musicPlayer: YouTubePlayer, jump: number | null = null) => {
+	const currentTime = musicPlayer.getCurrentTime();
+	const duration = musicPlayer.getDuration();
 	const progressState = (currentTime / duration) * 100;
 
 	let ms;
