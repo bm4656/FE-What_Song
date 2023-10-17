@@ -3,7 +3,6 @@ import getQueryClient from '@/utils/query/getQueryClient';
 import HydrateOnClient from '@/utils/query/hydrateOnClient';
 import { roomApis } from '../../app/service/room';
 import Rooms from './Rooms';
-import UserRooms from './UserRooms';
 
 type Props = {
 	type?: string;

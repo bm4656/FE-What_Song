@@ -1,11 +1,11 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { PropagateLoader } from 'react-spinners';
 import { roomClients } from '@/app/service/room-client';
 import MusicCarousel from '../music/MusicCarousel';
 import useUser from '@/hooks/useUser';
 import MusicCardNone from '../skeleton/MusicCardNone';
+import RoomsLoader from '../skeleton/RoomsLoader';
 
 export default function UserRooms() {
 	const user = useUser();
@@ -23,11 +23,7 @@ export default function UserRooms() {
 	);
 
 	if (loading) {
-		return (
-			<div className="flex justify-center items-center w-full h-[30rem] pl-2 mb-4 m-4">
-				<PropagateLoader color="red" />;
-			</div>
-		);
+		return <RoomsLoader />;
 	}
 	return <>{data[0] ? <MusicCarousel rooms={data} /> : <MusicCardNone type="user" />}</>;
 }
