@@ -1,8 +1,11 @@
 /* 소켓 subscribe */
 
 import { CompatClient } from '@stomp/stompjs';
-import { YouTubePlayer } from 'react-youtube';
-import { QueueVideo } from '@/types/video';
+
+type playingStatusInfo = {
+	timeStamp: string;
+	status: string;
+};
 
 // 플레이 리스트 업데이트 구독
 export const playListStatusSubscribe = (roomCode: string, client: CompatClient | any, setPlayList: any) => {
@@ -17,22 +20,16 @@ export const playListStatusSubscribe = (roomCode: string, client: CompatClient |
 };
 
 // 뮤직 상태 업데이트 구독
-export const musicStatusSubscribe = (roomCode: string, client: CompatClient | any, player: YouTubePlayer) => {
+export const musicStatusSubscribe = (
+	roomCode: string,
+	client: CompatClient | any,
+	setPlayingStatus: (status: playingStatusInfo) => void
+) => {
 	client.current.subscribe(
 		`/stream/${roomCode}/music/current/info`,
 		(data: any) => {
 			const musicStatus = JSON.parse(data.body);
-			const jumpTime = Number(musicStatus.timeStamp);
-			if (musicStatus.status === 'PLAYING') {
-				console.log('재생중');
-				player.playVideo();
-				player.seekTo(jumpTime);
-			}
-			if (musicStatus.status === 'PAUSE') {
-				console.log('정지중');
-				player.seekTo(jumpTime);
-				player.pauseVideo();
-			}
+			setPlayingStatus(musicStatus);
 		},
 		{}
 	);
@@ -53,19 +50,14 @@ export const enterSubscribe = (roomCode: string, client: CompatClient | any, set
 };
 
 // 퇴장 멤버 리스트 구독
-export const leaveSubscribe = (
-	roomCode: string,
-	client: CompatClient | any,
-	memberList: string[],
-	setMemberList: any
-) => {
+export const leaveSubscribe = (roomCode: string, client: CompatClient | any, setNewMemberList: any) => {
 	client.current.subscribe(
 		`/stream/${roomCode}/room/leave`,
 		(data: any) => {
 			const newMessage = JSON.parse(data.body);
 			// TODO 참여중인 멤버 리스트 UPDATE
 			const newMemberList = newMessage.memberList;
-			setMemberList(newMemberList);
+			setNewMemberList(newMemberList);
 		},
 		{}
 	);
