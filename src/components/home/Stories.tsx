@@ -13,39 +13,81 @@ import { modalAtom } from '@/state/store/modal';
 import { storyOpts } from '@/constants/iframe';
 
 export default function Stories() {
-	const [storyIndex, setStoryIndex] = useState(0);
 	const [storiesIndex, setStoriesIndex] = useState(0);
 	const [modalOpen, setModalOpen] = useAtom(modalAtom);
 	const [musicPlayer, setMusicPlayer] = useState<YouTubePlayer | null>(null);
-
 	const swiperRef = useRef<SwiperCore>();
 	const swiperMusic = useRef<SwiperCore>();
+	const [history, setHistory] = useState([0, 0, 0]);
+
 	const STORIES_DATA = [
 		{
 			user: '박수빈',
+			poster: [
+				{
+					videoId: 'LgQHPTRoI3c',
+					url: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
+				},
+				{
+					videoId: 'SIuF37EWaLU',
+					url: 'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
+				},
+				{
+					videoId: 'aRDURmIYBZ4',
+					url: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+				},
+			],
 		},
 		{
 			user: '이성호',
+			poster: [
+				{
+					videoId: 'LgQHPTRoI3c',
+					url: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
+				},
+				{
+					videoId: 'SIuF37EWaLU',
+					url: 'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
+				},
+				{
+					videoId: 'aRDURmIYBZ4',
+					url: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+				},
+			],
 		},
 		{
 			user: '김보민',
+			poster: [
+				{
+					videoId: 'LgQHPTRoI3c',
+					url: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
+				},
+				{
+					videoId: 'SIuF37EWaLU',
+					url: 'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
+				},
+				{
+					videoId: 'aRDURmIYBZ4',
+					url: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+				},
+			],
 		},
 		{
 			user: '장준환',
-		},
-	];
-	const POST_DATA = [
-		{
-			videoId: 'LgQHPTRoI3c',
-			url: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
-		},
-		{
-			videoId: 'SIuF37EWaLU',
-			url: 'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
-		},
-		{
-			videoId: 'aRDURmIYBZ4',
-			url: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+			poster: [
+				{
+					videoId: 'LgQHPTRoI3c',
+					url: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
+				},
+				{
+					videoId: 'SIuF37EWaLU',
+					url: 'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
+				},
+				{
+					videoId: 'aRDURmIYBZ4',
+					url: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+				},
+			],
 		},
 	];
 
@@ -72,22 +114,20 @@ export default function Stories() {
 
 	return (
 		<div className="absolute inset-0 z-50 bg-black w-full h-screen">
-			<div />
 			<Swiper
+				onSwiper={(swiper) => {
+					swiperRef.current = swiper;
+				}}
 				touchReleaseOnEdges
 				touchMoveStopPropagation
 				nested
-				loop
 				effect="cube"
+				initialSlide={0}
 				modules={[EffectCube]}
 				onSlideChange={(_swiper) => {
-					setStoriesIndex(0);
-					console.log(swiperMusic.current?.activeIndex);
+					if (!swiperRef.current) return;
+					setStoriesIndex(history[swiperRef.current.activeIndex]);
 					musicPlayer.seekTo(0);
-					swiperMusic.current?.slideTo(0, 0, false);
-				}}
-				onSwiper={(swiper) => {
-					swiperRef.current = swiper;
 				}}
 			>
 				{STORIES_DATA.map((data) => (
@@ -105,27 +145,30 @@ export default function Stories() {
 							<Swiper
 								onSwiper={(swiper) => {
 									swiperMusic.current = swiper;
+									swiper.navigation.update();
 								}}
-								navigation
 								modules={[Navigation]}
+								navigation
 								onSlideChange={(swiper) => {
+									if (!swiperRef.current) return;
+									const updatedHistory = [...history];
+									updatedHistory[swiperRef.current.activeIndex] = swiper.activeIndex; // 0번째 인덱스에 2를 할당합니다.
+									setHistory(updatedHistory);
 									setStoriesIndex(swiper.activeIndex);
 								}}
 							>
-								{POST_DATA.map((post, index) => {
-									return (
-										<SwiperSlide>
-											<img src={post.url} alt={`post${index}`} className="w-screen h-screen object-cover" />
-										</SwiperSlide>
-									);
-								})}
+								{data.poster.map((post, index) => (
+									<SwiperSlide key={post.url}>
+										<img src={post.url} alt={post.url} className="w-screen h-screen object-cover" />
+									</SwiperSlide>
+								))}
 							</Swiper>
 						</div>
 					</SwiperSlide>
 				))}
 			</Swiper>
 			<YouTube
-				videoId={POST_DATA[storiesIndex].videoId}
+				videoId={STORIES_DATA[swiperRef.current ? swiperRef.current.activeIndex : 0]?.poster[storiesIndex].videoId}
 				className="opacity-0 absolute"
 				opts={storyOpts}
 				onReady={onReady}
