@@ -18,7 +18,7 @@ export default function ChattingMockPage() {
 	const [newMessage, setNewMessage] = useState('');
 	// 최근의 채팅으로 스크롤 위한 ref
 	const messagesEndRef = useRef<HTMLDivElement>(null);
-	//인터랙션 상태
+	// 인터랙션 상태
 	const [interaction, setInteraction] = useState(false);
 	const handleButton = (e) => {
 		// console.log(e.target.value);
@@ -50,23 +50,23 @@ export default function ChattingMockPage() {
 	useEffect(() => {
 		mockSubscribe();
 	}, []);
-	useEffect(() => {
-		const receiveMessage = (msg: string) => {
-			setMessages((prevMessages) => [...prevMessages, { message: msg }]);
-		};
+	// useEffect(() => {
+	// 	const receiveMessage = (msg: string) => {
+	// 		setMessages((prevMessages) => [...prevMessages, { message: msg }]);
+	// 	};
 
-		const interval = setInterval(() => {
-			receiveMessage(`채팅 메시지 ${messages.length + 1}`);
-		}, 2000);
+	// 	const interval = setInterval(() => {
+	// 		receiveMessage(`채팅 메시지 ${messages.length + 1}`);
+	// 	}, 2000);
 
-		return () => {
-			clearInterval(interval);
-		};
-	}, [messages]);
+	// 	return () => {
+	// 		clearInterval(interval);
+	// 	};
+	// }, [messages]);
 	return (
 		<section>
 			{/* 채팅 메세지 목록 */}
-			<div className="w-full absolute bottom-52 p-8 h-[230px] overflow-scroll bg-black bg-opacity-10">
+			<div className="w-full absolute bottom-52 p-8 h-[100px] overflow-scroll bg-black bg-opacity-10">
 				<ul className="">
 					{messages.map((message, index) => (
 						<li className="p-1 m-2 ml-5 w-fit text-white text-xl" key={index}>
@@ -75,6 +75,10 @@ export default function ChattingMockPage() {
 					))}
 					<div ref={messagesEndRef} />
 				</ul>
+				<div class="w-32 h-16 bg-blue-500 rounded-full relative">
+					<div class="w-16 h-16 bg-blue-500 rounded-full absolute top-0 left-16"></div>
+					<div class="w-24 h-24 bg-blue-500 rounded-full absolute bottom-0 right-4"></div>
+				</div>
 			</div>
 			{/* 인터랙션 이모지 */}
 			{interaction && <LottieView file={heartEmoji} styles="absolute w-full h-full" />}
