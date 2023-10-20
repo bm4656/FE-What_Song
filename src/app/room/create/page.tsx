@@ -50,10 +50,10 @@ export default function CreateRoomPage() {
 	const onAddRoom = async () => {
 		createMusicRoomMutate({ ...data });
 	};
-	// console.log(data);
 	return (
 		<>
-			<article ref={focusFirst} className="flex flex-col h-full items-start mb-5 p-[2rem]">
+			{/* 플레이리스트 이름 Input Section */}
+			<section ref={focusFirst} className="flex flex-col h-full items-start mb-5 p-[2rem]">
 				<TitleHeader title="뮤직방 생성" previous isWrap />
 				<MusicRecord image="/assets/cover.jpeg" />
 				<PageHeaderContent
@@ -69,10 +69,10 @@ export default function CreateRoomPage() {
 						setData((prev) => ({ ...prev, roomName: e.target.value }));
 					}}
 				/>
-				<HiOutlineChevronDown className="absolute bottom-32 text-4xl flex self-center" />
-				<Button content="다음" clickFn={() => onMoveToFocus(focusSecond)} />
-			</article>
-			<article ref={focusSecond} className="flex flex-col relative h-full items-start my-32 p-[2rem]">
+				<Button content="다음" clickFn={() => onMoveToFocus(focusSecond)} disabled={data.roomName === ''} />
+			</section>
+			{/* 플레이리스트 카테고리 선택 Section */}
+			<section ref={focusSecond} className="flex flex-col relative h-full items-start my-32 p-[2rem]">
 				<TitleHeader title="뮤직방 생성" isWrap />
 				<div className="w-80 h-80 relative rounded-[4rem] shadow-2xl shadow-slate-700 overflow-hidden self-center m-4">
 					<Image src="/assets/cat-music.jpeg" fill alt="이미지" />
@@ -89,13 +89,14 @@ export default function CreateRoomPage() {
 					onClick={() => onMoveToFocus(focusFirst)}
 				/>
 				<Button content="다음" clickFn={() => onMoveToFocus(focusLast)} />
-			</article>
-			<article ref={focusLast} className="flex flex-col relative h-full items-start justify-between p-[2rem]">
+			</section>
+			{/* 플레이리스트 공개 범위 선택 Section */}
+			<section ref={focusLast} className="flex flex-col relative h-full items-start justify-between p-[2rem]">
 				<TitleHeader title="뮤직방 생성" isWrap />
 				<div className="w-80 h-80 relative rounded-[4rem] shadow-2xl shadow-slate-700 overflow-hidden self-center">
 					<Image src="/assets/cat-music.jpeg" fill alt="이미지" />
 				</div>
-				<article className="flex flex-col w-full  py-32">
+				<section className="flex flex-col w-full  py-32">
 					<PageHeaderContent content="공개 여부를 결정해주세요! ✍️ " mb="mb-4" />
 					<div className="relative text-2xl font-bold">
 						<input
@@ -140,13 +141,13 @@ export default function CreateRoomPage() {
 						💡 전체 공개는 모든 사람들에게 공개되는 방이에요! <br />
 						<span className="text-white">___</span> 인기 방 순위에 올라갈 수도 있답니다!
 					</p>
-				</article>
+				</section>
 				<HiOutlineChevronUp
 					className="absolute bottom-32 text-4xl cursor-pointer flex self-center"
 					onClick={() => onMoveToFocus(focusSecond)}
 				/>
-				<Button content="다음" link="room/create/success" clickFn={onAddRoom} />
-			</article>
+				<Button content="다음" link="room/create/success" clickFn={onAddRoom} disabled={data.accessAuth === ''} />
+			</section>
 		</>
 	);
 }
