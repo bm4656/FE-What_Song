@@ -52,7 +52,7 @@ export default function ChattingPage() {
 			console.log(e);
 		}
 	};
-	const sendHandler = (e) => {
+	const sendHandler = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		console.log(newMessage);
 		client.current!.send(
@@ -96,7 +96,7 @@ export default function ChattingPage() {
 						value={newMessage}
 						onChange={(e) => setNewMessage(e.target.value)}
 					/>
-					<RiCloudFill className="text-6xl text-primary m-7 p-0.5" onClick={sendHandler} />
+					{/* <RiCloudFill className="text-6xl text-primary m-7 p-0.5" onClick={sendHandler} /> */}
 				</form>
 			</article>
 		</section>
