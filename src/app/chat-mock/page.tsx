@@ -96,13 +96,13 @@ export default function ChattingMockPage() {
 					className="bg-zinc-200 flex justify-between items-center overflow-hidden h-20 rounded-[28px]"
 					onSubmit={sendHandler}
 				>
-					<input
+					{/* <input
 						className="w-full pl-10 text-2xl text-zinc-400 bg-zinc-200"
 						placeholder="구름 채팅 띄우기..."
 						type="text"
 						value={newMessage}
 						onChange={(e) => setNewMessage(e.target.value)}
-					/>
+					/> */}
 					<RiCloudFill className="text-6xl text-primary m-7 p-0.5" onClick={sendHandler} />
 				</form>
 			</article>
