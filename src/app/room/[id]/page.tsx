@@ -1,6 +1,5 @@
 import { roomApis } from '@/app/service/room';
 import ChattingBar from '@/components/bar/ChattingBar';
-import StreamingBar from '@/components/bar/StreamingBar';
 import Iframe from '@/components/music/iframe/Iframe';
 import TitleHeader from '@/components/TitleHeader';
 
