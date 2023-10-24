@@ -5,20 +5,26 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-cube';
 import 'swiper/css/navigation';
+
 import SwiperCore from 'swiper';
 import { EffectCube, Navigation, Pagination } from 'swiper/modules';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubePlayer } from 'react-youtube';
 import { modalAtom } from '@/state/store/modal';
-import { storyOpts } from '@/constants/iframe';
+import Progressbar from './Progressbar';
 
-export default function Stories() {
-	const [storiesIndex, setStoriesIndex] = useState(0);
+export default function Stories({ mainIndex, setMainIndex }: any) {
 	const [modalOpen, setModalOpen] = useAtom(modalAtom);
-	const [musicPlayer, setMusicPlayer] = useState<YouTubePlayer | null>(null);
+	const [subIndexHistory, setSubIndexHistory] = useState([0, 0, 0, 0]);
+	const [musicPlayer, setMusicPlayer] = useState<YouTubePlayer>();
+	const [firstVideoId, setFirstVideoId] = useState('');
+	const [firstStartTime, setFirstStartTime] = useState(0);
+	const [firstEndTime, setFirstEndTime] = useState(0);
+	const [playing, setPlaying] = useState<boolean>(false);
 	const swiperRef = useRef<SwiperCore>();
 	const swiperMusic = useRef<SwiperCore>();
-	const [history, setHistory] = useState([0, 0, 0]);
+	const prevRef = useRef(null);
+	const nextRef = useRef(null);
 
 	const STORIES_DATA = [
 		{
@@ -26,15 +32,22 @@ export default function Stories() {
 			poster: [
 				{
 					videoId: 'LgQHPTRoI3c',
-					url: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
+					thumbnail: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
+					startTime: 10,
+					endTime: 25,
 				},
 				{
 					videoId: 'SIuF37EWaLU',
-					url: 'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
+					thumbnail:
+						'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
+					startTime: 10,
+					endTime: 25,
 				},
 				{
 					videoId: 'aRDURmIYBZ4',
-					url: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+					thumbnail: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+					startTime: 10,
+					endTime: 25,
 				},
 			],
 		},
@@ -43,15 +56,22 @@ export default function Stories() {
 			poster: [
 				{
 					videoId: 'LgQHPTRoI3c',
-					url: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
+					thumbnail: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
+					startTime: 10,
+					endTime: 25,
 				},
 				{
 					videoId: 'SIuF37EWaLU',
-					url: 'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
+					thumbnail:
+						'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
+					startTime: 10,
+					endTime: 25,
 				},
 				{
 					videoId: 'aRDURmIYBZ4',
-					url: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+					thumbnail: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+					startTime: 10,
+					endTime: 25,
 				},
 			],
 		},
@@ -60,15 +80,22 @@ export default function Stories() {
 			poster: [
 				{
 					videoId: 'LgQHPTRoI3c',
-					url: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
+					thumbnail: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
+					startTime: 10,
+					endTime: 25,
 				},
 				{
 					videoId: 'SIuF37EWaLU',
-					url: 'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
+					thumbnail:
+						'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
+					startTime: 10,
+					endTime: 25,
 				},
 				{
 					videoId: 'aRDURmIYBZ4',
-					url: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+					thumbnail: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+					startTime: 10,
+					endTime: 25,
 				},
 			],
 		},
@@ -77,19 +104,30 @@ export default function Stories() {
 			poster: [
 				{
 					videoId: 'LgQHPTRoI3c',
-					url: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
+					thumbnail: 'https://www.sonymusic.co.jp/img/common/artist_image/70007000/70007781/images/202202211748560.jpg',
+					startTime: 10,
+					endTime: 25,
 				},
 				{
 					videoId: 'SIuF37EWaLU',
-					url: 'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
+					thumbnail:
+						'https://i1.wp.com/saluteproject.com/wp-content/uploads/2019/11/2019-11-24-1.png?resize=800%2C450&ssl=1',
+					startTime: 10,
+					endTime: 25,
 				},
 				{
 					videoId: 'aRDURmIYBZ4',
-					url: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+					thumbnail: 'https://thetv.jp/i/nw/1080602/10786636.jpg?w=1284',
+					startTime: 10,
+					endTime: 25,
 				},
 			],
 		},
 	];
+
+	useEffect(() => {
+		setSubIndexHistory([0, 0, 0, 0]);
+	}, [modalOpen]);
 
 	const onReady = (event: YouTubePlayer) => {
 		setMusicPlayer(event.target);
@@ -98,6 +136,7 @@ export default function Stories() {
 	// iframe 재생 시
 	const onPlay = () => {
 		console.log('재생...');
+		setPlaying(true);
 	};
 
 	// iframe 정지 시
@@ -111,7 +150,6 @@ export default function Stories() {
 	};
 
 	if (!modalOpen) return null;
-
 	return (
 		<div className="absolute inset-0 z-50 bg-black w-full h-screen">
 			<Swiper
@@ -122,44 +160,78 @@ export default function Stories() {
 				touchMoveStopPropagation
 				nested
 				effect="cube"
-				initialSlide={0}
+				initialSlide={mainIndex}
+				onAfterInit={() => {
+					const { videoId, startTime, endTime } = STORIES_DATA[mainIndex].poster[subIndexHistory[mainIndex]];
+					setFirstVideoId(videoId);
+					setFirstStartTime(startTime);
+					setFirstEndTime(endTime);
+				}}
 				modules={[EffectCube]}
 				onSlideChange={(_swiper) => {
 					if (!swiperRef.current) return;
-					setStoriesIndex(history[swiperRef.current.activeIndex]);
-					musicPlayer.seekTo(0);
+					if (swiperRef.current.activeIndex !== undefined) {
+						const storyIndex = swiperRef.current.activeIndex;
+						const { videoId, startTime, endTime } = STORIES_DATA[storyIndex].poster[subIndexHistory[storyIndex]];
+						musicPlayer.loadVideoById({
+							videoId,
+							startSeconds: startTime,
+							endSeconds: endTime,
+							suggestedQuality: 'small',
+						});
+					}
 				}}
 			>
-				{STORIES_DATA.map((data) => (
-					<SwiperSlide key={data.user}>
-						<div className="flex items-center w-screen h-screen">
-							<div className="absolute z-50 insert-0 top-4">
-								<span className="text-white text-3xl">{data.user}</span>
+				{STORIES_DATA.map((main) => (
+					<SwiperSlide key={main.user}>
+						<div className="flex items-center w-full h-full">
+							<div className="flex absolute z-50 insert-0 top-2 w-full px-2 justify-between">
+								{/* {main.poster.map((prog, index) => (
+                                    <Progressbar
+                                        key={index}
+                                        duration={Number(prog.endTime - prog.startTime + '000')}
+                                        active={index === subIndexHistory[mainIndex] && playing}
+                                    />
+                                ))} */}
+								<button onClick={() => swiperMusic.current?.slidePrev()}>Prev</button>
+								<button onClick={() => swiperMusic.current?.slideNext()}>Next</button>
+							</div>
+							<div className="absolute z-50 insert-0 top-10">
+								<span className="text-white text-3xl">{main.user}</span>
 							</div>
 							<button
 								onClick={() => setModalOpen(false)}
-								className="text-white text-2xl cursor-pointer absolute z-50 insert-0 right-4 top-4"
+								className="text-white text-2xl cursor-pointer absolute z-50 insert-0 right-4 top-10"
 							>
 								닫기
 							</button>
 							<Swiper
 								onSwiper={(swiper) => {
 									swiperMusic.current = swiper;
-									swiper.navigation.update();
+								}}
+								navigation={{
+									prevEl: prevRef.current,
+									nextEl: nextRef.current,
 								}}
 								modules={[Navigation]}
-								navigation
 								onSlideChange={(swiper) => {
 									if (!swiperRef.current) return;
-									const updatedHistory = [...history];
-									updatedHistory[swiperRef.current.activeIndex] = swiper.activeIndex; // 0번째 인덱스에 2를 할당합니다.
-									setHistory(updatedHistory);
-									setStoriesIndex(swiper.activeIndex);
+									const subIndex = swiper.activeIndex;
+									const updatedHistory = [...subIndexHistory];
+									updatedHistory[swiperRef.current.activeIndex] = subIndex;
+									setSubIndexHistory(updatedHistory);
+									const { videoId, startTime, endTime } = main.poster[subIndex];
+									musicPlayer.loadVideoById({
+										videoId,
+										startSeconds: startTime,
+										endSeconds: endTime,
+										suggestedQuality: 'small',
+									});
 								}}
 							>
-								{data.poster.map((post, index) => (
-									<SwiperSlide key={post.url}>
-										<img src={post.url} alt={post.url} className="w-screen h-screen object-cover" />
+								{main.poster.map((sub, _index) => (
+									<SwiperSlide key={sub.thumbnail}>
+										<img src={sub.thumbnail} alt={sub.thumbnail} className="w-full h-screen object-cover" />
 									</SwiperSlide>
 								))}
 							</Swiper>
@@ -167,15 +239,26 @@ export default function Stories() {
 					</SwiperSlide>
 				))}
 			</Swiper>
-			<YouTube
-				videoId={STORIES_DATA[swiperRef.current ? swiperRef.current.activeIndex : 0]?.poster[storiesIndex].videoId}
-				className="opacity-0 absolute"
-				opts={storyOpts}
-				onReady={onReady}
-				onPlay={() => onPlay()}
-				onPause={() => onPause()}
-				onEnd={() => onEnd()}
-			/>
+			{firstVideoId && (
+				<YouTube
+					videoId={firstVideoId}
+					className="opacity-0 absolute"
+					opts={{
+						width: 1,
+						height: 1,
+						playerVars: {
+							autoplay: 1,
+							controls: 1,
+							start: firstStartTime,
+							end: firstEndTime,
+						},
+					}}
+					onReady={onReady}
+					onPlay={() => onPlay()}
+					onPause={() => onPause()}
+					onEnd={() => onEnd()}
+				/>
+			)}
 		</div>
 	);
 }

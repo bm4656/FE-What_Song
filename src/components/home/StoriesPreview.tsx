@@ -10,8 +10,7 @@ import { modalAtom } from '@/state/store/modal';
 
 export default function StoriesPreview() {
 	const setModalOpen = useSetAtom(modalAtom);
-	const [storyId, setStoryId] = useState('');
-
+	const [mainIndex, setMainIndex] = useState(0);
 	const STORIES_DATA = [
 		{
 			user: '박수빈',
@@ -36,7 +35,7 @@ export default function StoriesPreview() {
 							<button
 								onClick={() => {
 									setModalOpen(true);
-									setStoryId(index.toString());
+									setMainIndex(index);
 								}}
 								className="flex flex-col items-center"
 							>
@@ -53,7 +52,7 @@ export default function StoriesPreview() {
 						</SwiperSlide>
 					))}
 				</Swiper>
-				<Stories />
+				<Stories mainIndex={mainIndex} setMainIndex={setMainIndex} />
 			</div>
 		</>
 	);
