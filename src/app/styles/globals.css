@@ -54,12 +54,3 @@ input[type=number]::-webkit-out-spin-button {
   @apply bg-white h-[100vh] relative p-[2rem];
 }
 
-/* navigation */
-.swiper-button-prev, .swiper-button-next {
-  background-color: white;
-}
-
-.swiper-button-next::after,
-.swiper-button-prev::after {
-  display: none;
-}

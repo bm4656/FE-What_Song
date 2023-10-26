@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useSetAtom } from 'jotai';
 import { useState } from 'react';
-import Stories from './Stories';
+import StoriesModal from './StoriesModal';
 import { modalAtom } from '@/state/store/modal';
 
 export default function StoriesPreview() {
@@ -52,7 +52,7 @@ export default function StoriesPreview() {
 						</SwiperSlide>
 					))}
 				</Swiper>
-				<Stories mainIndex={mainIndex} setMainIndex={setMainIndex} />
+				<StoriesModal mainIndex={mainIndex} setMainIndex={setMainIndex} />
 			</div>
 		</>
 	);
