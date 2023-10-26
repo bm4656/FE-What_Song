@@ -2,13 +2,12 @@
 
 import { useAtom } from 'jotai';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
 import SwiperCore from 'swiper';
+import { EffectCube } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/effect-cube';
 import { useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubePlayer } from 'react-youtube';
-import Stories from 'react-insta-stories';
-import 'swiper/css/effect-cube';
-import { EffectCube } from 'swiper/modules';
 import { modalAtom } from '@/state/store/modal';
 
 export default function StoriesModal({ mainIndex, setMainIndex }: any) {
@@ -22,7 +21,7 @@ export default function StoriesModal({ mainIndex, setMainIndex }: any) {
 	const [topIndex, setTopindex] = useState(0);
 	const [subIndex, setSubindex] = useState(0);
 	const swiperRef = useRef<SwiperCore>();
-	const visibleIndex = useRef(0);
+
 	const STORIES_DATA = [
 		{
 			user: '박수빈',
@@ -102,7 +101,7 @@ export default function StoriesModal({ mainIndex, setMainIndex }: any) {
 
 	useEffect(() => {
 		setSubIndexHistory([0, 0, 0, 0]);
-		setTopindex(0);
+		setTopindex(mainIndex);
 		setSubindex(0);
 	}, [modalOpen]);
 
@@ -134,6 +133,7 @@ export default function StoriesModal({ mainIndex, setMainIndex }: any) {
 	}, [subIndex, topIndex]);
 
 	if (!modalOpen) return null;
+
 	return (
 		<div className="absolute inset-0 z-50 bg-black w-full h-screen">
 			<div className="">
@@ -159,9 +159,12 @@ export default function StoriesModal({ mainIndex, setMainIndex }: any) {
 				>
 					{STORIES_DATA.map((main, index) => (
 						<SwiperSlide key={main.user}>
-							<div className="flex justify-between">
-								<span className="text-white text-3xl">{STORIES_DATA[index].user}</span>
-								<button onClick={() => setModalOpen(false)} className="text-white text-3xl">
+							<div>
+								<span className="absolute left-0 text-white text-3xl">{STORIES_DATA[index].user}</span>
+								<span className="absolute left-1/2 text-white text-3xl">
+									{subIndexHistory[index] + 1}/{STORIES_DATA[index].poster.length}
+								</span>
+								<button onClick={() => setModalOpen(false)} className="absolute right-0 text-white text-3xl">
 									닫기
 								</button>
 							</div>
@@ -183,6 +186,9 @@ export default function StoriesModal({ mainIndex, setMainIndex }: any) {
 							<button
 								onClick={() => {
 									if (subIndex === STORIES_DATA[index].poster.length - 1) {
+										if (topIndex === STORIES_DATA.length - 1) {
+											setModalOpen(false);
+										}
 										swiperRef.current?.slideNext();
 										setSubindex(0);
 									} else {
