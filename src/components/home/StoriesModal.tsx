@@ -10,16 +10,18 @@ import { useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubePlayer } from 'react-youtube';
 import { modalAtom } from '@/state/store/modal';
 
-export default function StoriesModal({ mainIndex, setMainIndex }: any) {
+export default function StoriesModal({ mainIndex }: any) {
 	const [modalOpen, setModalOpen] = useAtom(modalAtom);
 	const [subIndexHistory, setSubIndexHistory] = useState([0, 0, 0, 0]);
 	const [musicPlayer, setMusicPlayer] = useState<YouTubePlayer>();
 	const [firstVideoId, setFirstVideoId] = useState('');
 	const [firstStartTime, setFirstStartTime] = useState(0);
 	const [firstEndTime, setFirstEndTime] = useState(0);
-	const [playing, setPlaying] = useState<boolean>(false);
+	// const [playing, setPlaying] = useState<boolean>(false);
 	const [topIndex, setTopindex] = useState(0);
 	const [subIndex, setSubindex] = useState(0);
+	const [storyProgress, setStoryProgress] = useState<number[][]>([[]]);
+	const [intervalId, setIntervalId] = useState<undefined | NodeJS.Timer>(undefined);
 	const swiperRef = useRef<SwiperCore>();
 
 	const STORIES_DATA = [
@@ -100,29 +102,56 @@ export default function StoriesModal({ mainIndex, setMainIndex }: any) {
 	];
 
 	useEffect(() => {
-		setSubIndexHistory([0, 0, 0, 0]);
-		setTopindex(mainIndex);
-		setSubindex(0);
-	}, [modalOpen]);
+		if (modalOpen) {
+			const data = STORIES_DATA.map((story) => new Array(story.poster.length).fill(0));
+			setStoryProgress(data);
+			console.log(data);
 
+			setSubIndexHistory([0, 0, 0, 0]);
+			setTopindex(mainIndex);
+			setSubindex(0);
+			// setProgress(0);
+		}
+		return () => {
+			clearInterval(intervalId);
+		};
+	}, [modalOpen]);
 	const onReady = (event: YouTubePlayer) => {
 		setMusicPlayer(event.target);
+	};
+
+	// 뮤직 프로그레시브 실시간 업데이트
+	const updateProgressBar = () => {
+		const currentTime = musicPlayer.getCurrentTime();
+		const progressState = ((currentTime - firstStartTime) / (firstEndTime - firstStartTime)) * 100;
+		// setProgress(progressState);
 	};
 
 	// iframe 재생 시
 	const onPlay = () => {
 		console.log('재생...');
-		setPlaying(true);
+		// setPlaying(true);
+		// setProgress(0);
+		clearInterval(intervalId);
+		setIntervalId(undefined);
+		// const newIntervalId = setInterval(updateProgressBar, 1000);
+		// setIntervalId(newIntervalId);
 	};
 
 	// iframe 정지 시
 	const onPause = () => {
 		console.log('정지...');
+		clearInterval(intervalId);
+		setIntervalId(undefined);
 	};
 
 	// iframe 노래 끝났을 때
 	const onEnd = () => {
 		console.log('끝');
+		// setProgress(0);
+		// subIndexHistory
+		clearInterval(intervalId);
+		setIntervalId(undefined);
 	};
 
 	useEffect(() => {
@@ -133,7 +162,6 @@ export default function StoriesModal({ mainIndex, setMainIndex }: any) {
 	}, [subIndex, topIndex]);
 
 	if (!modalOpen) return null;
-
 	return (
 		<div className="absolute inset-0 z-50 bg-black w-full h-screen">
 			<div className="">
@@ -159,11 +187,28 @@ export default function StoriesModal({ mainIndex, setMainIndex }: any) {
 				>
 					{STORIES_DATA.map((main, index) => (
 						<SwiperSlide key={main.user}>
+							<div className="flex justify-between">
+								{storyProgress[index]?.map((progress, progressIndex) => (
+									<input
+										key={progressIndex}
+										onChange={undefined}
+										type="range"
+										min="0"
+										max="100"
+										value={progress}
+										style={{
+											background: `linear-gradient(to right, #428EFF 0%, #428EFF ${progress}%, #d5d4d3 ${progress}%, #d5d4d3 100%)`,
+										}}
+									/>
+								))}
+							</div>
 							<div>
 								<span className="absolute left-0 text-white text-3xl">{STORIES_DATA[index].user}</span>
-								<span className="absolute left-1/2 text-white text-3xl">
-									{subIndexHistory[index] + 1}/{STORIES_DATA[index].poster.length}
-								</span>
+								<div className="absolute left-1/2 text-white text-3xl">
+									<span>
+										{subIndexHistory[index] + 1}/{STORIES_DATA[index].poster.length}
+									</span>
+								</div>
 								<button onClick={() => setModalOpen(false)} className="absolute right-0 text-white text-3xl">
 									닫기
 								</button>
