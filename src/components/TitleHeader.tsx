@@ -14,6 +14,7 @@ export default function TitleHeader({ title, notification, previous, view, isWra
 		<header className={`flex  w-full h-20 my-1 justify-center ${isWrap ? '' : 'items-center'}`}>
 			{previous && <PreviousButton />}
 			<h1 className={`text-3xl font-bold ${isWrap && 'absolute top-[1.5rem]'}`}>{title}</h1>
+			{/* viewer 수, 알림 - api 없어서 임시로 막아둠 */}
 			{/* {notification && <IoNotifications className="text-3xl absolute right-5" />} */}
 			{/* {view && (
 				<span className="flex justify-center items-center absolute right-5 gap-1">

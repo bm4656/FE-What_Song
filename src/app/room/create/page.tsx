@@ -20,6 +20,7 @@ type createRoom = {
 	accessAuth: string;
 };
 export default function CreateRoomPage() {
+	// 뮤직룸 생성 mutation
 	const queryClient = useQueryClient();
 	const { mutate: createMusicRoomMutate, isLoading } = useMutation(roomClients.createMusicRoom, {
 		onSuccess: () => {
@@ -27,14 +28,15 @@ export default function CreateRoomPage() {
 		},
 		onError: (error) => console.log(error),
 	});
-	// 스크롤 이동
+	// 스크롤 이동을 위한 useRef 객체 선언
 	const focusFirst = useRef<HTMLDivElement>(null);
 	const focusSecond = useRef<HTMLDivElement>(null);
 	const focusLast = useRef<HTMLDivElement>(null);
+	// 스크롤 포커스하는 함수
 	const onMoveToFocus = (focus: React.RefObject<HTMLDivElement>) => {
 		focus.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 	};
-	// 유저 정보
+	// 유저 정보 GET
 	const user = useUser();
 	const userSeq = user.data?.memberSeq;
 	// 뮤직 방 생성 폼 데이터
