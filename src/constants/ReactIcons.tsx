@@ -1,7 +1,7 @@
 import { AiFillHome, AiFillMessage, AiOutlineHome, AiOutlineMessage } from 'react-icons/ai';
 import { BsFillMusicPlayerFill, BsMusicPlayer } from 'react-icons/bs';
 import { HiPlay, HiOutlineShare, HiOutlineUsers, HiOutlinePencilAlt, HiOutlineAdjustments } from 'react-icons/hi';
-import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
+import { IoChevronBack, IoChevronForward, IoClose } from 'react-icons/io5';
 import { RiUser3Fill, RiUser3Line } from 'react-icons/ri';
 
 export const Icons = {
@@ -18,6 +18,7 @@ export const Icons = {
 	playButton: <HiPlay />,
 	share: <HiOutlineShare />,
 	users: <HiOutlineUsers />,
+	close: <IoClose />,
 	modify: <HiOutlinePencilAlt />,
 	adjustments: <HiOutlineAdjustments />,
 	arrowBack: <IoChevronBack />,

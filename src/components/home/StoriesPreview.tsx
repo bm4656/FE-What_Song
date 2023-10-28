@@ -5,12 +5,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useSetAtom } from 'jotai';
 import { useState } from 'react';
-import StoriesModal from './StoriesModal';
+import { useRouter } from 'next/navigation';
 import { modalAtom } from '@/state/store/modal';
 
 export default function StoriesPreview() {
+	const router = useRouter();
 	const setModalOpen = useSetAtom(modalAtom);
-	const [mainIndex, setMainIndex] = useState(0);
 	const STORIES_DATA = [
 		{
 			user: '박수빈',
@@ -35,7 +35,7 @@ export default function StoriesPreview() {
 							<button
 								onClick={() => {
 									setModalOpen(true);
-									setMainIndex(index);
+									router.push(`/stories/${index}`);
 								}}
 								className="flex flex-col items-center"
 							>
@@ -52,7 +52,6 @@ export default function StoriesPreview() {
 						</SwiperSlide>
 					))}
 				</Swiper>
-				<StoriesModal mainIndex={mainIndex} setMainIndex={setMainIndex} />
 			</div>
 		</>
 	);
