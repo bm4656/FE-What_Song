@@ -1,5 +1,6 @@
 import { QueueVideo } from '@/types/video';
 import server from './server';
+import { decodeTitle } from '@/utils/youtube/decode';
 
 export const roomApis = {
 	healthCheck: async () => {
@@ -13,26 +14,6 @@ export const roomApis = {
 	getAllRooms: async () => {
 		const res = await server.get('/api/v1/check/all');
 		return res.data;
-	},
-	getQueueList: async (roomId: number) => {
-		const res = await server.get(`/api/v1/reservation?roomSeq=${roomId}`);
-		const queueList: QueueVideo[] = res.data;
-		const filteredList = queueList
-			.filter((item) => item.recognize === 'NONE')
-			.map((item) => {
-				return {
-					...item.selectVideo,
-					reservationId: item.reservationId,
-					recognize: item.recognize,
-				};
-			});
-		return filteredList;
-	},
-	getPlayList: async (roomId: number) => {
-		const res = await server.get(`/api/v1/reservation/approve/list?roomSeq=${roomId}`);
-		const playList: QueueVideo[] = res.data;
-		const filteredList = playList.map((item: QueueVideo) => item.selectVideo);
-		return filteredList;
 	},
 	getRoomData: async (roomId: number) => {
 		const res = await server.get(`/api/v1/check/room?roomSeq=${roomId}`);
