@@ -21,6 +21,7 @@ export default function MusicBarCard({ music, barType, onAdd, onDelete }: Props)
 						src={music.thumbnailUrl}
 						alt="앨범커버"
 						fill
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 						style={{ objectFit: 'cover' }}
 						className="rounded-[1.5rem] shadow-md shadow-zinc-400"
 					/>
