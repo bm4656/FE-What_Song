@@ -21,9 +21,6 @@ export default function StoriesPreview() {
 		{
 			user: '김보민',
 		},
-		{
-			user: '장준환',
-		},
 	];
 
 	return (

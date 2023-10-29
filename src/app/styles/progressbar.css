@@ -13,10 +13,10 @@ input[type=range]:focus {
   
 input[type=range]::-webkit-slider-thumb{
     -webkit-appearance: none;
-    width: 12px;
-    height: 12px;
-    background: #fff;
-    border: 1px solid dodgerblue;
+    width: 15px;
+    height: 15px;
+    background: #ee5253;
+    /* border: 1px solid dodgerblue; */
     border-radius: 50%;
     cursor: pointer;
 }
@@ -26,7 +26,7 @@ input[type=range]::-moz-range-thumb{
     width:10px;
     height:10px;
     background: #fff;
-    border: 1px solid dodgerblue;
+    /* border: 1px solid dodgerblue; */
     border-radius: 50%;
     cursor: pointer;
 }
