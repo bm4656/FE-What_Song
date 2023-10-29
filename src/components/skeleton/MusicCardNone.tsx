@@ -6,7 +6,12 @@ export default function MusicCardNone({ type }: { type: string }) {
 		<article className="m-4 rounded-[40px] shadow-md shadow-zinc-700 overflow-hidden relative w-[30rem] h-[30rem] hover:scale-95">
 			<Link href="room/create">
 				<div className="w-1/2 h-1/2">
-					<Image src="/assets/cat-music.jpeg" alt="make" fill />
+					<Image
+						src="/assets/cat-music.jpeg"
+						alt="make"
+						fill
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+					/>
 				</div>
 				<div className="absolute w-[30rem] h-[30rem] bottom-0 left-0 bg-gradient-to-tl from-zinc-900" />
 				<h2 className="absolute bottom-32 left-5 text-3xl font-bold text-white p-2 w-4/5">

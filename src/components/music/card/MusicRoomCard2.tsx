@@ -22,6 +22,7 @@ export default function MusicRoomCard2({
 						src="https://i.pinimg.com/564x/f0/a1/9f/f0a19f453d9201c3226c2a6d4be786c0.jpg"
 						alt={roomName}
 						fill
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
 						style={{ objectFit: 'cover' }}
 						className="rounded-[40px] shadow-md shadow-zinc-400"
 					/>
