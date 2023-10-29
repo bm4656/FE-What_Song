@@ -16,3 +16,7 @@ export type ResVideo = Video & {
 	reservationId: string;
 	roomSeq?: number;
 };
+
+export type YoutubeType = Video & {
+	roomSeq: number;
+};

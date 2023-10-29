@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubePlayer } from 'react-youtube';
+import { decode } from 'html-entities';
 import SockJS from 'sockjs-client';
 import { CompatClient, Stomp } from '@stomp/stompjs';
 import { opts } from '@/constants/iframe';
@@ -210,7 +211,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 				player={musicPlayer}
 			/>
 			<div className="flex flex-col justify-center items-center p-2 w-full">
-				<h2 className="text-4xl font-bold">{playList[musicIndex]?.selectVideo.title}</h2>
+				<h2 className="text-4xl font-bold line-clamp-1 w-[80%]">{decode(playList[musicIndex]?.selectVideo.title)}</h2>
 				<p className="text-3xl font-semibold text-zinc-400">{playList[musicIndex]?.selectVideo.channelName}</p>
 			</div>
 			{playList && (

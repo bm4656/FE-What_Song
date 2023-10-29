@@ -21,11 +21,12 @@ export default function MusicBarCard({ music, barType, onAdd, onDelete }: Props)
 						src={music.thumbnailUrl}
 						alt="앨범커버"
 						fill
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
 						style={{ objectFit: 'cover' }}
 						className="rounded-[1.5rem] shadow-md shadow-zinc-400"
 					/>
 				</div>
-				<h2 className="absolute left-[11.5rem] top-7 text-3xl font-bold truncate w-[60%]">{music.title}</h2>
+				<h2 className="absolute left-[11.5rem] top-7 text-3xl font-bold truncate w-[60%] text-start">{music.title}</h2>
 				<p className="absolute left-[11.5rem] top-16 text-xl text-zinc-400 font-semibold">{music.channelName}</p>
 			</button>
 			<button className="absolute right-14 text-3xl hover:scale-110" onClick={handleRequest}>
