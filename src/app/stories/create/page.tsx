@@ -9,35 +9,34 @@ import PageHeaderContent from '@/components/PageHeaderContent';
 import SearchBar from '@/components/bar/SearchBar';
 import { ResVideo } from '@/types/video';
 import { currentMusicInfo } from '@/utils/iframe';
+import equalizer from '../../../../public/assets/equalizer.png';
 
 export default function CreateStoryPage() {
-	const [searchList, setSearchList] = useState([
-		{
-			title: 'Kyrie（アイナ・ジ・エンド）- キリエ・憐れみの讃歌',
-			thumbnail:
-				'https://img.imageimg.net/upload/portal/category_push/img/banner_1002088_97ad5df7ddf09ce1fa519c62bc49808ff1507cf3.jpg',
-			videoId: 'BI4zNteRP7E',
-			startTime: 207,
-			endTime: 222,
-		},
-	]);
+	const [searchList, setSearchList] = useState<any>([]);
 	const [musicPlayer, setMusicPlayer] = useState<YouTubePlayer | null>(null);
 	const [playTime, setPlayTime] = useState<string>('0:00');
 	const [endPlayTime, setEndPlayTime] = useState<string>('0:00');
 	const [timeScale, setTimeScale] = useState<number>(15);
 	const [progress, setProgress] = useState<number>(0);
+	const [storyProgress, setStoryProgress] = useState<number>(0);
 	const [playStatus, setPlayStatus] = useState<string>('PAUSE');
 	const focusFirst = useRef<HTMLDivElement>(null);
 	const focusSecond = useRef<HTMLDivElement>(null);
 	const [intervalId, setIntervalId] = useState<undefined | NodeJS.Timer>(undefined);
 	const [firstStartTime, setFirstStartTime] = useState(0);
-	const inputRef = useRef(null);
 
 	const onMoveToFocus = (focus: React.RefObject<HTMLDivElement>) => {
 		focus.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		if (focus === focusSecond) {
-			musicPlayer.playVideo();
-			setPlayStatus('PLAYING');
+			setSearchList([
+				{
+					title: 'キタニタツヤ「青のすみか」',
+					thumbnail: 'https://i1.sndcdn.com/artworks-5DkDarrIPyczQi2L-Ig5DlA-t500x500.jpg',
+					videoId: 'gcgKUcJKxIs',
+					startTime: 46,
+					endTime: 60,
+				},
+			]);
 		}
 	};
 
@@ -55,9 +54,12 @@ export default function CreateStoryPage() {
 
 	// 뮤직 프로그레시브 실시간 업데이트
 	const updateProgressBar = () => {
-		const { progressState, currentPlayTime } = currentMusicInfo(musicPlayer);
+		console.log(2);
+		const { currentTime, progressState } = currentMusicInfo(musicPlayer);
 		setProgress(progressState);
-		setPlayTime(currentPlayTime);
+
+		const storyProgressState = ((currentTime - firstStartTime) / (firstStartTime + (timeScale - firstStartTime))) * 100;
+		setStoryProgress(storyProgressState);
 	};
 
 	const onReady = (event: YouTubePlayer) => {
@@ -88,6 +90,7 @@ export default function CreateStoryPage() {
 	const onEnd = () => {
 		clearInterval(intervalId);
 		setIntervalId(undefined);
+		setStoryProgress(100);
 		setPlayStatus('PAUSE');
 	};
 
@@ -97,6 +100,7 @@ export default function CreateStoryPage() {
 		const { currentPlayTime } = currentMusicInfo(musicPlayer, jump);
 		setProgress(jump);
 		setPlayTime(currentPlayTime);
+		setStoryProgress(0);
 	};
 
 	// 뮤직 점프
@@ -141,61 +145,52 @@ export default function CreateStoryPage() {
 				className="flex flex-col relative h-full items-start justify-between p-[2rem] bg-cover"
 			>
 				{/* <TitleHeader title="뮤직방 생성" isWrap /> */}
-				<div
-					style={{
-						position: 'absolute',
-						top: 0,
-						left: 0,
-						width: '100%',
-						height: '100%',
-						backgroundColor: 'red',
-						backgroundImage: `url(${searchList[0].thumbnail})`,
-						filter: 'blur(20px)',
-						zIndex: -1,
-						backgroundPosition: 'center',
-					}}
-				/>
-				<div className="w-full h-full flex flex-col items-center justify-center">
-					<span className="text-white text-4xl">{searchList[0].title}</span>
-					<img
-						src={searchList[0].thumbnail}
-						alt={searchList[0].thumbnail}
-						className="my-6 border-solid border-[2px] border-white w-[250px] h-[250px] rounded-xl object-cover"
-					/>
-					<div className="flex mb-6">
-						{[5, 10, 15].map((time) => (
-							<button
-								onClick={() => {
-									setTimeScale(time);
-									musicPlayer.playVideo();
-									setPlayStatus('PLAYING');
-								}}
-								className={`${
-									timeScale === time ? '' : 'opacity-[0.5]'
-								}  w-[30px] h-[30px] flex items-center justify-center mx-2 bg-[#fff] rounded-full`}
-								key={time}
-							>
-								<span className="text-3xl text-black">{time}</span>
-							</button>
-						))}
-					</div>
-					<div className="flex">
-						<input
-							ref={inputRef}
-							onChange={handleProgressBarChange}
-							onMouseUp={handleMouseUp}
-							onTouchEnd={handleMouseUp}
-							type="range"
-							min="0"
-							max="100"
-							value={progress}
+				{searchList[0] && (
+					<>
+						<div
 							style={{
-								width: '29rem',
-								height: '0.8rem',
-								background: `linear-gradient(to right, #ee5253 0%, #ee5253 ${progress}%, #eee ${progress}%, #fff 100%)`,
+								position: 'absolute',
+								top: 0,
+								left: 0,
+								width: '100%',
+								height: '100%',
+								backgroundColor: 'red',
+								backgroundImage: `url(${searchList[0].thumbnail})`,
+								filter: 'blur(20px)',
+								zIndex: -1,
+								backgroundPosition: 'center',
 							}}
 						/>
-						<button
+						<div className="w-full h-full flex flex-col items-center justify-center">
+							<span className="text-white text-4xl">{searchList[0].title}</span>
+							<img
+								src={searchList[0].thumbnail}
+								alt={searchList[0].thumbnail}
+								className="my-6 border-solid border-[2px] border-white w-[250px] h-[250px] rounded-xl object-cover"
+							/>
+							<div className="flex mb-6">
+								{[5, 10, 15].map((time) => (
+									<button
+										onClick={() => {
+											setStoryProgress(0);
+											setTimeScale(time);
+											musicPlayer.playVideo();
+											setPlayStatus('PLAYING');
+										}}
+										className={`${
+											timeScale === time ? 'bg-[#ee5253] text-white' : 'opacity-[0.5] bg-[#fff] '
+										}  w-[35px] h-[35px] flex items-center justify-center mx-2 rounded-full`}
+										key={time}
+									>
+										<span className="text-3xl ">{time}</span>
+									</button>
+								))}
+							</div>
+							<div className="overflow-hidden w-[60%] h-[10px] first:mr-4 rounded-xl bg-[#eee]">
+								<div className="h-[100%] bg-[#ee5253]" style={{ width: `${storyProgress <= 100 && storyProgress}%` }} />
+							</div>
+							<div className="flex">
+								{/* <button
 							onClick={() => {
 								if (playStatus === 'PLAYING') {
 									musicPlayer.pauseVideo();
@@ -209,37 +204,54 @@ export default function CreateStoryPage() {
 							className="text-3xl text-white"
 						>
 							재생
-						</button>
-					</div>
-					<div className="flex">
-						<div className="mr-6">
-							<span className="text-white text-3xl">시작 : </span>
-							<span className="text-white text-3xl">{playTime}</span>
+						</button> */}
+							</div>
+							<div className="flex mt-6">
+								<span className="text-white text-3xl">
+									{playTime} ~ {endPlayTime}
+								</span>
+							</div>
+							<input
+								className="mt-6"
+								onChange={handleProgressBarChange}
+								onMouseUp={handleMouseUp}
+								onTouchEnd={handleMouseUp}
+								type="range"
+								min="0"
+								max="100"
+								value={progress}
+								style={{
+									width: '35rem',
+									height: '4rem',
+									backgroundColor: 'black',
+									border: '1px solid #ee5253',
+									backgroundImage: `url(${equalizer.src})`,
+									backgroundPosition: 'center',
+									borderRadius: 12,
+								}}
+							/>
 						</div>
-						<div>
-							<span className="text-white text-3xl">끝 : </span>
-							<span className="text-white text-3xl">{endPlayTime}</span>
-						</div>
-					</div>
-				</div>
-				<YouTube
-					videoId={searchList[0].videoId}
-					className="opacity-0 absolute"
-					opts={{
-						width: 1,
-						height: 1,
-						playerVars: {
-							autoplay: 1,
-							controls: 1,
-							start: firstStartTime,
-							end: firstStartTime + timeScale,
-						},
-					}}
-					onReady={onReady}
-					onPlay={() => onPlay()}
-					onPause={() => onPause()}
-					onEnd={() => onEnd()}
-				/>
+						<YouTube
+							videoId={searchList[0].videoId}
+							className="opacity-0 absolute"
+							opts={{
+								width: 1,
+								height: 1,
+								playerVars: {
+									autoplay: 1,
+									controls: 1,
+									start: firstStartTime,
+									end: firstStartTime + timeScale,
+								},
+							}}
+							onReady={onReady}
+							onPlay={() => onPlay()}
+							onPause={() => onPause()}
+							onEnd={() => onEnd()}
+						/>
+					</>
+				)}
+
 				<HiOutlineChevronUp
 					className="absolute bottom-32 text-4xl cursor-pointer flex self-center"
 					onClick={() => onMoveToFocus(focusSecond)}
