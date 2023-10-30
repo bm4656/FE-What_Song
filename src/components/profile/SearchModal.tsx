@@ -11,8 +11,18 @@ export default function SearchModal() {
 	const [targetName, setTargetName] = useState('');
 	const user = useUser();
 
-	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTargetName(e.target.value);
+		try {
+			const ownerSeq = await user.data?.memberSeq;
+			const res = await friendApis.searchName({ ownerSeq, targetName });
+			// eslint-disable-next-line no-unused-expressions
+			console.log(res);
+			setSerchList(res);
+		} catch (error) {
+			// 오류 처리
+			console.error('검색 요청 중 오류 발생:', error);
+		}
 	};
 	const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
@@ -20,6 +30,7 @@ export default function SearchModal() {
 			const ownerSeq = await user.data?.memberSeq;
 			const res = await friendApis.searchName({ ownerSeq, targetName });
 			// eslint-disable-next-line no-unused-expressions
+			console.log(res);
 			setSerchList(res);
 			setTargetName('');
 		} catch (error) {
@@ -27,6 +38,7 @@ export default function SearchModal() {
 			console.error('검색 요청 중 오류 발생:', error);
 		}
 	};
+
 	return (
 		<section className="absolute bg-yellow-200 w-full h-[50%]">
 			<article className="w-full flex justify-center items-center p-2">
