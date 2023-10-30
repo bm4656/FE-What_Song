@@ -6,3 +6,12 @@ export const opts = {
 		controls: 1,
 	},
 };
+
+export const storyOpts = {
+	width: 1,
+	height: 1,
+	playerVars: {
+		autoplay: 1,
+		controls: 1,
+	},
+};
