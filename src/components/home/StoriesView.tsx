@@ -225,8 +225,7 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 				{STORIES_DATA.map((main, index) => (
 					<SwiperSlide key={main.user}>
 						<Swiper
-							className="w-screen"
-							// touchRatio={0}
+							className="w-full"
 							spaceBetween={16}
 							onSwiper={(swiper) => {
 								swiperMusic.current = swiper;
@@ -253,7 +252,7 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 						>
 							{main.poster.map((post, postIndex) => (
 								<SwiperSlide key={post.thumbnail + postIndex}>
-									<div className="z-50 flex items-center justify-between w-full absolute top-2 px-2">
+									<div className="z-50 flex items-center justify-between absolute top-2 px-2">
 										{/* {storyProgress[index]?.map((progress, progressIndex) => (
 											<div
 												key={progressIndex}
@@ -265,7 +264,7 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 											</div>
 										))} */}
 									</div>
-									<div className="flex w-full justify-between p-6">
+									<div className="flex justify-between p-6">
 										<div className="flex items-center">
 											<img className="w-[50px] h-[50px] rounded-full mr-2" src={main.profile} alt="smaliCat" />
 											<div className="flex flex-col">
@@ -277,7 +276,7 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 											{Icons.close}
 										</button>
 									</div>
-									<div className="flex flex-col mx-8 items-center justify-center h-screen bg-cover">
+									<div className="flex flex-col mx-8 items-center justify-center h-screen max-w-[50rem]">
 										<div
 											style={{
 												position: 'absolute',
@@ -291,7 +290,6 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 												backgroundPosition: 'center',
 											}}
 										/>
-
 										<input
 											onChange={undefined}
 											type="range"
