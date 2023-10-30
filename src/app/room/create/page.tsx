@@ -77,7 +77,12 @@ export default function CreateRoomPage() {
 			<section ref={focusSecond} className="flex flex-col relative h-full items-start my-32 p-[2rem]">
 				<TitleHeader title="뮤직방 생성" isWrap />
 				<div className="w-80 h-80 relative rounded-[4rem] shadow-2xl shadow-slate-700 overflow-hidden self-center m-4">
-					<Image src="/assets/cat-music.jpeg" fill alt="이미지" />
+					<Image
+						src="/assets/cat-music.jpeg"
+						fill
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+						alt="이미지"
+					/>
 				</div>
 				<PageHeaderContent
 					content="당신의 플레이리스트의
