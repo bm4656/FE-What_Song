@@ -8,6 +8,7 @@ import useUser from '@/hooks/useUser';
 
 type Props = {
 	musicRoom: Room;
+	priority?: boolean;
 };
 
 export default function MusicRoomCard({
@@ -15,6 +16,7 @@ export default function MusicRoomCard({
 		extraInfo: { hostName, view, hostEmail },
 		have: { roomName, musicRoomSeq },
 	},
+	priority = false,
 }: Props) {
 	const user = useUser();
 	const userEmail = user.data?.email;
@@ -22,11 +24,13 @@ export default function MusicRoomCard({
 	return (
 		<article className="m-4 rounded-[40px] shadow-md shadow-zinc-700 overflow-hidden relative w-[30rem] h-[30rem] hover:opacity-90">
 			<Link href={`room/${musicRoomSeq}`}>
-				<div className="w-1/2 h-1/2">
+				<div className="w-full h-full relative">
 					<Image
 						src="https://i.pinimg.com/originals/af/99/7b/af997bd9ce063b60705e71b7c21b8198.jpg"
 						alt={roomName}
+						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
 						fill
+						priority={priority}
 					/>
 				</div>
 				<div className="absolute w-[30rem] h-[30rem] bottom-0 left-0 bg-gradient-to-tl from-zinc-900" />

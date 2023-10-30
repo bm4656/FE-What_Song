@@ -6,7 +6,7 @@ export default function RoundedButton({ name, color }: { name: string; color: st
 	const colorList: ColorList = {
 		blue: 'bg-primary',
 		pink: 'bg-secondary',
-		pick: 'bg-amber-200',
+		gray: 'bg-[#BDBDBD]',
 	};
 	return (
 		<div className={`${colorList[color]} w-44 h-20 rounded-full flex justify-center items-center cursor-pointer bg-`}>

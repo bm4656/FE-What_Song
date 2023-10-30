@@ -5,7 +5,7 @@ const categories = ['K-POP', 'POP', 'J-POP', '힙합', '공부', '잔잔'];
 
 export default function CategoryGrid({ clickFn }: { clickFn: (item: string) => void }) {
 	// 선택된 카테고리의 인덱스를 상태로 관리
-	const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+	const [selectedCategory, setSelectedCategory] = useState<string | null>(categories[0]);
 
 	return (
 		<div className="flex self-center m-5">
@@ -22,7 +22,7 @@ export default function CategoryGrid({ clickFn }: { clickFn: (item: string) => v
 							}
 						}}
 					>
-						<RoundedButton name={item} color={selectedCategory === item ? 'pick' : 'pink'} />
+						<RoundedButton name={item} color={selectedCategory === item ? 'pink' : 'gray'} />
 					</li>
 				))}
 			</ul>

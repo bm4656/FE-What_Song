@@ -34,9 +34,7 @@ export default function RequestModal({
 	const { data: queueList } = useQuery(['queueList', roomId], () => {
 		return roomClients.getQueueList(Number(roomId));
 	});
-	// console.log(queueList);
 	const searchFn = (list: ResVideo[]) => {
-		// console.log('동작', list[0]);
 		setSearchList(list);
 	};
 	const removeFn = () => {

@@ -1,5 +1,6 @@
-import { QueueVideo } from '@/types/video';
+import { QueueVideo, ResVideo } from '@/types/video';
 import client from './client';
+import { decodeTitle } from '@/utils/youtube/decode';
 
 export const roomClients = {
 	createMusicRoom: async (body: {
@@ -49,13 +50,12 @@ export const roomClients = {
 					recognize: item.recognize,
 				};
 			});
-		return filteredList;
+		return decodeTitle(filteredList);
 	},
 	getPlayList: async (roomId: number) => {
 		const res = await client.get(`/api/v1/reservation/approve/list?roomSeq=${roomId}`);
 		const playList: QueueVideo[] = res.data;
-		// console.log(playList);
-		const filteredList = playList
+		const filteredList: ResVideo[] = playList
 			.filter((item) => item.recognize === 'APPROVE')
 			.map((item) => {
 				return {
@@ -63,7 +63,7 @@ export const roomClients = {
 					reservationId: item.reservationId,
 				};
 			});
-		return filteredList;
+		return decodeTitle(filteredList);
 	},
 	getRoomData: async (roomId: number) => {
 		const res = await client.get(`/api/v1/check/room?roomSeq=${roomId}`);

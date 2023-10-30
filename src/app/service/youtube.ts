@@ -1,20 +1,14 @@
 import client from './client';
-
-export type YoutubeType = {
-	videoId: string;
-	title: string;
-	channelName: string;
-	thumbnailUrl: string;
-	roomSeq: number;
-};
+import { decodeTitle } from '@/utils/youtube/decode';
 
 export const youtubeApis = {
 	serchKeyword: async (body: { keyword: string }) => {
 		const res = await client.post('/api/v1/youtube/search', { ...body });
-		// const str = /&#39;/gi;
-		// return res.data.filter((item: YoutubeType) => {
-		// 	item.title = item.title.replace(str, "'");
+		// const decoded = res.data.map((item: YoutubeType) => {
+		// 	item.title = decode(item.title);
+		// 	return item;
 		// });
-		return res.data;
+		// return decoded;
+		return decodeTitle(res.data);
 	},
 };
