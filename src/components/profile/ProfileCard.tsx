@@ -1,18 +1,18 @@
 import { FiSettings } from 'react-icons/fi';
 import ProfileBar from './ProfileBar';
-import SearchBar from '../bar/SearchBar';
 import SearchModal from './SearchModal';
+import ProfileButton from './ProfileButton';
 
 export default function ProfileCard() {
 	return (
 		<section className="w-full h-[30rem]">
 			<ProfileBar />
 			<div className="flex gap-4 justify-center items-center mt-16">
-				<button className="bg-neutral-200 w-[40%] h-16 rounded-xl text-2xl font-semibold">프로필 편집</button>
-				<button className="bg-neutral-200 w-[40%] h-16 rounded-xl text-2xl font-semibold">친구 추가</button>
-				<button className="bg-neutral-200 w-[10%] h-16 rounded-xl text-3xl font-semibol flex items-center justify-center">
+				<ProfileButton addStyle="w-[40%] text-2xl">프로필 편집</ProfileButton>
+				<ProfileButton addStyle="w-[40%] text-2xl">친구 추가</ProfileButton>
+				<ProfileButton addStyle="w-[10%] text-3xl  flex items-center justify-center">
 					<FiSettings />
-				</button>
+				</ProfileButton>
 			</div>
 			<SearchModal />
 		</section>
