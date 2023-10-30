@@ -1,6 +1,7 @@
 'use client';
 
 import { AiOutlineSearch } from 'react-icons/ai';
+import { FiDelete } from 'react-icons/fi';
 import { FormEvent, useState } from 'react';
 import { SimpleUser } from '@/types/user';
 import { friendApis } from '@/app/service/friend';
@@ -41,20 +42,23 @@ export default function SearchModal() {
 	};
 
 	return (
-		<section className="absolute bg-neutral-100 w-full h-[50%]">
-			<article className="w-full flex justify-center items-center p-2">
-				<div className="bg-neutral-200 w-[85%] h-16 rounded-xl flex items-center gap-2">
-					<AiOutlineSearch className="text-3xl ml-5" />
-					<div className="">
+		<section className="absolute bg-neutral-100 w-full h-full rounded-t-[5%]">
+			<article className="w-full flex justify-center items-center mt-4">
+				<div className="bg-neutral-200 w-[90%] h-16 rounded-xl flex items-center justify-center gap-2 m-2 overflow-hidden">
+					<div className="w-full flex justify-around items-center">
+						<AiOutlineSearch className="text-3xl" />
 						<form onSubmit={handleSubmit}>
 							<input
 								type="text"
 								placeholder="검색"
 								value={targetName}
 								onChange={handleChange}
-								className="text-[1.4rem] bg-neutral-200 w-[30rem] min-w-full"
+								className="text-[1.4rem] w-[28rem] bg-neutral-200"
 							/>
 						</form>
+						<button>
+							<FiDelete className="text-2xl mr-4" />
+						</button>
 					</div>
 				</div>
 			</article>
@@ -62,7 +66,7 @@ export default function SearchModal() {
 				{searchList?.[0] &&
 					searchList?.map((item) => (
 						<li key={item.memberSeq}>
-							<UserCard user={item} />
+							<UserCard user={item} ownerSeq={user.data?.memberSeq} />
 						</li>
 					))}
 			</ul>

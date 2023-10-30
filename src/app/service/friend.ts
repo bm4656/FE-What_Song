@@ -12,4 +12,12 @@ export const friendApis = {
 		}));
 		return filteredData;
 	},
+	addFriend: async (body: { ownerSeq: number; targetSeq: number }) => {
+		const res = await client.post('api/v1/friends/apply', { ...body });
+		return res.data;
+	},
+	getFollowings: async (ownerSeq: number) => {
+		const res = await client.get(`api/v1/friends?ownerSeq=${ownerSeq}`);
+		return res.data;
+	},
 };

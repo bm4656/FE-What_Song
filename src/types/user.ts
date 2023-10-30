@@ -1,7 +1,7 @@
 export type SimpleUser = {
 	email: string;
 	imgURL: string;
-	memberSeq: string;
+	memberSeq: number;
 	nickname: string;
 };
 
