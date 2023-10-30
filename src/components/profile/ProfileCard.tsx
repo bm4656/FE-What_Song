@@ -1,5 +1,7 @@
 import { FiSettings } from 'react-icons/fi';
 import ProfileBar from './ProfileBar';
+import SearchBar from '../bar/SearchBar';
+import SearchModal from './SearchModal';
 
 export default function ProfileCard() {
 	return (
@@ -12,6 +14,7 @@ export default function ProfileCard() {
 					<FiSettings />
 				</button>
 			</div>
+			<SearchModal />
 		</section>
 	);
 }
