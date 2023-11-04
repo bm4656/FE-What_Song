@@ -56,7 +56,12 @@ export default function SearchModal() {
 								className="text-[1.4rem] w-[28rem] bg-neutral-200"
 							/>
 						</form>
-						<button>
+						<button
+							onClick={() => {
+								setTargetName('');
+								setSerchList([]);
+							}}
+						>
 							<FiDelete className="text-2xl mr-4" />
 						</button>
 					</div>
