@@ -12,4 +12,6 @@ export type RawUser = SimpleUser & {
 	profileMusic: string;
 	refreshToken: string;
 	socialType: string;
+	// following: number;
+	// followers: number;
 };
