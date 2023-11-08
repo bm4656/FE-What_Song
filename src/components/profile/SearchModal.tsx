@@ -2,14 +2,18 @@
 
 import { AiOutlineSearch } from 'react-icons/ai';
 import { FiDelete } from 'react-icons/fi';
+import { BsFillXCircleFill } from 'react-icons/bs';
 import { FormEvent, useState } from 'react';
+import { useAtom } from 'jotai';
 import { SimpleUser } from '@/types/user';
 import { friendApis } from '@/app/service/friend';
 import UserCard from './UserCard';
+import { SearchModalAtom } from '@/state/store/searchModal';
 
 export default function SearchModal({ ownerSeq }: { ownerSeq: number }) {
 	const [searchList, setSerchList] = useState<SimpleUser[]>([]);
 	const [targetName, setTargetName] = useState('');
+	const [modalOpen, setModalOpen] = useAtom(SearchModalAtom);
 
 	const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTargetName(e.target.value);
@@ -38,8 +42,15 @@ export default function SearchModal({ ownerSeq }: { ownerSeq: number }) {
 	};
 	return (
 		<div className="fixed top-0 bottom-0 w-full max-w-[50rem] bg-black/50 z-10">
-			<article className="absolute bottom-0 left-0 w-full max-w-screen-md h-[41rem] rounded-t-2xl px-4 pb-1 flex justify-center bg-neutral-100">
-				<div className="bg-neutral-200 w-[98%] h-16 rounded-xl flex items-center justify-center gap-2 mt-6 overflow-hidden">
+			<button
+				className="w-20 h-20 absolute top-[29rem] left-[21rem] flex justify-center items-center"
+				onClick={() => setModalOpen((prev) => !prev)}
+			>
+				<BsFillXCircleFill className="text-neutral-200 text-6xl" />
+			</button>
+			<article className="absolute bottom-0 left-0 w-full max-w-screen-md h-[41rem] rounded-t-2xl px-4 pb-1 flex justify-center bg-neutral-100 animate-[bottom-sheet-up_200ms_ease-in-out]">
+				<div className="absolute top-4 bg-neutral-400 w-28 h-[0.4rem] rounded-full" />
+				<div className="bg-neutral-200 w-[98%] h-16 rounded-xl flex items-center justify-center gap-2 mt-10 overflow-hidden">
 					<AiOutlineSearch className="text-3xl absolute left-10" />
 					<form onSubmit={handleSubmit}>
 						<input
@@ -47,7 +58,7 @@ export default function SearchModal({ ownerSeq }: { ownerSeq: number }) {
 							placeholder="검색"
 							value={targetName}
 							onChange={handleChange}
-							className="text-[1.4rem] w-[28rem] bg-neutral-200 absolute left-[5.5rem] top-[2.6rem]"
+							className="text-[1.4rem] max-w-[28rem] bg-neutral-200 absolute left-[5.5rem] top-[3.4rem]"
 						/>
 					</form>
 					<button
@@ -56,7 +67,7 @@ export default function SearchModal({ ownerSeq }: { ownerSeq: number }) {
 							setSerchList([]);
 						}}
 					>
-						{targetName && <FiDelete className="text-2xl mr-4 absolute right-10 top-[2.75rem]" />}
+						{targetName && <FiDelete className="text-2xl mr-4 absolute right-10 top-[3.72rem]" />}
 					</button>
 				</div>
 				<ul className="w-full absolute left-0 top-28">
