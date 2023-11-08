@@ -3,13 +3,14 @@
 import { FiSettings } from 'react-icons/fi';
 import { useAtom } from 'jotai';
 import ProfileBar from './ProfileBar';
-import SearchModal from './SearchModal';
 import ProfileButton from './ProfileButton';
-import { SearchModalAtom } from '@/state/store/searchModal';
 import useUser from '@/hooks/useUser';
+import BottomSheetModal from '../modal/BottomSheetModal';
+import SearchFriend from '../modal/SearchFriend';
+import { modalAtom } from '@/state/store/modal';
 
 export default function ProfileCard() {
-	const [modalOpen, setModalOpen] = useAtom(SearchModalAtom);
+	const [modalOpen, setModalOpen] = useAtom(modalAtom);
 	const user = useUser().data;
 
 	if (!user) return null;
@@ -25,7 +26,11 @@ export default function ProfileCard() {
 					<FiSettings />
 				</ProfileButton>
 			</div>
-			{modalOpen && <SearchModal ownerSeq={user.memberSeq} />}
+			{modalOpen && (
+				<BottomSheetModal>
+					<SearchFriend ownerSeq={user.memberSeq} />
+				</BottomSheetModal>
+			)}
 		</section>
 	);
 }
