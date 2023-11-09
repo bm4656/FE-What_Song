@@ -33,7 +33,7 @@ export default function SearchBar({ placeholder, searchFn, removeFn, searchType 
 			// eslint-disable-next-line no-unused-expressions
 			searchFn && searchFn(res); // searchFn을 호출하여 검색 결과 전달
 			setOpen(true);
-			// setKeyword('');
+			setKeyword('');
 		} catch (error) {
 			// 오류 처리
 			console.error('검색 요청 중 오류 발생:', error);
@@ -46,10 +46,10 @@ export default function SearchBar({ placeholder, searchFn, removeFn, searchType 
 				<form onSubmit={handleSubmit}>
 					<input
 						type="text"
-						placeholder="검색"
+						placeholder={placeholder}
 						value={keyword}
 						onChange={handleChange}
-						className="text-[1.4rem] max-w-[28rem] bg-neutral-200 absolute left-[5.5rem] top-[3.4rem]"
+						className="text-[1.4rem] max-w-full bg-neutral-200 absolute left-[5.5rem] top-[3.4rem]"
 					/>
 				</form>
 				<button

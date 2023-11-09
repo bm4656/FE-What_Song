@@ -2,16 +2,17 @@ import Image from 'next/image';
 import { FaTrashAlt } from 'react-icons/fa';
 import { BsMusicNoteList } from 'react-icons/bs';
 import { ResVideo, Video } from '@/types/video';
-import { BottomModal } from '@/types/modal';
+import { MusicBar } from '@/types/modal';
 import PlaylistButton from '@/components/button/PlaylistButton';
 
 type Props = {
 	music: ResVideo & { roomSeq: number };
-	barType: BottomModal;
-	onAdd: (music: ResVideo, addType: string) => void;
+	barType: MusicBar;
+	onAdd: (music: ResVideo, addType: MusicBar) => void;
 	onDelete?: () => void;
 };
 export default function MusicBarCard({ music, barType, onAdd, onDelete }: Props) {
+	// 버튼 클릭 시 뮤직 정보와 요청 타입 상위(MusicBars)에 전달
 	const handleRequest = () => {
 		onAdd({ ...music }, barType);
 	};
@@ -33,7 +34,7 @@ export default function MusicBarCard({ music, barType, onAdd, onDelete }: Props)
 				</h2>
 				<p className="absolute left-[11.5rem] top-16 text-xl text-zinc-400 font-semibold">{music.channelName}</p>
 				<button className="absolute right-14 text-3xl hover:scale-110" onClick={handleRequest}>
-					{barType !== 'ACCEPT' && <PlaylistButton type={barType} />}
+					<PlaylistButton type={barType} />
 				</button>
 			</div>
 		</li>
