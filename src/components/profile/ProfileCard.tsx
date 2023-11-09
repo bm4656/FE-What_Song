@@ -6,7 +6,7 @@ import ProfileBar from './ProfileBar';
 import ProfileButton from './ProfileButton';
 import useUser from '@/hooks/useUser';
 import BottomSheetModal from '../modal/BottomSheetModal';
-import SearchFriend from '../modal/SearchFriend';
+import SearchFriend from './SearchFriend';
 import { modalAtom } from '@/state/store/modal';
 
 export default function ProfileCard() {

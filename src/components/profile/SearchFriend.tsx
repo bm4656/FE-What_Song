@@ -5,11 +5,11 @@ import { FiDelete } from 'react-icons/fi';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { SimpleUser } from '@/types/user';
 import { friendApis } from '@/app/service/friend';
-import UserCard from '../profile/UserCard';
+import UserCard from './UserCard';
 
 export default function SearchFriend({ ownerSeq }: { ownerSeq: number }) {
 	const [targetName, setTargetName] = useState('');
-	const [searchList, setSerchList] = useState<SimpleUser[]>([]);
+	const [searchList, setSearchList] = useState<SimpleUser[]>([]);
 
 	const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		setTargetName(e.target.value);
@@ -17,7 +17,7 @@ export default function SearchFriend({ ownerSeq }: { ownerSeq: number }) {
 			const res = await friendApis.searchName({ ownerSeq, targetName });
 			// eslint-disable-next-line no-unused-expressions
 			console.log(res);
-			setSerchList(res);
+			setSearchList(res);
 		} catch (error) {
 			// 오류 처리
 			console.error('검색 요청 중 오류 발생:', error);
@@ -29,7 +29,7 @@ export default function SearchFriend({ ownerSeq }: { ownerSeq: number }) {
 			const res = await friendApis.searchName({ ownerSeq, targetName });
 			// eslint-disable-next-line no-unused-expressions
 			// console.log(res);
-			setSerchList(res);
+			setSearchList(res);
 			setTargetName('');
 		} catch (error) {
 			// 오류 처리
@@ -53,7 +53,7 @@ export default function SearchFriend({ ownerSeq }: { ownerSeq: number }) {
 				<button
 					onClick={() => {
 						setTargetName('');
-						setSerchList([]);
+						setSearchList([]);
 					}}
 				>
 					{targetName && <FiDelete className="text-2xl mr-4 absolute right-10 top-[3.72rem]" />}

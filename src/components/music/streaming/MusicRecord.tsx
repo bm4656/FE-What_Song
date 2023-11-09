@@ -27,7 +27,14 @@ export default function MusicRecord({ image, isHost, music, playStatus, player }
 					)}
 				</span>
 			)}
-			<div className="bg-zinc-900 absolute right-44 max-[490px]:right-24 w-80 h-80 rounded-full z-0" />
+			<div
+				className={`absolute right-44 max-[490px]:right-24 w-[22rem] h-[22rem] rounded-full z-0 ${
+					playStatus === 'PLAYING' && 'animate-spin'
+				}`}
+			>
+				<Image src="/assets/record.png" alt="레코드" fill />
+			</div>
+
 			<div className="w-80 h-96 absolute rounded-[40px] shadow-2xl shadow-slate-700 overflow-hidden z-10">
 				<Image src={image} alt="이미지" fill />
 			</div>

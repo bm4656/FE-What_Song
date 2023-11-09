@@ -8,6 +8,9 @@ import { Icons } from '@/constants/ReactIcons';
 import RequestModal from '../RequestModal';
 import { BottomModalAtom } from '@/state/store/bottomModal';
 import useUser from '@/hooks/useUser';
+import StreamingModal from '../music/streaming/StreamingModal';
+import { modalAtom } from '@/state/store/modal';
+import { BottomModal } from '@/types/modal';
 
 const icons = [
 	// { name: '참여자', icon: Icons.users, clickFn: '' },
@@ -16,21 +19,17 @@ const icons = [
 	// { name: '수락', icon: Icons.adjustments, clickFn: 'request' },
 ];
 
-export default function StreamingBar({
-	roomId,
-	isOwner,
-	musicSock,
-	roomCode,
-	memberList,
-}: {
+type Props = {
 	roomId: string;
 	isOwner: boolean;
 	musicSock: CompatClient | any;
 	roomCode: string;
 	memberList: [];
-}) {
-	const [modalOpen, setModalOpen] = useAtom(BottomModalAtom);
-	const [modalType, setModalType] = useState(`${isOwner ? 'host' : 'normal'}`);
+};
+
+export default function StreamingBar({ roomId, isOwner, musicSock, roomCode, memberList }: Props) {
+	const [modalOpen, setModalOpen] = useAtom(modalAtom);
+	const [modalType, setModalType] = useState<BottomModal>(`${isOwner ? 'ADD' : 'REQUEST'}`);
 
 	return (
 		<article className="w-full h-40 flex items-center justify-center gap-5">
@@ -46,7 +45,7 @@ export default function StreamingBar({
 							className="flex flex-col justify-center items-center cursor-pointer"
 							onClick={() => {
 								setModalOpen((prev) => !prev);
-								setModalType('users');
+								// setModalType('users');
 							}}
 						>
 							<div className="text-5xl">{Icons.users}</div>
@@ -56,7 +55,7 @@ export default function StreamingBar({
 							className="flex flex-col justify-center items-center cursor-pointer"
 							onClick={() => {
 								setModalOpen((prev) => !prev);
-								setModalType('modify');
+								setModalType('ADD');
 							}}
 						>
 							<div className="text-5xl">{Icons.modify}</div>
@@ -66,7 +65,7 @@ export default function StreamingBar({
 							className="flex flex-col justify-center items-center cursor-pointer"
 							onClick={() => {
 								setModalOpen((prev) => !prev);
-								setModalType('host');
+								setModalType('ACCEPT');
 							}}
 						>
 							<div className="text-5xl">{Icons.adjustments}</div>
@@ -80,7 +79,7 @@ export default function StreamingBar({
 							className="bg-primary w-44 h-20 text-white rounded-full flex gap-3 justify-center items-center cursor-pointer"
 							onClick={() => {
 								setModalOpen((prev) => !prev);
-								setModalType('modify');
+								setModalType('REQUEST');
 							}}
 						>
 							<div className="text-4xl">{Icons.playButton}</div>
@@ -90,7 +89,7 @@ export default function StreamingBar({
 							className="flex flex-col justify-center items-center cursor-pointer"
 							onClick={() => {
 								setModalOpen((prev) => !prev);
-								setModalType('users');
+								// setModalType('users');
 							}}
 						>
 							<div className="text-5xl">{Icons.users}</div>
@@ -99,13 +98,12 @@ export default function StreamingBar({
 						<IconBox name={icons[0].name} clickFn={icons[0].clickFn}>
 							{icons[0].icon}
 						</IconBox>
-						{/* <IconBox name={icons[1].name} clickFn={icons[1].clickFn}>
-                            {icons[1].icon}
-                        </IconBox> */}
 					</>
 				)}
 			</ul>
-			<RequestModal modalType={modalType} musicSock={musicSock} roomCode={roomCode} memberList={memberList} />
+			{modalOpen && (
+				<StreamingModal modalType={modalType} musicSock={musicSock} roomCode={roomCode} memberList={memberList} />
+			)}
 		</article>
 	);
 }
