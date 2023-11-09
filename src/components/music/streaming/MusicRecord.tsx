@@ -28,11 +28,11 @@ export default function MusicRecord({ image, isHost, music, playStatus, player }
 				</span>
 			)}
 			<div
-				className={`absolute right-44 max-[490px]:right-24 w-[22rem] h-[22rem] rounded-full z-0 ${
+				className={`absolute right-44 max-[490px]:right-24 w-[20rem] h-[20rem] rounded-full z-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ${
 					playStatus === 'PLAYING' && 'animate-spin'
 				}`}
 			>
-				<Image src="/assets/record.png" alt="레코드" fill />
+				{/* <Image src="/assets/recordImg.png" alt="레코드" fill /> */}
 			</div>
 
 			<div className="w-80 h-96 absolute rounded-[40px] shadow-2xl shadow-slate-700 overflow-hidden z-10">
