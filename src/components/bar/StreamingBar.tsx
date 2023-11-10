@@ -22,12 +22,13 @@ const icons = [
 type Props = {
 	roomId: string;
 	isOwner: boolean;
+	memberSeq: number;
 	musicSock: CompatClient | any;
 	roomCode: string;
 	memberList: [];
 };
 
-export default function StreamingBar({ roomId, isOwner, musicSock, roomCode, memberList }: Props) {
+export default function StreamingBar({ roomId, isOwner, memberSeq, musicSock, roomCode, memberList }: Props) {
 	const [modalOpen, setModalOpen] = useAtom(modalAtom);
 	const [modalType, setModalType] = useState<BottomModal>(`${isOwner ? 'ADD' : 'REQUEST'}`);
 
@@ -102,7 +103,13 @@ export default function StreamingBar({ roomId, isOwner, musicSock, roomCode, mem
 				)}
 			</ul>
 			{modalOpen && (
-				<StreamingModal modalType={modalType} musicSock={musicSock} roomCode={roomCode} memberList={memberList} />
+				<StreamingModal
+					modalType={modalType}
+					musicSock={musicSock}
+					roomCode={roomCode}
+					memberList={memberList}
+					memberSeq={memberSeq}
+				/>
 			)}
 		</article>
 	);

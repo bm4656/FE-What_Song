@@ -33,9 +33,11 @@ export default function MusicBarCard({ music, barType, onAdd, onDelete }: Props)
 					{music.title}
 				</h2>
 				<p className="absolute left-[11.5rem] top-16 text-xl text-zinc-400 font-semibold">{music.channelName}</p>
-				<button className="absolute right-14 text-3xl hover:scale-110" onClick={handleRequest}>
-					<PlaylistButton type={barType} />
-				</button>
+				{barType !== 'NONE' && (
+					<button className="absolute right-14 text-3xl hover:scale-110" onClick={handleRequest}>
+						<PlaylistButton type={barType} />
+					</button>
+				)}
 			</div>
 		</li>
 	);

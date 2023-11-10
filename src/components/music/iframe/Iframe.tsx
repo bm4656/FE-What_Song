@@ -56,6 +56,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 	const [sockConnecting, setSockConnecting] = useState<boolean>(false);
 	const musicSock = useRef<CompatClient>();
 	const user = useUser();
+	const memberSeq = user.data?.memberSeq;
 	const userEmail = user.data?.email;
 	const isOwner = userEmail === hostEmail;
 
@@ -242,6 +243,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 			</div>
 			<StreamingBar
 				isOwner={isOwner}
+				memberSeq={memberSeq}
 				roomId={roomId}
 				musicSock={musicSock}
 				roomCode={roomCode}

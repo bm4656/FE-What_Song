@@ -10,14 +10,15 @@ type Props = {
 	roomId: string;
 	musicSock: any;
 	roomCode: string;
+	memberSeq: number;
 };
 
-export default function MusicBars({ list, barType, roomId, musicSock, roomCode }: Props) {
+export default function MusicBars({ list, barType, roomId, musicSock, roomCode, memberSeq }: Props) {
 	const handleAdd = (music: ResVideo, addType: MusicBar) => {
 		switch (addType) {
 			case 'ADD':
 				// 방장: 뮤직 추가
-				roomClients.acceptRequestMusic(music.reservationId);
+				roomClients.registerMusic({ ...music, roomSeq: Number(roomId), memberSeq });
 				playlistStatusSend(roomCode, roomId, musicSock);
 				alert('뮤직이 플레이리스트에 추가되었습니다!');
 				break;

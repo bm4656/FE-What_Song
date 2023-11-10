@@ -16,8 +16,9 @@ type Props = {
 	musicSock: CompatClient;
 	roomCode: string;
 	memberList: [];
+	memberSeq: number;
 };
-export default function StreamingModal({ modalType, musicSock, roomCode, memberList }: Props) {
+export default function StreamingModal({ modalType, musicSock, roomCode, memberList, memberSeq }: Props) {
 	const params = useParams();
 	const roomId = params.id;
 
@@ -54,17 +55,19 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 										barType={modalType}
 										musicSock={musicSock}
 										roomCode={roomCode}
+										memberSeq={memberSeq}
 									/>
 								</>
 							) : (
 								<>
-									<span className="text-xl font-bold p-2 ml-12 mb-5">🎼 현재 플레이리스트</span>
+									<span className="text-xl font-bold p-2 ml-12 mb-5">🎼 플레이리스트 내역</span>
 									<MusicBars
 										list={playList}
 										roomId={roomId}
-										barType={modalType}
+										barType="NONE"
 										musicSock={musicSock}
 										roomCode={roomCode}
+										memberSeq={memberSeq}
 									/>
 								</>
 							)}
@@ -84,6 +87,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 										barType={modalType}
 										musicSock={musicSock}
 										roomCode={roomCode}
+										memberSeq={memberSeq}
 									/>
 								</>
 							) : (

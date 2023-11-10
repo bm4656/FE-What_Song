@@ -30,6 +30,7 @@ export const roomClients = {
 		channelName: string;
 		thumbnailUrl: string;
 		roomSeq: number;
+		memberSeq?: number;
 	}) => {
 		const res = await client.post('/api/v1/reservation', { ...body });
 		return res;
