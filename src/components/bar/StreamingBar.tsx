@@ -5,12 +5,10 @@ import { useState } from 'react';
 import { CompatClient } from '@stomp/stompjs';
 import IconBox from '../music/streaming/IconBox';
 import { Icons } from '@/constants/ReactIcons';
-import RequestModal from '../RequestModal';
-import { BottomModalAtom } from '@/state/store/bottomModal';
-import useUser from '@/hooks/useUser';
 import StreamingModal from '../music/streaming/StreamingModal';
 import { modalAtom } from '@/state/store/modal';
 import { BottomModal } from '@/types/modal';
+import { SimpleUser } from '@/types/user';
 
 const icons = [
 	// { name: '참여자', icon: Icons.users, clickFn: '' },
@@ -25,7 +23,7 @@ type Props = {
 	memberSeq: number;
 	musicSock: CompatClient | any;
 	roomCode: string;
-	memberList: [];
+	memberList: SimpleUser[];
 };
 
 export default function StreamingBar({ roomId, isOwner, memberSeq, musicSock, roomCode, memberList }: Props) {
@@ -46,7 +44,7 @@ export default function StreamingBar({ roomId, isOwner, memberSeq, musicSock, ro
 							className="flex flex-col justify-center items-center cursor-pointer"
 							onClick={() => {
 								setModalOpen((prev) => !prev);
-								// setModalType('users');
+								setModalType('USERS');
 							}}
 						>
 							<div className="text-5xl">{Icons.users}</div>

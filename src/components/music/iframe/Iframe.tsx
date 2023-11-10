@@ -17,6 +17,7 @@ import { enterSend, leaveSend, musicStatusUpdate, playlistStatusSend } from '@/u
 import MusicRecord from '../streaming/MusicRecord';
 import useUser from '@/hooks/useUser';
 import StreamingBar from '@/components/bar/StreamingBar';
+import { SimpleUser } from '@/types/user';
 
 type Props = {
 	roomId: string;
@@ -49,7 +50,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 	const [playStatus, setPlayStatus] = useState<string>('NONE');
 	const [progress, setProgress] = useState<number>(0);
 	const [intervalId, setIntervalId] = useState<undefined | NodeJS.Timer>(undefined);
-	const [memberList, setMemberList] = useState<[]>([]);
+	const [memberList, setMemberList] = useState<SimpleUser[]>([]);
 	const [newMemberList, setNewMemberList] = useState<[]>([]);
 	const [playingStatus, setPlayingStatus] = useState<playingStatusInfo>();
 	const [musicIndex, setMusicIndex] = useState<number>(0);

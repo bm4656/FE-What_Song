@@ -10,12 +10,13 @@ import { ResVideo } from '@/types/video';
 import MusicBars from '../MusicBars';
 import { roomClients } from '@/app/service/room-client';
 import { BottomModal } from '@/types/modal';
+import { SimpleUser } from '@/types/user';
 
 type Props = {
 	modalType: BottomModal;
 	musicSock: CompatClient;
 	roomCode: string;
-	memberList: [];
+	memberList: SimpleUser[];
 	memberSeq: number;
 };
 export default function StreamingModal({ modalType, musicSock, roomCode, memberList, memberSeq }: Props) {
@@ -38,6 +39,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 	const removeFn = () => {
 		setSearchList([]);
 	};
+	console.log(memberList);
 	return (
 		<>
 			<BottomSheetModal>
@@ -95,6 +97,22 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 									<span className="text-2xl font-semibold mb-5">현재 대기열이 없어요!💦</span>
 								</div>
 							)}
+						</div>
+					</>
+				)}
+				{/* 방장 - 뮤직룸 참여자 조회 모달 */}
+				{modalType === 'USERS' && (
+					<>
+						<div className="absolute w-full top-12">
+							<span className="text-xl font-bold p-2 ml-12 mb-5">📌 참여자 목록</span>
+							{memberList &&
+								memberList.map((member) => (
+									<>
+										<p className="text-xl font-bold p-2 ml-12 mb-5" key={member.memberSeq}>
+											{member.nickname}
+										</p>
+									</>
+								))}
 						</div>
 					</>
 				)}
