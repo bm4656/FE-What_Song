@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Icons } from '../../constants/ReactIcons';
+import { Icons } from '../../constants/Icon/ReactIcons';
 
 type Props = {
 	tab: string;

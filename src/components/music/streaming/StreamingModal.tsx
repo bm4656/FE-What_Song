@@ -39,7 +39,6 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 	const removeFn = () => {
 		setSearchList([]);
 	};
-	console.log(memberList);
 	return (
 		<>
 			<BottomSheetModal>
@@ -100,7 +99,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 						</div>
 					</>
 				)}
-				{/* 방장 - 뮤직룸 참여자 조회 모달 */}
+				{/* 방장,일반 - 뮤직룸 참여자 조회 모달 */}
 				{modalType === 'USERS' && (
 					<>
 						<div className="absolute w-full top-12">
@@ -113,6 +112,39 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 										</p>
 									</>
 								))}
+						</div>
+					</>
+				)}
+				{/* 일반 - 뮤직룸 플레이리스트 요청 모달 */}
+				{modalType === 'REQUEST' && (
+					<>
+						<SearchBar placeholder="검색" searchFn={searchFn} removeFn={removeFn} />
+						<div className="absolute w-full top-32">
+							{searchList[0] ? (
+								<>
+									<span className="text-xl font-bold p-2 ml-12 mb-5">🎼 검색 결과</span>
+									<MusicBars
+										list={searchList}
+										roomId={roomId}
+										barType={modalType}
+										musicSock={musicSock}
+										roomCode={roomCode}
+										memberSeq={memberSeq}
+									/>
+								</>
+							) : (
+								<>
+									<span className="text-xl font-bold p-2 ml-12 mb-5">🎼 플레이리스트 내역</span>
+									<MusicBars
+										list={playList}
+										roomId={roomId}
+										barType="NONE"
+										musicSock={musicSock}
+										roomCode={roomCode}
+										memberSeq={memberSeq}
+									/>
+								</>
+							)}
 						</div>
 					</>
 				)}

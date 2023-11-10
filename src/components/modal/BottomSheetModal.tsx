@@ -13,7 +13,7 @@ export default function BottomSheetModal({ children }: { children: React.ReactNo
 				className="w-full absolute bottom-[46rem] flex justify-center items-center"
 				onClick={() => setModalOpen((prev) => !prev)}
 			>
-				<BsFillXCircleFill className="text-neutral-200 text-6xl w-13 h-13" />
+				<BsFillXCircleFill className="text-neutral-200 text-6xl w-12 h-12" />
 			</button>
 			<article className="absolute bottom-0 left-0 w-full max-w-screen-md h-[45rem] rounded-t-2xl px-4 pb-1 flex justify-center bg-neutral-100 animate-[bottom-sheet-up_200ms_ease-in-out]">
 				<div className="absolute top-4 bg-neutral-400 w-28 h-[0.4rem] rounded-full" />

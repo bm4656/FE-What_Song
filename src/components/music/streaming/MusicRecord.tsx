@@ -28,7 +28,7 @@ export default function MusicRecord({ image, isHost, music, playStatus, player }
 				</span>
 			)}
 			<div
-				className={`absolute right-44 max-[490px]:right-24 w-[20rem] h-[20rem] rounded-full z-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 ${
+				className={`absolute right-44 max-[490px]:right-24 w-[20rem] h-[20rem] rounded-full z-0 bg-gradient-to-r from-indigo-800 via-zinc-900 to-neutral-900 ${
 					playStatus === 'PLAYING' && 'animate-spin'
 				}`}
 			>
