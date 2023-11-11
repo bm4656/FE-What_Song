@@ -8,7 +8,7 @@ type Props = {
 	ownerSeq: number;
 };
 
-export default function UserCard({ user: { imgURL, nickname, email, memberSeq }, ownerSeq }: Props) {
+export default function UserCard({ user: { imgURL, nickname, email, memberSeq, alreadyFollowing }, ownerSeq }: Props) {
 	return (
 		<article className="flex w-full min-w-full items-center justify-center relative my-1">
 			<div className="w-[90%] h-28 px-4 flex items-center cursor-pointer">
@@ -24,7 +24,7 @@ export default function UserCard({ user: { imgURL, nickname, email, memberSeq },
 				</div>
 				<h2 className="absolute left-[10.5rem] top-8 text-xl font-semibold truncate w-[60%] text-start">{nickname}</h2>
 				<p className="absolute left-[10.5rem] top-[3.5rem] text-xl text-neutral-400">{email}</p>
-				<FollowButton followed={false} ownerSeq={ownerSeq} memberSeq={memberSeq} />
+				<FollowButton followed={alreadyFollowing} ownerSeq={ownerSeq} memberSeq={memberSeq} />
 			</div>
 		</article>
 	);

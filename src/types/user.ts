@@ -3,6 +3,7 @@ export type SimpleUser = {
 	imgURL: string;
 	memberSeq: number;
 	nickname: string;
+	alreadyFollowing: boolean;
 };
 
 export type RawUser = SimpleUser & {
@@ -12,6 +13,4 @@ export type RawUser = SimpleUser & {
 	profileMusic: string;
 	refreshToken: string;
 	socialType: string;
-	// following: number;
-	// followers: number;
 };
