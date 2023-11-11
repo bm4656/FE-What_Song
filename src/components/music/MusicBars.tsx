@@ -26,7 +26,7 @@ export default function MusicBars({ list, barType, roomId, musicSock, roomCode, 
 				// 방장: 뮤직 대기열 수락
 				roomClients.acceptRequestMusic(music.reservationId);
 				playlistStatusSend(roomCode, roomId, musicSock);
-				alert('대기열 뮤직이 플레이리스트에 추가되었습니다!');
+				alert('대기열 뮤직 수락! 플레이리스트에 추가되었습니다!');
 				break;
 			case 'REQUEST':
 				// 일반: 뮤직 대기열 요청

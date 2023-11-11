@@ -60,6 +60,7 @@ export default function StreamingBar({ roomId, isOwner, memberSeq, musicSock, ro
 					roomCode={roomCode}
 					memberList={memberList}
 					memberSeq={memberSeq}
+					roomId={roomId}
 				/>
 			)}
 		</article>

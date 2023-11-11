@@ -1,7 +1,5 @@
 import Image from 'next/image';
-import { FaTrashAlt } from 'react-icons/fa';
-import { BsMusicNoteList } from 'react-icons/bs';
-import { ResVideo, Video } from '@/types/video';
+import { ResVideo } from '@/types/video';
 import { MusicBar } from '@/types/modal';
 import PlaylistButton from '@/components/button/PlaylistButton';
 

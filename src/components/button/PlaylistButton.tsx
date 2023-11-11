@@ -8,14 +8,14 @@ type Props = {
 // 핸들링은
 export default function PlaylistButton({ type }: Props) {
 	return (
-		<button
-			className={`text-xl rounded-lg font-semibold text-white w-24 h-10 hover:scale-105 ${
+		<div
+			className={`flex items-center justify-center text-xl rounded-lg font-semibold text-white w-24 h-10 hover:scale-105 ${
 				type === 'ACCEPT' ? ' bg-primary' : 'bg-secondary'
 			}`}
 		>
 			{type === 'REQUEST' && '요청'}
 			{type === 'ACCEPT' && '수락'}
 			{type === 'ADD' && '추가'}
-		</button>
+		</div>
 	);
 }

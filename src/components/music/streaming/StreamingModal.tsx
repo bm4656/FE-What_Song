@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { CompatClient } from '@stomp/stompjs';
-import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import SearchBar from '@/components/bar/SearchBar';
 import BottomSheetModal from '@/components/modal/BottomSheetModal';
@@ -18,11 +17,9 @@ type Props = {
 	roomCode: string;
 	memberList: SimpleUser[];
 	memberSeq: number;
+	roomId: string;
 };
-export default function StreamingModal({ modalType, musicSock, roomCode, memberList, memberSeq }: Props) {
-	const params = useParams();
-	const roomId = params.id;
-
+export default function StreamingModal({ modalType, musicSock, roomCode, memberList, memberSeq, roomId }: Props) {
 	const [searchList, setSearchList] = useState<ResVideo[]>([]);
 
 	// 현재 플레이리스트 GET -> 변경 팔요
