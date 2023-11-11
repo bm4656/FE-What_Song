@@ -2,6 +2,7 @@
 
 import { FormEvent, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
+import { FiDelete } from 'react-icons/fi';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { TiDeleteOutline } from 'react-icons/ti';
 import { youtubeApis } from '@/app/service/youtube';
@@ -39,30 +40,38 @@ export default function SearchBar({ placeholder, searchFn, removeFn, searchType 
 		}
 	};
 	return (
-		<div className="flex justify-center">
-			<div className="bg-input w-[85%] h-16 rounded-xl flex justify-start gap-5 items-center mb-5">
-				<AiOutlineSearch className="text-3xl ml-5" />
+		<>
+			<div className="bg-neutral-200 w-[98%] h-16 rounded-xl flex items-center justify-center gap-2 mt-10 overflow-hidden">
+				<AiOutlineSearch className="text-3xl absolute left-10" />
 				<form onSubmit={handleSubmit}>
 					<input
 						type="text"
 						placeholder={placeholder}
 						value={keyword}
 						onChange={handleChange}
-						className="text-[1.4rem] bg-input w-[30rem] min-w-full"
+						className="text-[1.4rem] max-w-full bg-neutral-200 absolute left-[5.5rem] top-[3.4rem]"
 					/>
 				</form>
-				{open && (
-					<TiDeleteOutline
-						className="text-3xl absolute right-24 text-fontGray cursor-pointer"
-						onClick={() => {
-							setOpen(false);
-							// eslint-disable-next-line no-unused-expressions
-							removeFn && removeFn();
-							router.refresh();
-						}}
-					/>
-				)}
+				<button
+					onClick={() => {
+						setKeyword('');
+						setSearchList([]);
+					}}
+				>
+					{keyword && <FiDelete className="text-2xl mr-4 absolute right-10 top-[3.72rem]" />}
+				</button>
 			</div>
-		</div>
+			{/* {open && (
+				<TiDeleteOutline
+					className="text-3xl absolute right-24 text-fontGray cursor-pointer"
+					onClick={() => {
+						setOpen(false);
+						// eslint-disable-next-line no-unused-expressions
+						removeFn && removeFn();
+						router.refresh();
+					}}
+				/>
+			)} */}
+		</>
 	);
 }

@@ -3,6 +3,7 @@ export type SimpleUser = {
 	imgURL: string;
 	memberSeq: number;
 	nickname: string;
+	alreadyFollowing: boolean;
 };
 
 export type RawUser = SimpleUser & {

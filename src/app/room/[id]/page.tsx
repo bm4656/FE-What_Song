@@ -1,5 +1,5 @@
 import { roomApis } from '@/app/service/room';
-import ChattingBar from '@/components/bar/ChattingBar';
+import InteractionBar from '@/components/bar/InteractionBar';
 import Iframe from '@/components/music/iframe/Iframe';
 import TitleHeader from '@/components/TitleHeader';
 
@@ -18,7 +18,7 @@ export default async function MusicRoomPage({ params: { id } }: Props) {
 		<>
 			<TitleHeader title={roomName} previous view={view} />
 			<Iframe roomId={musicRoomSeq} roomCode={roomCode} hostEmail={hostEmail} />
-			<ChattingBar />
+			<InteractionBar />
 		</>
 	);
 }

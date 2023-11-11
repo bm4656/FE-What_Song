@@ -1,3 +1,9 @@
+import RoomsRoader from '@/components/skeleton/RoomsLoader';
+
 export default function loading() {
-	return <h1 className="w-full h-full">로딩중..입니당</h1>;
+	return (
+		<section className="w-full h-full flex justify-center items-center">
+			<RoomsRoader />
+		</section>
+	);
 }

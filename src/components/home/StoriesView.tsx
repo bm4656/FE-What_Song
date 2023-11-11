@@ -10,7 +10,7 @@ import 'swiper/css/pagination';
 import { useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubePlayer } from 'react-youtube';
 import { useRouter } from 'next/navigation';
-import { Icons } from '../../constants/ReactIcons';
+import { Icons } from '../../constants/Icon/ReactIcons';
 
 export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 	const router = useRouter();

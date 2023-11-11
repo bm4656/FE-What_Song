@@ -1,6 +1,12 @@
 import Image from 'next/image';
+import { RawUser } from '@/types/user';
 
-export default function ProfileBar() {
+type Props = {
+	user: RawUser;
+};
+
+export default function ProfileBar({ user: { nickname, email, imgURL } }: Props) {
+	// ImgURL 서버에서 디폴트 넣어줄 수 있는지?
 	return (
 		<article className="flex w-full relative h-[15rem]">
 			<div className="absolute w-40 h-60 p-4 left-10 top-6">
@@ -14,8 +20,8 @@ export default function ProfileBar() {
 						className="rounded-full"
 					/>
 				</div>
-				<p className="absolute bottom-10 left-4 text-2xl font-semibold">이름</p>
-				<p className="absolute bottom-4 left-4 text-xl text-zinc-400">이메일</p>
+				<p className="absolute bottom-10 left-4 text-2xl font-semibold">{nickname}</p>
+				<p className="absolute bottom-4 left-4 text-xl text-zinc-400">{email}</p>
 			</div>
 			<div className="flex gap-12 absolute right-32 top-20">
 				<div className="flex-col justify-center">

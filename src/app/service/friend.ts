@@ -9,6 +9,7 @@ export const friendApis = {
 			email: item.email,
 			imgURL: item.imgURL,
 			nickname: item.nickname,
+			alreadyFollowing: item.alreadyFollowing,
 		}));
 		return filteredData;
 	},

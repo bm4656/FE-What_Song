@@ -21,6 +21,16 @@ module.exports = {
 				fontGray: '#484C52',
 				input: '#E8EEF3',
 			},
+			keyframes: {
+				'bottom-sheet-up': {
+					'0%': { transform: 'translateY(50rem)' },
+					'100%': { transform: 'translateY(0)' },
+				},
+				'bottom-sheet-down': {
+					'0%': { transform: 'translateY(0)' },
+					'100%': { transform: 'translateY(50rem)' },
+				},
+			},
 		},
 	},
 	plugins: [],

@@ -17,6 +17,7 @@ import { enterSend, leaveSend, musicStatusUpdate, playlistStatusSend } from '@/u
 import MusicRecord from '../streaming/MusicRecord';
 import useUser from '@/hooks/useUser';
 import StreamingBar from '@/components/bar/StreamingBar';
+import { SimpleUser } from '@/types/user';
 
 type Props = {
 	roomId: string;
@@ -49,13 +50,14 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 	const [playStatus, setPlayStatus] = useState<string>('NONE');
 	const [progress, setProgress] = useState<number>(0);
 	const [intervalId, setIntervalId] = useState<undefined | NodeJS.Timer>(undefined);
-	const [memberList, setMemberList] = useState<[]>([]);
+	const [memberList, setMemberList] = useState<SimpleUser[]>([]);
 	const [newMemberList, setNewMemberList] = useState<[]>([]);
 	const [playingStatus, setPlayingStatus] = useState<playingStatusInfo>();
 	const [musicIndex, setMusicIndex] = useState<number>(0);
 	const [sockConnecting, setSockConnecting] = useState<boolean>(false);
 	const musicSock = useRef<CompatClient>();
 	const user = useUser();
+	const memberSeq = user.data?.memberSeq;
 	const userEmail = user.data?.email;
 	const isOwner = userEmail === hostEmail;
 
@@ -211,7 +213,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 				player={musicPlayer}
 			/>
 			<div className="flex flex-col justify-center items-center p-2 w-full">
-				<h2 className="text-4xl font-bold line-clamp-1 w-[80%]">{decode(playList[musicIndex]?.selectVideo.title)}</h2>
+				<p className="text-4xl font-bold line-clamp-1">{decode(playList[musicIndex]?.selectVideo.title)}</p>
 				<p className="text-3xl font-semibold text-zinc-400">{playList[musicIndex]?.selectVideo.channelName}</p>
 			</div>
 			{playList && (
@@ -242,6 +244,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 			</div>
 			<StreamingBar
 				isOwner={isOwner}
+				memberSeq={memberSeq}
 				roomId={roomId}
 				musicSock={musicSock}
 				roomCode={roomCode}
