@@ -5,6 +5,8 @@ import { HiOutlineChevronUp } from 'react-icons/hi';
 import YouTube, { YouTubePlayer } from 'react-youtube';
 import Image from 'next/image';
 import { BsPauseFill, BsPlayFill } from 'react-icons/bs';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import Button from '@/components/button/Button';
 import TitleHeader from '@/components/TitleHeader';
 import PageHeaderContent from '@/components/PageHeaderContent';
@@ -14,8 +16,11 @@ import equalizer from '../../../../public/assets/equalizer.png';
 import '../../styles/storiesProgressbar.css';
 import StoriesMusicBarCard from '@/components/music/card/StoriesMusicBarCard';
 import StoriesSearchBar from '@/components/bar/StoriesSearchBar';
+import { storyClients } from '@/app/service/stories';
+import useUser from '@/hooks/useUser';
 
 export default function CreateStoryPage() {
+	const router = useRouter();
 	const [searchList, setSearchList] = useState<StoryVideo[]>([]);
 	const [selectMusic, setSelectMuisc] = useState<StoryVideo>();
 	const [musicPlayer, setMusicPlayer] = useState<YouTubePlayer | null>(null);
@@ -33,8 +38,30 @@ export default function CreateStoryPage() {
 		focus.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 	};
 
+	const { mutate: createStoryMutate, isLoading } = useMutation(storyClients.postCreateStory, {
+		onSuccess: (res) => {
+			console.log(res);
+		},
+		onError: (error) => console.log(error),
+	});
+	const user = useUser();
+	const userSeq = user.data.memberSeq;
+
 	const onAddRoom = async () => {
-		// createMusicRoomMutate({ ...data });
+		if (!selectMusic) return;
+		createStoryMutate({
+			memberSeq: userSeq,
+			img_url: null,
+			start: String(firstStartTime),
+			end: String(firstStartTime + timeScale),
+			storyVideoReq: {
+				videoId: selectMusic.videoId,
+				title: selectMusic.title,
+				channelName: selectMusic.channelName,
+				thumbnailUrl: selectMusic.thumbnailUrl,
+			},
+		});
+		router.replace('/');
 	};
 
 	const searchFn = (list: ResVideo[]) => {
@@ -274,7 +301,7 @@ export default function CreateStoryPage() {
 					className="absolute bottom-32 text-4xl cursor-pointer flex self-center"
 					onClick={() => onMoveToFocus(focusSecond)}
 				/>
-				<Button content="공유하기" link="room/create/success" clickFn={onAddRoom} />
+				<Button content="공유하기" clickFn={onAddRoom} />
 			</article>
 		</>
 	);

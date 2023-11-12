@@ -13,6 +13,7 @@ export type StoryVideo = {
 	thumbnailUrl: string;
 	startTime: number;
 	endTime: number;
+	channelName: string;
 };
 
 export type QueueVideo = {
