@@ -10,7 +10,9 @@ import 'swiper/css/pagination';
 import { useEffect, useRef, useState } from 'react';
 import YouTube, { YouTubePlayer } from 'react-youtube';
 import { useRouter } from 'next/navigation';
+import { useAtomValue } from 'jotai';
 import { Icons } from '../../constants/Icon/ReactIcons';
+import { storiesInfo } from '@/state/store/stories';
 
 export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 	const router = useRouter();
@@ -25,85 +27,10 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 	const [intervalId, setIntervalId] = useState<undefined | NodeJS.Timer>(undefined);
 	const swiperRef = useRef<SwiperCore>();
 	const swiperMusic = useRef<SwiperCore>();
-
-	const STORIES_DATA = [
-		{
-			user: '박수빈',
-			profile:
-				'https://img4.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/24/holapet/20210524020226294iols.jpg',
-			poster: [
-				{
-					title: '[MV] IU(아이유) _ Blueming(블루밍)',
-					thumbnail:
-						'https://i.namu.wiki/i/VB9Jks3DdhQdvJq4hCCWsxnBK2EpAix3j63Qh-rjDOXZEDJOIGoAYJ44It11KxbB4IJY45iJWzsOv_lGcuYJWQ.webp',
-					videoId: 'D1PvIWdJ8xo',
-					startTime: 46,
-					endTime: 60,
-				},
-				{
-					title: 'GODS (ft. 뉴진스) (공식 뮤직 비디오) | 2023 월드 챔피언십 주제곡 - 리그 오브 레전드',
-					thumbnail:
-						'https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/0a/34/4d/0a344d13-8b5e-8f88-fab0-a4b36aa520a0/811395039915.png/1200x1200bf-60.jpg',
-					videoId: 'C3GouGa0noM',
-					startTime: 40,
-					endTime: 55,
-				},
-				{
-					title: 'Worlds Collide',
-					thumbnail:
-						'https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/53/d9/be/53d9be12-bf5d-726c-39f7-487b7884f816/859715616194.png/1200x1200bf-60.jpg',
-					videoId: 'u_hBDT6uRuQ',
-					startTime: 13,
-					endTime: 28,
-				},
-			],
-		},
-		{
-			user: '너구리의 갱즈의 리더 갱',
-			profile: 'https://i1.ruliweb.com/cmt/17/07/07/15d199f7dc9346e89.jpeg',
-			poster: [
-				{
-					title: 'キタニタツヤ「青のすみか」',
-					thumbnail: 'https://i1.sndcdn.com/artworks-5DkDarrIPyczQi2L-Ig5DlA-t500x500.jpg',
-					videoId: 'gcgKUcJKxIs',
-					startTime: 46,
-					endTime: 60,
-				},
-				{
-					title: '[MV] OH MY GIRL(오마이걸) _ The fifth season(다섯 번째 계절) (SSFWL)',
-					thumbnail: 'https://image.yes24.com/goods/72297332/XL',
-					videoId: 'udGwca1HBM4',
-					startTime: 60,
-					endTime: 85,
-				},
-			],
-		},
-		{
-			user: '밍승배잉',
-			profile:
-				'https://img.imageimg.net/upload/portal/category_push/img/banner_1002088_97ad5df7ddf09ce1fa519c62bc49808ff1507cf3.jpg',
-			poster: [
-				{
-					title: 'Kyrie（アイナ・ジ・エンド）- キリエ・憐れみの讃歌',
-					thumbnail:
-						'https://img.imageimg.net/upload/portal/category_push/img/banner_1002088_97ad5df7ddf09ce1fa519c62bc49808ff1507cf3.jpg',
-					videoId: 'BI4zNteRP7E',
-					startTime: 207,
-					endTime: 222,
-				},
-				{
-					title: 'Shutter',
-					thumbnail: 'https://static.qobuz.com/images/covers/gc/s4/m3kl9jlsws4gc_600.jpg',
-					videoId: 'VUY4DIuZAQI',
-					startTime: 111,
-					endTime: 126,
-				},
-			],
-		},
-	];
+	const storiesData = useAtomValue(storiesInfo);
 
 	useEffect(() => {
-		const data = STORIES_DATA.map((story) => new Array(story.poster.length).fill(0));
+		const data = storiesData.map((story: any) => new Array(story.stories.length).fill(0));
 		setStoryProgress(data);
 		setSubIndexHistory([0, 0, 0, 0]);
 		setTopindex(selectIndex);
@@ -132,8 +59,8 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 
 	const next = (jumpIndex: number) => {
 		setFirstVideoId('');
-		if (subIndex === STORIES_DATA[topIndex].poster.length - 1) {
-			if (topIndex === STORIES_DATA.length - 1) {
+		if (subIndex === storiesData[topIndex].stories.length - 1) {
+			if (topIndex === storiesData.length - 1) {
 				router.replace('/');
 			}
 			swiperRef.current?.slideNext();
@@ -189,10 +116,11 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 	};
 
 	useEffect(() => {
-		const { videoId, startTime, endTime } = STORIES_DATA[topIndex].poster[subIndex];
+		const { videoId } = storiesData[topIndex].stories[subIndex].storyVideo;
+		const { start, end } = storiesData[topIndex].stories[subIndex];
 		setFirstVideoId(videoId);
-		setFirstStartTime(startTime);
-		setFirstEndTime(endTime);
+		setFirstStartTime(Math.floor(Number(start)));
+		setFirstEndTime(Math.floor(Number(end)));
 	}, [subIndex, topIndex]);
 
 	return (
@@ -207,10 +135,11 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 					swiperRef.current.slideTo(selectIndex, 0, false);
 				}}
 				onAfterInit={() => {
-					const { videoId, startTime, endTime } = STORIES_DATA[selectIndex].poster[0];
+					const { videoId } = storiesData[topIndex].stories[subIndex].storyVideo;
+					const { start, end } = storiesData[topIndex].stories[subIndex];
 					setFirstVideoId(videoId);
-					setFirstStartTime(startTime);
-					setFirstEndTime(endTime);
+					setFirstStartTime(Math.floor(Number(start)));
+					setFirstEndTime(Math.floor(Number(end)));
 				}}
 				onSlideChange={(swiper) => {
 					setFirstVideoId('');
@@ -219,8 +148,8 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 					setSubindex(subIndexHistory[swiperIndex]);
 				}}
 			>
-				{STORIES_DATA.map((main, index) => (
-					<SwiperSlide key={main.user}>
+				{storiesData.map((main: any) => (
+					<SwiperSlide key={main.memberName}>
 						<Swiper
 							className="w-full"
 							spaceBetween={16}
@@ -234,7 +163,7 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 								bulletClass: 'custom_bullet',
 								bulletActiveClass: 'swiper-pagination-custom-bullet-active',
 								renderBullet(bulletIndex, className) {
-									return `<div class="${className}"><img src="${main.poster[bulletIndex].thumbnail}"></div>`;
+									return `<div class="${className}"><img src="${main.stories[bulletIndex].storyVideo.thumbnailUrl}"></div>`;
 								},
 							}}
 							modules={[Navigation, Pagination]}
@@ -247,8 +176,8 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 								}
 							}}
 						>
-							{main.poster.map((post, postIndex) => (
-								<SwiperSlide key={post.thumbnail + postIndex}>
+							{main.stories.map((post: any, postIndex: number) => (
+								<SwiperSlide key={post.storyVideo.thumbnailUrl + postIndex}>
 									<div className="z-50 flex items-center justify-between absolute top-2 px-2">
 										{/* {storyProgress[index]?.map((progress, progressIndex) => (
 											<div
@@ -263,9 +192,13 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 									</div>
 									<div className="flex justify-between p-6">
 										<div className="flex items-center">
-											<img className="w-[50px] h-[50px] rounded-full mr-2" src={main.profile} alt="smaliCat" />
+											<img
+												className="w-[50px] h-[50px] rounded-full mr-2"
+												src="https://img4.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/24/holapet/20210524020226294iols.jpg"
+												alt="smaliCat"
+											/>
 											<div className="flex flex-col">
-												<span className="text-white text-3xl">{main.user}</span>
+												<span className="text-white text-3xl">{main.memberName}</span>
 												<span className="text-gray-200 text-xl">23분전</span>
 											</div>
 										</div>
@@ -281,7 +214,7 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 												left: 0,
 												width: '100%',
 												height: '100%',
-												backgroundImage: `url(${post.thumbnail})`,
+												backgroundImage: `url(${post.storyVideo.thumbnailUrl})`,
 												filter: 'blur(20px)',
 												zIndex: -1,
 												backgroundPosition: 'center',
@@ -299,11 +232,11 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 												background: `linear-gradient(to right, #ee5253 0%, #ee5253 ${storyProgress[topIndex][subIndex]}%, #eee ${storyProgress[topIndex][subIndex]}%, #fff 100%)`,
 											}}
 										/>
-										<span className="my-6 text-white text-4xl">{post.title}</span>
+										<span className="my-6 text-white text-4xl">{post.storyVideo.title}</span>
 										<div className="flex flex-col items-center mx-8 mb-[14rem]">
 											<img
-												src={post.thumbnail}
-												alt={post.thumbnail}
+												src={post.storyVideo.thumbnailUrl}
+												alt={post.storyVideo.thumbnailUrl}
 												className="border-solid border-[2px] border-white w-[250px] h-[250px] rounded-xl object-cover"
 											/>
 										</div>

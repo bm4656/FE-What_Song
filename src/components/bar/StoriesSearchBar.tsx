@@ -1,7 +1,6 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
 import { FiDelete } from 'react-icons/fi';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { youtubeApis } from '@/app/service/youtube';
@@ -13,9 +12,7 @@ type Props = {
 	removeFn?: () => void;
 	searchType?: 'music' | 'user';
 };
-export default function SearchBar({ placeholder, searchFn, removeFn, searchType = 'music' }: Props) {
-	const param = useParams();
-	const router = useRouter();
+export default function StoriesSearchBar({ placeholder, searchFn, removeFn, searchType = 'music' }: Props) {
 	const [keyword, setKeyword] = useState('');
 	const [searchList, setSearchList] = useState<Video[]>([]);
 	const [open, setOpen] = useState(false);
@@ -40,7 +37,7 @@ export default function SearchBar({ placeholder, searchFn, removeFn, searchType 
 	};
 	return (
 		<>
-			<div className="bg-neutral-200 w-[98%] h-16 rounded-xl flex items-center justify-center gap-2 mt-10 overflow-hidden">
+			<div className="bg-neutral-200 w-[98%] h-16 rounded-xl flex items-center justify-center gap-2 mt-10 overflow-hidden relative">
 				<AiOutlineSearch className="text-3xl absolute left-10" />
 				<form onSubmit={handleSubmit}>
 					<input
@@ -48,7 +45,7 @@ export default function SearchBar({ placeholder, searchFn, removeFn, searchType 
 						placeholder={placeholder}
 						value={keyword}
 						onChange={handleChange}
-						className="text-[1.4rem] max-w-full bg-neutral-200 absolute left-[5.5rem] top-[3.4rem]"
+						className="text-[1.4rem] max-w-full bg-neutral-200 absolute left-[5.5rem] top-[1.1rem]"
 					/>
 				</form>
 				<button
@@ -57,20 +54,9 @@ export default function SearchBar({ placeholder, searchFn, removeFn, searchType 
 						setSearchList([]);
 					}}
 				>
-					{keyword && <FiDelete className="text-2xl mr-4 absolute right-10 top-[3.72rem]" />}
+					{keyword && <FiDelete className="text-2xl mr-4 absolute right-10 top-[1.2rem]" />}
 				</button>
 			</div>
-			{/* {open && (
-				<TiDeleteOutline
-					className="text-3xl absolute right-24 text-fontGray cursor-pointer"
-					onClick={() => {
-						setOpen(false);
-						// eslint-disable-next-line no-unused-expressions
-						removeFn && removeFn();
-						router.refresh();
-					}}
-				/>
-			)} */}
 		</>
 	);
 }

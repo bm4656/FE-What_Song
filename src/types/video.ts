@@ -3,6 +3,17 @@ export type Video = {
 	title: string;
 	channelName: string;
 	thumbnailUrl: string;
+	startTime: 46;
+	endTime: 60;
+};
+
+export type StoryVideo = {
+	videoId: string;
+	title: string;
+	thumbnailUrl: string;
+	startTime: number;
+	endTime: number;
+	channelName: string;
 };
 
 export type QueueVideo = {

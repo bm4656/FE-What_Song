@@ -5,20 +5,29 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { useRouter } from 'next/navigation';
 import { BsPlusSquare } from 'react-icons/bs';
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { useSetAtom } from 'jotai';
+import { storyClients } from '@/app/service/stories';
+import useUser from '@/hooks/useUser';
+import { storiesInfo } from '@/state/store/stories';
 
 export default function StoriesPreview() {
+	const setStoriesInfo = useSetAtom(storiesInfo);
 	const router = useRouter();
-	const STORIES_DATA = [
-		{
-			user: '박수빈',
+	const user = useUser();
+	const userSeq = user.data?.memberSeq;
+
+	const { data: stories } = useQuery(['stories'], () => storyClients.getStories(userSeq), {
+		onSuccess: (res) => {
+			setStoriesInfo(res.data);
 		},
-		{
-			user: '이성호',
+		onError: (error) => {
+			console.log(error);
 		},
-		{
-			user: '김보민',
-		},
-	];
+		enabled: !!userSeq,
+		// select: (data) => data.data,
+	});
 
 	return (
 		<>
@@ -32,9 +41,9 @@ export default function StoriesPreview() {
 							<span className="text-xl">스토리 작성</span>
 						</button>
 					</SwiperSlide>
-					{STORIES_DATA.map((story, index) => (
+					{stories?.data.map((story: { memberName: string }, index: number) => (
 						<SwiperSlide key={index} style={{ width: '85px' }}>
-							<button onClick={() => router.push(`/stories/${index}`)} className="flex flex-col items-center">
+							<Link href={`/stories/${index}`} className="flex flex-col items-center">
 								<Image
 									src="https://i.pinimg.com/564x/f0/a1/9f/f0a19f453d9201c3226c2a6d4be786c0.jpg"
 									alt={`story${index}`}
@@ -43,8 +52,8 @@ export default function StoriesPreview() {
 									style={{ objectFit: 'cover' }}
 									className="rounded-full mb-3"
 								/>
-								<span className="text-xl">{story.user}</span>
-							</button>
+								<span className="text-xl">{story.memberName}</span>
+							</Link>
 						</SwiperSlide>
 					))}
 				</Swiper>
