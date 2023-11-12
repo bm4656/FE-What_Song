@@ -10,6 +10,7 @@ import SearchBar from '@/components/bar/SearchBar';
 import { ResVideo } from '@/types/video';
 import { currentMusicInfo } from '@/utils/iframe';
 import equalizer from '../../../../public/assets/equalizer.png';
+import '../../styles/storiesProgressbar.css';
 
 export default function CreateStoryPage() {
 	const [searchList, setSearchList] = useState<any>([]);

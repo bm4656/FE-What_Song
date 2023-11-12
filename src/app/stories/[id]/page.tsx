@@ -1,4 +1,5 @@
 import StoriesView from '@/components/home/StoriesView';
+import '../../styles/storiesProgressbar.css';
 
 type Props = {
 	params: { id: string };
