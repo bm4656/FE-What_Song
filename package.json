@@ -37,6 +37,7 @@
     "react-youtube": "^10.1.0",
     "sockjs-client": "^1.6.1",
     "storybook": "^7.0.10",
+    "sweetalert2": "^11.9.0",
     "swiper": "^10.3.1",
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4",
