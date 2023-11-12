@@ -30,7 +30,7 @@ export default function StreamingBar({ roomId, isOwner, memberSeq, musicSock, ro
 	};
 
 	return (
-		<article className="w-full h-40 flex items-center justify-center gap-5">
+		<article className="w-full h-40 flex items-center justify-center gap-5 mt-10">
 			<ul className="flex gap-10">
 				{isOwner ? (
 					// 방장 - 스트리밍 관리 탭

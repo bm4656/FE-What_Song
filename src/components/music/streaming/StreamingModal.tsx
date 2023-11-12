@@ -46,7 +46,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 						<div className="absolute w-full top-32">
 							{searchList[0] ? (
 								<>
-									<span className="text-xl font-bold p-2 ml-12 mb-5">🎼 검색 결과</span>
+									<span className="text-xl font-bold p-2 ml-12 mb-5">검색 결과</span>
 									<MusicBars
 										list={searchList}
 										roomId={roomId}
@@ -58,7 +58,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 								</>
 							) : (
 								<>
-									<span className="text-xl font-bold p-2 ml-12 mb-5">🎼 플레이리스트 내역</span>
+									<span className="text-xl font-bold p-2 ml-12 mb-5">플레이리스트 내역</span>
 									<MusicBars
 										list={playList}
 										roomId={roomId}
