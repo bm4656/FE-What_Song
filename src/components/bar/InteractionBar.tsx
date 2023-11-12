@@ -1,6 +1,7 @@
 'use client';
 
-import { RiCloudFill } from 'react-icons/ri';
+import { BsFire } from 'react-icons/bs';
+import { FaHeart, FaHandSparkles } from 'react-icons/fa';
 import { useState } from 'react';
 import InteractionView from '../InteractionView';
 
@@ -19,18 +20,20 @@ export default function InteractionBar() {
 		<article className="flex flex-col gap-2 w-full  h-42 px-10 absolute bottom-8">
 			{/* 인터랙션 이모지 버튼 */}
 			<ul className="flex justify-evenly items-center h-24">
-				{emoji.map((item) => (
+				{/* {emoji.map((item) => (
 					<li className="text-4xl p-5 w-24" key={item}>
 						<button onClick={handleButton} value={item}>
 							{item}
 						</button>
 					</li>
-				))}
+				))} */}
 			</ul>
 			{/* 인터랙션 이모지 반응 */}
 			{interaction && <InteractionView emoji="" />}
-			<div className="bg-zinc-200 flex justify-between items-center overflow-hidden h-20 rounded-[28px]">
-				<RiCloudFill className="text-6xl text-primary m-7 p-0.5" />
+			<div className="flex justify-end items-center h-20 w-full rounded-sm">
+				{/* <FaHandSparkles className="text-6xl text-secondary m-7 p-0.5" />
+				<BsFire className="text-6xl text-secondary m-7 p-0.5" /> */}
+				<FaHeart className="text-[5rem] text-secondary p-0.5 cursor-pointer animate-bounce" onClick={handleButton} />
 			</div>
 		</article>
 	);

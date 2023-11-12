@@ -28,7 +28,6 @@ export default function SearchFriend({ ownerSeq }: { ownerSeq: number }) {
 		try {
 			const res = await friendApis.searchName({ ownerSeq, targetName });
 			// eslint-disable-next-line no-unused-expressions
-			// console.log(res);
 			setSearchList(res);
 			setTargetName('');
 		} catch (error) {

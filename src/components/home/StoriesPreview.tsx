@@ -31,7 +31,7 @@ export default function StoriesPreview() {
 
 	return (
 		<>
-			<div>
+			<div className="pb-7">
 				<Swiper slidesPerView="auto" spaceBetween={16} slidesOffsetBefore={16}>
 					<SwiperSlide style={{ width: '85px' }}>
 						<button onClick={() => router.push(`/stories/create`)} className="flex flex-col items-center ">

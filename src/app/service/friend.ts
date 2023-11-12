@@ -13,8 +13,12 @@ export const friendApis = {
 		}));
 		return filteredData;
 	},
-	addFriend: async (body: { ownerSeq: number; targetSeq: number }) => {
+	followFriend: async (body: { ownerSeq: number; targetSeq: number }) => {
 		const res = await client.post('api/v1/friends/apply', { ...body });
+		return res.data;
+	},
+	unFollowFriend: async (body: { ownerSeq: number; targetSeq: number }) => {
+		const res = await client.delete('api/v1/friends/apply', { data: { ...body } });
 		return res.data;
 	},
 	getFollowings: async (ownerSeq: number) => {
