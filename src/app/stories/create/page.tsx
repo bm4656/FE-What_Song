@@ -3,16 +3,26 @@
 import { useEffect, useRef, useState } from 'react';
 import { HiOutlineChevronUp } from 'react-icons/hi';
 import YouTube, { YouTubePlayer } from 'react-youtube';
+import Image from 'next/image';
+import { BsPauseFill, BsPlayFill } from 'react-icons/bs';
+import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import Button from '@/components/button/Button';
 import TitleHeader from '@/components/TitleHeader';
 import PageHeaderContent from '@/components/PageHeaderContent';
-import SearchBar from '@/components/bar/SearchBar';
-import { ResVideo } from '@/types/video';
+import { ResVideo, StoryVideo } from '@/types/video';
 import { currentMusicInfo } from '@/utils/iframe';
 import equalizer from '../../../../public/assets/equalizer.png';
+import '../../styles/storiesProgressbar.css';
+import StoriesMusicBarCard from '@/components/music/card/StoriesMusicBarCard';
+import StoriesSearchBar from '@/components/bar/StoriesSearchBar';
+import { storyClients } from '@/app/service/stories';
+import useUser from '@/hooks/useUser';
 
 export default function CreateStoryPage() {
-	const [searchList, setSearchList] = useState<any>([]);
+	const router = useRouter();
+	const [searchList, setSearchList] = useState<StoryVideo[]>([]);
+	const [selectMusic, setSelectMuisc] = useState<StoryVideo>();
 	const [musicPlayer, setMusicPlayer] = useState<YouTubePlayer | null>(null);
 	const [playTime, setPlayTime] = useState<string>('0:00');
 	const [endPlayTime, setEndPlayTime] = useState<string>('0:00');
@@ -24,29 +34,38 @@ export default function CreateStoryPage() {
 	const focusSecond = useRef<HTMLDivElement>(null);
 	const [intervalId, setIntervalId] = useState<undefined | NodeJS.Timer>(undefined);
 	const [firstStartTime, setFirstStartTime] = useState(0);
-
 	const onMoveToFocus = (focus: React.RefObject<HTMLDivElement>) => {
 		focus.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-		if (focus === focusSecond) {
-			setSearchList([
-				{
-					title: 'キタニタツヤ「青のすみか」',
-					thumbnail: 'https://i1.sndcdn.com/artworks-5DkDarrIPyczQi2L-Ig5DlA-t500x500.jpg',
-					videoId: 'gcgKUcJKxIs',
-					startTime: 46,
-					endTime: 60,
-				},
-			]);
-		}
 	};
 
+	const { mutate: createStoryMutate, isLoading } = useMutation(storyClients.postCreateStory, {
+		onSuccess: (res) => {
+			console.log(res);
+		},
+		onError: (error) => console.log(error),
+	});
+	const user = useUser();
+	const userSeq = user.data?.memberSeq;
+
 	const onAddRoom = async () => {
-		// createMusicRoomMutate({ ...data });
+		if (!selectMusic) return;
+		createStoryMutate({
+			memberSeq: userSeq,
+			img_url: null,
+			start: String(firstStartTime),
+			end: String(firstStartTime + timeScale),
+			storyVideoReq: {
+				videoId: selectMusic.videoId,
+				title: selectMusic.title,
+				channelName: selectMusic.channelName,
+				thumbnailUrl: selectMusic.thumbnailUrl,
+			},
+		});
+		router.replace('/');
 	};
 
 	const searchFn = (list: ResVideo[]) => {
-		// console.log('동작', list[0]);
-		// setSearchList(list);
+		setSearchList(list);
 	};
 	const removeFn = () => {
 		setSearchList([]);
@@ -54,7 +73,6 @@ export default function CreateStoryPage() {
 
 	// 뮤직 프로그레시브 실시간 업데이트
 	const updateProgressBar = () => {
-		console.log(2);
 		const { currentTime, progressState } = currentMusicInfo(musicPlayer);
 		setProgress(progressState);
 
@@ -119,6 +137,10 @@ export default function CreateStoryPage() {
 		};
 	}, []);
 
+	const handleAdd = (music: ResVideo) => {
+		setSelectMuisc(music);
+	};
+
 	return (
 		<>
 			<article ref={focusFirst} className="flex flex-col relative h-full items-start p-[2rem]">
@@ -129,11 +151,31 @@ export default function CreateStoryPage() {
 					mt="mt-10"
 					mb="mb-5"
 				/>
-				<div className="w-full">
-					<SearchBar placeholder="공유하고 싶은 노래 검색!" searchFn={searchFn} removeFn={removeFn} />
+				<StoriesSearchBar placeholder="공유하고 싶은 노래 검색!" searchFn={searchFn} removeFn={removeFn} />
+				<div className=" absolute right-[4rem] top-[8rem]">
+					{selectMusic && (
+						<div>
+							<Image
+								src={selectMusic.thumbnailUrl}
+								alt="앨범커버"
+								width={120}
+								height={100}
+								style={{ objectFit: 'cover' }}
+								className="rounded-[1.5rem] shadow-md shadow-zinc-400"
+							/>
+						</div>
+					)}
 				</div>
-
-				{/* <MusicBars list={searchList}   /> */}
+				<ul className="my-4 w-full flex flex-col gap-4 max-h-[50rem] overflow-scroll">
+					{searchList?.map((item) => (
+						<StoriesMusicBarCard
+							key={item.videoId}
+							music={{ ...item } as ResVideo & { roomSeq: number }}
+							onAdd={handleAdd}
+							barType="ADD"
+						/>
+					))}
+				</ul>
 				<HiOutlineChevronUp
 					className="absolute bottom-32 text-4xl cursor-pointer flex self-center"
 					onClick={() => onMoveToFocus(focusFirst)}
@@ -144,8 +186,7 @@ export default function CreateStoryPage() {
 				ref={focusSecond}
 				className="flex flex-col relative h-full items-start justify-between p-[2rem] bg-cover"
 			>
-				{/* <TitleHeader title="뮤직방 생성" isWrap /> */}
-				{searchList[0] && (
+				{selectMusic && (
 					<>
 						<div
 							style={{
@@ -155,19 +196,41 @@ export default function CreateStoryPage() {
 								width: '100%',
 								height: '100%',
 								backgroundColor: 'red',
-								backgroundImage: `url(${searchList[0].thumbnail})`,
+								backgroundImage: `url(${selectMusic.thumbnailUrl})`,
 								filter: 'blur(20px)',
 								zIndex: -1,
 								backgroundPosition: 'center',
 							}}
 						/>
 						<div className="w-full h-full flex flex-col items-center justify-center">
-							<span className="text-white text-4xl">{searchList[0].title}</span>
-							<img
-								src={searchList[0].thumbnail}
-								alt={searchList[0].thumbnail}
-								className="my-6 border-solid border-[2px] border-white w-[250px] h-[250px] rounded-xl object-cover"
-							/>
+							<span className="text-white text-4xl">{selectMusic.title}</span>
+							<div className="relative">
+								<img
+									src={selectMusic.thumbnailUrl}
+									alt={selectMusic.thumbnailUrl}
+									className="my-6 border-solid border-[2px] border-white w-[250px] h-[250px] rounded-xl object-cover"
+								/>
+								<span className="bg-white rounded-full flex items-center justify-center absolute top-[43%] left-[43%]">
+									{playStatus === 'PLAYING' ? (
+										<BsPauseFill
+											onClick={() => {
+												musicPlayer.pauseVideo();
+												setPlayStatus('PAUSE');
+											}}
+											className="cursor-pointer w-14 h-14 p-0.5 ml"
+										/>
+									) : (
+										<BsPlayFill
+											onClick={() => {
+												musicPlayer.playVideo();
+												setPlayStatus('PLAYING');
+											}}
+											className="cursor-pointer last:w-14 h-14 p-0.5 ml-1"
+										/>
+									)}
+								</span>
+							</div>
+
 							<div className="flex mb-6">
 								{[5, 10, 15].map((time) => (
 									<button
@@ -188,23 +251,6 @@ export default function CreateStoryPage() {
 							</div>
 							<div className="overflow-hidden w-[60%] h-[10px] first:mr-4 rounded-xl bg-[#eee]">
 								<div className="h-[100%] bg-[#ee5253]" style={{ width: `${storyProgress <= 100 && storyProgress}%` }} />
-							</div>
-							<div className="flex">
-								{/* <button
-							onClick={() => {
-								if (playStatus === 'PLAYING') {
-									musicPlayer.pauseVideo();
-									setPlayStatus('PAUSE');
-								}
-								if (playStatus === 'PAUSE') {
-									musicPlayer.playVideo();
-									setPlayStatus('PLAYING');
-								}
-							}}
-							className="text-3xl text-white"
-						>
-							재생
-						</button> */}
 							</div>
 							<div className="flex mt-6">
 								<span className="text-white text-3xl">
@@ -232,13 +278,13 @@ export default function CreateStoryPage() {
 							/>
 						</div>
 						<YouTube
-							videoId={searchList[0].videoId}
+							videoId={selectMusic.videoId}
 							className="opacity-0 absolute"
 							opts={{
 								width: 1,
 								height: 1,
 								playerVars: {
-									autoplay: 1,
+									autoplay: 0,
 									controls: 1,
 									start: firstStartTime,
 									end: firstStartTime + timeScale,
@@ -251,12 +297,11 @@ export default function CreateStoryPage() {
 						/>
 					</>
 				)}
-
 				<HiOutlineChevronUp
 					className="absolute bottom-32 text-4xl cursor-pointer flex self-center"
 					onClick={() => onMoveToFocus(focusSecond)}
 				/>
-				<Button content="공유하기" link="room/create/success" clickFn={onAddRoom} />
+				<Button content="공유하기" clickFn={onAddRoom} />
 			</article>
 		</>
 	);

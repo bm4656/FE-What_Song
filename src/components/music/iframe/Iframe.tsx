@@ -84,6 +84,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 		} catch (e: unknown) {
 			// TODO 에러 핸들링
 			alert(`소켓 연결 에러${e}`);
+			setSockConnecting(false);
 		}
 	};
 
@@ -172,8 +173,10 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 		return () => {
 			clearInterval(intervalId);
 			// 퇴장
-			leaveSend(roomCode, musicSock);
-			musicSock.current!.disconnect();
+			if (sockConnecting) {
+				leaveSend(roomCode, musicSock);
+				musicSock.current!.disconnect();
+			}
 		};
 	}, []);
 
@@ -240,7 +243,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 						background: `linear-gradient(to right, #428EFF 0%, #428EFF ${progress}%, #d5d4d3 ${progress}%, #d5d4d3 100%)`,
 					}}
 				/>
-				<span className="ml-2">{playTime}</span>
+				<span className="ml-2 text-xl">{playTime}</span>
 			</div>
 			<StreamingBar
 				isOwner={isOwner}
