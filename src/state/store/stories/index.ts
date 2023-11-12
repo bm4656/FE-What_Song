@@ -6,6 +6,7 @@ type StoriesInfoType = {
 	stories: {
 		start: string;
 		end: string;
+		postTime: [];
 		id: string;
 		img_url: null;
 		storyVideo: {
@@ -23,6 +24,7 @@ export const storiesInfo = atom<StoriesInfoType>({
 		{
 			start: '',
 			end: '',
+			postTime: [],
 			id: '',
 			img_url: null,
 			storyVideo: {

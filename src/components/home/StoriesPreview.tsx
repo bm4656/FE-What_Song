@@ -18,7 +18,7 @@ export default function StoriesPreview() {
 	const user = useUser();
 	const userSeq = user.data?.memberSeq;
 
-	const { data: stories } = useQuery(['stories'], () => storyClients.getStories(userSeq), {
+	const { data: stories, isLoading } = useQuery(['stories'], () => storyClients.getStories(userSeq), {
 		onSuccess: (res) => {
 			setStoriesInfo(res.data);
 		},
@@ -28,6 +28,10 @@ export default function StoriesPreview() {
 		enabled: !!userSeq,
 		// select: (data) => data.data,
 	});
+
+	if (isLoading) {
+		return <div className="w-[85px] h-[85px]" />;
+	}
 
 	return (
 		<>

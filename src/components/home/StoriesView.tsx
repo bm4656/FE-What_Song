@@ -123,6 +123,11 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 		setFirstEndTime(Math.floor(Number(end)));
 	}, [subIndex, topIndex]);
 
+	const createDate = (dateArray: number[]) => {
+		const [year, month, day, hours, minutes] = dateArray;
+		return `${year}년 ${month}월 ${day}일 ${hours}시 ${minutes}분`;
+	};
+
 	return (
 		<div className="w-full h-screen bg-black">
 			<Swiper
@@ -148,7 +153,7 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 					setSubindex(subIndexHistory[swiperIndex]);
 				}}
 			>
-				{storiesData.map((main: any) => (
+				{storiesData?.map((main: any) => (
 					<SwiperSlide key={main.memberName}>
 						<Swiper
 							className="w-full"
@@ -194,12 +199,12 @@ export default function StoriesView({ selectIndex }: { selectIndex: number }) {
 										<div className="flex items-center">
 											<img
 												className="w-[50px] h-[50px] rounded-full mr-2"
-												src="https://img4.daumcdn.net/thumb/R658x0.q70/?fname=https://t1.daumcdn.net/news/202105/24/holapet/20210524020226294iols.jpg"
+												src="https://i.pinimg.com/564x/f0/a1/9f/f0a19f453d9201c3226c2a6d4be786c0.jpg"
 												alt="smaliCat"
 											/>
 											<div className="flex flex-col">
 												<span className="text-white text-3xl">{main.memberName}</span>
-												<span className="text-gray-200 text-xl">23분전</span>
+												<span className="text-gray-200 text-xl">{createDate(post.postTime)}</span>
 											</div>
 										</div>
 										<button onClick={() => router.replace('/')} className="text-white text-6xl">
