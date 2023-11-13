@@ -216,7 +216,9 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 				player={musicPlayer}
 			/>
 			<div className="flex flex-col justify-center items-center p-2 w-full">
-				<p className="text-4xl font-bold line-clamp-1">{decode(playList[musicIndex]?.selectVideo.title)}</p>
+				<p className="text-4xl font-bold line-clamp-1 text-center w-[80%]">
+					{decode(playList[musicIndex]?.selectVideo.title)}
+				</p>
 				<p className="text-3xl font-semibold text-zinc-400">{playList[musicIndex]?.selectVideo.channelName}</p>
 			</div>
 			{playList && (
