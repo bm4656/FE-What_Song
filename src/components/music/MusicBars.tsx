@@ -13,42 +13,49 @@ type Props = {
 	musicSock: any;
 	roomCode: string;
 	memberSeq: number;
+	updateList?: (listType: 'queueList' | 'playList') => void;
 };
 
-export default function MusicBars({ list, barType, roomId, musicSock, roomCode, memberSeq }: Props) {
-	const handleAdd = (music: ResVideo, addType: MusicBar) => {
+export default function MusicBars({ list, barType, roomId, musicSock, roomCode, memberSeq, updateList }: Props) {
+	const handleAdd = async (music: ResVideo, addType: MusicBar) => {
 		switch (addType) {
 			case 'ADD':
 				// 방장: 뮤직 추가
-				roomClients.registerMusic({ ...music, roomSeq: Number(roomId), memberSeq });
+				await roomClients.registerMusic({ ...music, roomSeq: Number(roomId), memberSeq });
 				playlistStatusSend(roomCode, roomId, musicSock);
-				Swal.fire({
+				await Swal.fire({
 					title: '뮤직 추가 완료!',
 					text: '플레이리스트에 추가되었습니다!',
 					icon: 'success',
 					confirmButtonColor: '#428EEF',
 				});
+				// eslint-disable-next-line no-unused-expressions
+				updateList && updateList('playList');
 				break;
 			case 'ACCEPT':
 				// 방장: 뮤직 대기열 수락
-				roomClients.acceptRequestMusic(music.reservationId);
+				await roomClients.acceptRequestMusic(music.reservationId);
 				playlistStatusSend(roomCode, roomId, musicSock);
-				Swal.fire({
+				await Swal.fire({
 					title: '대기열 뮤직 수락!',
 					text: '플레이리스트에 추가되었습니다!',
 					icon: 'success',
 					confirmButtonColor: '#428EEF',
 				});
+				// eslint-disable-next-line no-unused-expressions
+				updateList && updateList('playList');
 				break;
 			case 'REQUEST':
 				// 일반: 뮤직 대기열 요청
-				roomClients.registerMusic({ ...music, roomSeq: Number(roomId) });
-				Swal.fire({
+				await roomClients.registerMusic({ ...music, roomSeq: Number(roomId) });
+				await Swal.fire({
 					title: '대기열 뮤직 요청!',
 					text: '뮤직 요청이 완료되었습니다!',
 					icon: 'success',
 					confirmButtonColor: '#428EEF',
 				});
+				// eslint-disable-next-line no-unused-expressions
+				updateList && updateList('queueList');
 				break;
 
 			default:
@@ -59,7 +66,7 @@ export default function MusicBars({ list, barType, roomId, musicSock, roomCode, 
 		<ul className="flex flex-col gap-4 max-h-[35rem] overflow-scroll">
 			{list?.map((item) => (
 				<MusicBarCard
-					key={item.videoId}
+					key={item.reservationId}
 					music={{ ...item, roomSeq: Number(roomId) }}
 					onAdd={handleAdd}
 					barType={barType}

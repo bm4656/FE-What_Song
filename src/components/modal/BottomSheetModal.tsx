@@ -8,7 +8,7 @@ export default function BottomSheetModal({ children }: { children: React.ReactNo
 	const [modalOpen, setModalOpen] = useAtom(modalAtom);
 
 	return (
-		<div className="fixed top-0 bottom-0 w-full max-w-[50rem] bg-black/50 z-10">
+		<div className="fixed top-0 bottom-0 w-full max-w-[50rem] bg-black/50 z-30">
 			<button
 				className="w-full absolute bottom-[46rem] flex justify-center items-center"
 				onClick={() => setModalOpen((prev) => !prev)}

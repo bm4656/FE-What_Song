@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { CompatClient } from '@stomp/stompjs';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import SearchBar from '@/components/bar/SearchBar';
 import BottomSheetModal from '@/components/modal/BottomSheetModal';
 import { ResVideo } from '@/types/video';
@@ -20,6 +20,7 @@ type Props = {
 	roomId: string;
 };
 export default function StreamingModal({ modalType, musicSock, roomCode, memberList, memberSeq, roomId }: Props) {
+	const queryClient = useQueryClient();
 	const [searchList, setSearchList] = useState<ResVideo[]>([]);
 
 	// 현재 플레이리스트 GET -> 변경 팔요
@@ -30,12 +31,19 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 	const { data: queueList } = useQuery(['queueList', roomId], () => {
 		return roomClients.getQueueList(Number(roomId));
 	});
+	// SearchBar에서 일어나는 이벤트 -> 검색, 검색리스트 지우기
 	const searchFn = (list: ResVideo[]) => {
 		setSearchList(list);
 	};
 	const removeFn = () => {
 		setSearchList([]);
 	};
+	// MusicBars에서 일어나는 데이터 업데이트 쿼리에 알려줌
+	const updateQuery = async (listType: 'playList' | 'queueList') => {
+		await queryClient.invalidateQueries({ queryKey: [listType] });
+		// console.log(playList);
+	};
+
 	return (
 		<>
 			<BottomSheetModal>
@@ -46,7 +54,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 						<div className="absolute w-full top-32">
 							{searchList[0] ? (
 								<>
-									<span className="text-xl font-bold p-2 ml-12 mb-5">검색 결과</span>
+									<span className="text-xl font-bold ml-12 mb-5 text-neutral-400">검색 결과</span>
 									<MusicBars
 										list={searchList}
 										roomId={roomId}
@@ -54,11 +62,12 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 										musicSock={musicSock}
 										roomCode={roomCode}
 										memberSeq={memberSeq}
+										updateList={updateQuery}
 									/>
 								</>
 							) : (
 								<>
-									<span className="text-xl font-bold p-2 ml-12 mb-5">플레이리스트 내역</span>
+									<span className="text-xl font-bold ml-12 mb-5 text-neutral-400">플레이리스트 내역</span>
 									<MusicBars
 										list={playList}
 										roomId={roomId}
@@ -100,7 +109,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 				{modalType === 'USERS' && (
 					<>
 						<div className="absolute w-full top-12">
-							<span className="text-xl font-bold p-2 ml-12 mb-5">📌 참여자 목록</span>
+							<span className="text-xl font-bold ml-12 mb-5 text-neutral-400">📌 참여자 목록</span>
 							{memberList &&
 								memberList.map((member) => (
 									<>
@@ -119,7 +128,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 						<div className="absolute w-full top-32">
 							{searchList[0] ? (
 								<>
-									<span className="text-xl font-bold p-2 ml-12 mb-5">🎼 검색 결과</span>
+									<span className="text-xl font-bold ml-12 mb-5 text-neutral-400">검색 결과</span>
 									<MusicBars
 										list={searchList}
 										roomId={roomId}
@@ -131,7 +140,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 								</>
 							) : (
 								<>
-									<span className="text-xl font-bold p-2 ml-12 mb-5">🎼 플레이리스트 내역</span>
+									<span className="text-xl font-bold ml-12 mb-5 text-neutral-400">플레이리스트 내역</span>
 									<MusicBars
 										list={playList}
 										roomId={roomId}
