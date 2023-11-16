@@ -14,8 +14,6 @@ type Props = {
 	searchType?: 'music' | 'user';
 };
 export default function SearchBar({ placeholder, searchFn, removeFn, searchType = 'music' }: Props) {
-	const param = useParams();
-	const router = useRouter();
 	const [keyword, setKeyword] = useState('');
 	const [searchList, setSearchList] = useState<Video[]>([]);
 	const [open, setOpen] = useState(false);
@@ -32,7 +30,7 @@ export default function SearchBar({ placeholder, searchFn, removeFn, searchType 
 			// eslint-disable-next-line no-unused-expressions
 			searchFn && searchFn(res); // searchFn을 호출하여 검색 결과 전달
 			setOpen(true);
-			setKeyword('');
+			// setKeyword('');
 		} catch (error) {
 			// 오류 처리
 			console.error('검색 요청 중 오류 발생:', error);
@@ -55,22 +53,13 @@ export default function SearchBar({ placeholder, searchFn, removeFn, searchType 
 					onClick={() => {
 						setKeyword('');
 						setSearchList([]);
+						// eslint-disable-next-line no-unused-expressions
+						removeFn && removeFn();
 					}}
 				>
 					{keyword && <FiDelete className="text-2xl mr-4 absolute right-10 top-[3.72rem]" />}
 				</button>
 			</div>
-			{/* {open && (
-				<TiDeleteOutline
-					className="text-3xl absolute right-24 text-fontGray cursor-pointer"
-					onClick={() => {
-						setOpen(false);
-						// eslint-disable-next-line no-unused-expressions
-						removeFn && removeFn();
-						router.refresh();
-					}}
-				/>
-			)} */}
 		</>
 	);
 }
