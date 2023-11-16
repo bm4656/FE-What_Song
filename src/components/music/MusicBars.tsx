@@ -9,7 +9,7 @@ import { playlistStatusSend } from '@/utils/iframe/send';
 type Props = {
 	list: ResVideo[] | undefined;
 	barType: MusicBar;
-	roomId: string;
+	roomId: number;
 	musicSock: any;
 	roomCode: string;
 	memberSeq: number;

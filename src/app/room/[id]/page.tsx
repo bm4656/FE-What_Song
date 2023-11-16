@@ -17,7 +17,7 @@ export default async function MusicRoomPage({ params: { id } }: Props) {
 
 	return (
 		<>
-			<TitleHeader title={roomName} previous view={view} />
+			<TitleHeader title={roomName} previous view={view} isView />
 			<Iframe roomId={musicRoomSeq} roomCode={roomCode} hostEmail={hostEmail} />
 			<InteractionBar />
 		</>

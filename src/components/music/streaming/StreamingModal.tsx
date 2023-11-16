@@ -17,7 +17,7 @@ type Props = {
 	roomCode: string;
 	memberList: SimpleUser[];
 	memberSeq: number;
-	roomId: string;
+	roomId: number;
 };
 export default function StreamingModal({ modalType, musicSock, roomCode, memberList, memberSeq, roomId }: Props) {
 	const queryClient = useQueryClient();
