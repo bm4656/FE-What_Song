@@ -10,6 +10,7 @@ import MusicBars from '../MusicBars';
 import { roomClients } from '@/app/service/room-client';
 import { BottomModal } from '@/types/modal';
 import { SimpleUser } from '@/types/user';
+import ListenerBars from './ListenerBars';
 
 type Props = {
 	modalType: BottomModal;
@@ -110,14 +111,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 					<>
 						<div className="absolute w-full top-12">
 							<span className="text-xl font-bold ml-12 mb-5 text-neutral-400">📌 참여자 목록</span>
-							{memberList &&
-								memberList.map((member) => (
-									<>
-										<p className="text-xl font-bold p-2 ml-12 mb-5" key={member.memberSeq}>
-											{member.nickname}
-										</p>
-									</>
-								))}
+							<ListenerBars memberList={memberList} memberSeq={memberSeq} />
 						</div>
 					</>
 				)}
