@@ -1,4 +1,5 @@
 import TitleHeader from '@/components/TitleHeader';
+import PostGrid from '@/components/profile/PostGrid';
 import ProfileCard from '@/components/profile/ProfileCard';
 
 export default function ProfilePage() {
@@ -6,6 +7,7 @@ export default function ProfilePage() {
 		<>
 			<TitleHeader title="프로필" />
 			<ProfileCard />
+			<PostGrid />
 		</>
 	);
 }
