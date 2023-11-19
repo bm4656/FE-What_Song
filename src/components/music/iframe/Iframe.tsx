@@ -20,9 +20,9 @@ import StreamingBar from '@/components/bar/StreamingBar';
 import { SimpleUser } from '@/types/user';
 
 type Props = {
-	roomId: string;
+	roomId: number;
 	roomCode: string;
-	hostEmail: boolean;
+	hostEmail: string;
 };
 
 type playListInfo = {

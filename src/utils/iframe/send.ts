@@ -35,7 +35,7 @@ export const musicStatusUpdate = (
 };
 
 // 플레이 리스트  상태 확인
-export const playlistStatusSend = (roomCode: string, roomId: string, client: CompatClient | any) => {
+export const playlistStatusSend = (roomCode: string, roomId: number, client: CompatClient | any) => {
 	client.current.send(
 		`/app/${roomCode}/playlist/current/new`,
 		SOCKET_HEADER,

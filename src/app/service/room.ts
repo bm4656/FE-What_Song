@@ -1,6 +1,5 @@
-import { QueueVideo } from '@/types/video';
+import { Room } from '@/types/room';
 import server from './server';
-import { decodeTitle } from '@/utils/youtube/decode';
 
 export const roomApis = {
 	healthCheck: async () => {
@@ -15,7 +14,7 @@ export const roomApis = {
 		const res = await server.get('/api/v1/check/all');
 		return res.data;
 	},
-	getRoomData: async (roomId: number) => {
+	getRoomData: async (roomId: number): Promise<Room> => {
 		const res = await server.get(`/api/v1/check/room?roomSeq=${roomId}`);
 		return res.data;
 	},

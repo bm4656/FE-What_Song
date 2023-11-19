@@ -12,7 +12,7 @@ import StreamingHalfButton from '../button/StreamingHalfButton';
 import { hostIconsFirst, hostIconsLast, userIcons } from '@/constants/Icon/streamingIcon';
 
 type Props = {
-	roomId: string;
+	roomId: number;
 	isOwner: boolean;
 	memberSeq: number;
 	musicSock: CompatClient | any;

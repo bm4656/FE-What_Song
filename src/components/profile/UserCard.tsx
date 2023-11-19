@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import { SimpleUser } from '@/types/user';
-import { friendApis } from '@/app/service/friend';
 import FollowButton from '../button/FollowButton';
 
 type Props = {
@@ -24,7 +23,9 @@ export default function UserCard({ user: { imgURL, nickname, email, memberSeq, a
 				</div>
 				<h2 className="absolute left-[10.5rem] top-8 text-xl font-semibold truncate w-[60%] text-start">{nickname}</h2>
 				<p className="absolute left-[10.5rem] top-[3.5rem] text-xl text-neutral-400">{email}</p>
-				<FollowButton followed={alreadyFollowing} ownerSeq={ownerSeq} memberSeq={memberSeq} />
+				{memberSeq !== ownerSeq && (
+					<FollowButton followed={alreadyFollowing} ownerSeq={ownerSeq} memberSeq={memberSeq} />
+				)}
 			</div>
 		</article>
 	);

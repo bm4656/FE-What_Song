@@ -8,7 +8,7 @@ export default async function MusicPage() {
 	return (
 		<>
 			<TitleHeader title="뮤직방" />
-			<SearchBar placeholder="뮤직방을 검색하세요..." />
+			{/* <SearchBar placeholder="뮤직방을 검색하세요..." /> */}
 			<h2 className="text-4xl font-bold mx-5">인기</h2>
 			{/* @ts-expect-error Server Component */}
 			<HydratedRooms type="all" />
