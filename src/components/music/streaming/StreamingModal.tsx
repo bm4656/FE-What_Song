@@ -11,6 +11,7 @@ import { roomClients } from '@/app/service/room-client';
 import { BottomModal } from '@/types/modal';
 import { SimpleUser } from '@/types/user';
 import ListenerBars from './ListenerBars';
+import { ListType } from '@/types/room';
 
 type Props = {
 	modalType: BottomModal;
@@ -40,8 +41,14 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 		setSearchList([]);
 	};
 	// MusicBars에서 일어나는 데이터 업데이트 쿼리에 알려줌
-	const updateQuery = async (listType: 'playList' | 'queueList') => {
-		await queryClient.invalidateQueries({ queryKey: [listType] });
+	const updateQuery = async (listType: ListType) => {
+		// 🔥 invalidate 되지 않는 오류 확인
+		if (listType === 'allList') {
+			await queryClient.invalidateQueries({ queryKey: ['queueList', roomId] });
+			await queryClient.invalidateQueries({ queryKey: ['playList', roomId] });
+		} else {
+			await queryClient.invalidateQueries({ queryKey: [listType, roomId] });
+		}
 		// console.log(playList);
 	};
 

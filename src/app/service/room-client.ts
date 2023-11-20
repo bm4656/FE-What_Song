@@ -40,6 +40,10 @@ export const roomClients = {
 		const res = await client.post('/api/v1/reservation/approve', { reservationId, recognize: 'APPROVE' });
 		return res;
 	},
+	rejectRequestMusic: async (reservationId: string, roomId: number) => {
+		const res = await client.delete('/api/v1/reservation', { data: { reservationId, roomSeq: roomId } });
+		return res;
+	},
 	getQueueList: async (roomId: number) => {
 		const res = await client.get(`/api/v1/reservation?roomSeq=${roomId}`);
 		const queueList: QueueVideo[] = res.data;
