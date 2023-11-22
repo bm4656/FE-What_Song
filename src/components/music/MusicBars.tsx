@@ -52,8 +52,6 @@ export default function MusicBars({ list, barType, roomId, musicSock, roomCode, 
 						});
 						roomClients.acceptRequestMusic(music.reservationId);
 						playlistStatusSend(roomCode, roomId, musicSock);
-						// eslint-disable-next-line no-unused-expressions
-						updateList && updateList('allList');
 					}
 					if (res.isDenied) {
 						Swal.fire({
@@ -63,9 +61,11 @@ export default function MusicBars({ list, barType, roomId, musicSock, roomCode, 
 						});
 						roomClients.rejectRequestMusic(music.reservationId, roomId);
 						// eslint-disable-next-line no-unused-expressions
-						updateList && updateList('allList');
+						// updateList && updateList('allList');
 					}
 				});
+				// eslint-disable-next-line no-unused-expressions
+				updateList && updateList('allList');
 				break;
 			case 'REQUEST':
 				// 일반: 뮤직 대기열 요청
