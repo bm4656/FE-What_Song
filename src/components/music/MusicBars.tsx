@@ -33,6 +33,28 @@ export default function MusicBars({ list, barType, roomId, musicSock, roomCode, 
 				// eslint-disable-next-line no-unused-expressions
 				updateList && updateList('playList');
 				break;
+			case 'HOST':
+				// 방장: 뮤직 삭제
+				await Swal.fire({
+					title: '뮤직 삭제',
+					text: '플레이리스트에서 뮤직을 삭제하시겠습니까?',
+					icon: 'error',
+					showCancelButton: true,
+					confirmButtonText: '네',
+					cancelButtonText: `아니오`,
+					confirmButtonColor: '#428EEF',
+					preConfirm: () => {
+						// eslint-disable-next-line no-unused-expressions
+						updateList && updateList('playList');
+					},
+				}).then(async (res) => {
+					if (res.isConfirmed) {
+						await roomClients.deleteteMusic(music.reservationId);
+						playlistStatusSend(roomCode, roomId, musicSock);
+						await Swal.fire('삭제 완료!', '', 'success');
+					}
+				});
+				break;
 			case 'ACCEPT':
 				// 방장: 뮤직 대기열 수락
 				await Swal.fire({

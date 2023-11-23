@@ -35,6 +35,10 @@ export const roomClients = {
 		const res = await client.post('/api/v1/reservation', { ...body });
 		return res;
 	},
+	deleteteMusic: async (reservationId: string) => {
+		const res = await client.delete('/api/v1/reservation/approve', { data: { reservationId, recognize: 'APPROVE' } });
+		return res;
+	},
 	acceptRequestMusic: async (reservationId: string) => {
 		const res = await client.post('/api/v1/reservation/approve', { reservationId, recognize: 'APPROVE' });
 		return res;
