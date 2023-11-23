@@ -43,14 +43,18 @@ export default function MusicBars({ list, barType, roomId, musicSock, roomCode, 
 					confirmButtonColor: '#428EEF',
 					confirmButtonText: '요청 수락',
 					denyButtonText: '요청 거절',
-				}).then((res) => {
+				}).then(async (res) => {
 					if (res.isConfirmed) {
-						Swal.fire({
+						await Swal.fire({
 							title: '요청 수락 완료!',
 							text: '요청 뮤직이 플레이리스트에 추가되었습니다.',
 							icon: 'success',
+							preConfirm: () => {
+								// eslint-disable-next-line no-unused-expressions
+								updateList && updateList('allList');
+							},
 						});
-						roomClients.acceptRequestMusic(music.reservationId);
+						await roomClients.acceptRequestMusic(music.reservationId);
 						playlistStatusSend(roomCode, roomId, musicSock);
 					}
 					if (res.isDenied) {
@@ -58,14 +62,14 @@ export default function MusicBars({ list, barType, roomId, musicSock, roomCode, 
 							title: '요청 수락 거절!',
 							text: '요청 거절이 완료되었습니다.',
 							icon: 'error',
+							preConfirm: () => {
+								// eslint-disable-next-line no-unused-expressions
+								updateList && updateList('allList');
+							},
 						});
-						roomClients.rejectRequestMusic(music.reservationId, roomId);
-						// eslint-disable-next-line no-unused-expressions
-						// updateList && updateList('allList');
+						await roomClients.rejectRequestMusic(music.reservationId, roomId);
 					}
 				});
-				// eslint-disable-next-line no-unused-expressions
-				updateList && updateList('allList');
 				break;
 			case 'REQUEST':
 				// 일반: 뮤직 대기열 요청

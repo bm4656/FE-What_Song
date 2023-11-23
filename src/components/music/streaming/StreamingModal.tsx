@@ -42,10 +42,8 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 	};
 	// MusicBars에서 일어나는 데이터 업데이트 쿼리에 알려줌
 	const updateQuery = async (listType: ListType) => {
-		console.log('업데이트');
 		// 🔥 invalidate 되지 않는 오류 확인
 		if (listType === 'allList') {
-			console.log('올 리스트 업데이트');
 			await queryClient.invalidateQueries({ queryKey: ['queueList', roomId] });
 			await queryClient.invalidateQueries({ queryKey: ['playList', roomId] });
 		} else {
@@ -104,6 +102,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 										musicSock={musicSock}
 										roomCode={roomCode}
 										memberSeq={memberSeq}
+										updateList={updateQuery}
 									/>
 								</>
 							) : (

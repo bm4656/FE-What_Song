@@ -33,7 +33,6 @@ export const roomClients = {
 		memberSeq?: number;
 	}) => {
 		const res = await client.post('/api/v1/reservation', { ...body });
-		console.log('dk', res);
 		return res;
 	},
 	acceptRequestMusic: async (reservationId: string) => {
