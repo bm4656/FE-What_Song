@@ -11,6 +11,7 @@ import { roomClients } from '@/app/service/room-client';
 import { BottomModal } from '@/types/modal';
 import { SimpleUser } from '@/types/user';
 import ListenerBars from './ListenerBars';
+import { ListType } from '@/types/room';
 
 type Props = {
 	modalType: BottomModal;
@@ -40,9 +41,13 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 		setSearchList([]);
 	};
 	// MusicBars에서 일어나는 데이터 업데이트 쿼리에 알려줌
-	const updateQuery = async (listType: 'playList' | 'queueList') => {
-		await queryClient.invalidateQueries({ queryKey: [listType] });
-		// console.log(playList);
+	const updateQuery = async (listType: ListType) => {
+		if (listType === 'allList') {
+			await queryClient.invalidateQueries({ queryKey: ['queueList', roomId] });
+			await queryClient.invalidateQueries({ queryKey: ['playList', roomId] });
+		} else {
+			await queryClient.invalidateQueries({ queryKey: [listType, roomId] });
+		}
 	};
 
 	return (
@@ -72,10 +77,11 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 									<MusicBars
 										list={playList}
 										roomId={roomId}
-										barType="NONE"
+										barType="HOST"
 										musicSock={musicSock}
 										roomCode={roomCode}
 										memberSeq={memberSeq}
+										updateList={updateQuery}
 									/>
 								</>
 							)}
@@ -88,7 +94,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 						<div className="absolute w-full top-12">
 							{queueList && queueList[0] ? (
 								<>
-									{/* <span className="text-xl font-bold p-2 ml-12 mb-5">📌 현재 대기열리스트</span> */}
+									<span className="text-xl font-bold ml-12 mb-5 text-neutral-400">현재 대기열리스트</span>
 									<MusicBars
 										list={queueList}
 										roomId={roomId}
@@ -96,6 +102,7 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 										musicSock={musicSock}
 										roomCode={roomCode}
 										memberSeq={memberSeq}
+										updateList={updateQuery}
 									/>
 								</>
 							) : (

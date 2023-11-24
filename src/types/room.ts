@@ -6,3 +6,5 @@ export type Room = {
 		view: number;
 	};
 };
+
+export type ListType = 'playList' | 'queueList' | 'allList';
