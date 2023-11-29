@@ -11,6 +11,7 @@ import { useSetAtom } from 'jotai';
 import { storyClients } from '@/app/service/stories';
 import useUser from '@/hooks/useUser';
 import { storiesInfo } from '@/state/store/stories';
+import StoriesLoader from '../skeleton/StoriesLoader';
 
 export default function StoriesPreview() {
 	const setStoriesInfo = useSetAtom(storiesInfo);
@@ -30,7 +31,7 @@ export default function StoriesPreview() {
 	});
 
 	if (isLoading) {
-		return <div className="w-[85px] h-[85px]" />;
+		return <StoriesLoader />;
 	}
 
 	return (
