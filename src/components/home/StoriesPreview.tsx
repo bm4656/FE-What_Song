@@ -42,7 +42,7 @@ export default function StoriesPreview() {
 						<div className="flex items-center justify-center w-[80px] h-[80px] bg-gray-200 rounded-full mb-3">
 							<BsPlusSquare className="text-4xl" />
 						</div>
-						<span className="text-xl">스토리 작성</span>
+						<span className="text-xl  text-neutral-500">스토리 작성</span>
 					</button>
 				</SwiperSlide>
 				{stories?.data.map((story: { memberName: string }, index: number) => (
@@ -56,7 +56,7 @@ export default function StoriesPreview() {
 								style={{ objectFit: 'cover' }}
 								className="rounded-full mb-3"
 							/>
-							<span className="text-xl">{story.memberName}</span>
+							<span className="text-xl text-neutral-500">{story.memberName}</span>
 						</Link>
 					</SwiperSlide>
 				))}
