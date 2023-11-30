@@ -18,7 +18,7 @@ export default function UserRooms() {
 		},
 		{
 			staleTime: 1000 * 60 * 3,
-			enabled: !!memberSeq, // memberSeq가 있는 경우에만 쿼리를 실행하도록 설정
+			enabled: Boolean(memberSeq), // memberSeq가 있는 경우에만 쿼리를 실행하도록 설정
 		}
 	);
 
