@@ -1,8 +1,12 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 
 export default function page() {
+	const { data: userList } = useQuery(['followList'], () => fetch('/api/friends').then((res) => res.json()));
+	console.log(userList);
+
 	const target = useRef<HTMLDivElement>(null);
 	const callback = () => {
 		if (target.current) {
@@ -23,6 +27,7 @@ export default function page() {
 	return (
 		<>
 			<div className="w-full h-[300vh] bg-yellow-200" />
+
 			<div className="h-24 bg-teal-400" ref={target}>
 				target
 			</div>
