@@ -26,5 +26,5 @@ export const friendApis = {
 		const { followerCount, followingCount } = res.data;
 		return { followerCount, followingCount };
 	},
-	getFollowingList: async (params: type) => {},
+	// getFollowingList: async (params: type) => {},
 };
