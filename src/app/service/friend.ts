@@ -21,8 +21,10 @@ export const friendApis = {
 		const res = await client.delete('api/v1/friends/apply', { data: { ...body } });
 		return res.data;
 	},
-	getFollowings: async (ownerSeq: number) => {
-		const res = await client.get(`api/v1/friends?ownerSeq=${ownerSeq}`);
-		return res.data;
+	getFollowCount: async (ownerSeq: number) => {
+		const res = await client.get(`api/v1/friends/count?ownerSeq=${ownerSeq}`);
+		const { followerCount, followingCount } = res.data;
+		return { followerCount, followingCount };
 	},
+	// getFollowingList: async (params: type) => {},
 };
