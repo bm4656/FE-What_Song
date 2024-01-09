@@ -1,6 +1,7 @@
 // 필로우 팔로잉 상태에 따라 변하는 팔로우버튼 - 팔로우 상태에서 선택하면 팔로잉된다.
 
 import { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
 import { friendApis } from '@/app/service/friend';
 
 type Props = {
@@ -10,15 +11,18 @@ type Props = {
 };
 
 export default function FollowButton({ followed = true, ownerSeq, memberSeq }: Props) {
+	const queryClient = useQueryClient();
 	const [following, setFollowing] = useState(followed);
 	const handleButton = async () => {
 		if (following) {
 			const res = await friendApis.unFollowFriend({ ownerSeq, targetSeq: memberSeq });
 			setFollowing(false);
+			await queryClient.invalidateQueries({ queryKey: ['followData', ownerSeq] });
 			return res;
 		}
 		const res = await friendApis.followFriend({ ownerSeq, targetSeq: memberSeq });
 		setFollowing(true);
+		await queryClient.invalidateQueries({ queryKey: ['followData', ownerSeq] });
 		return res;
 	};
 	return (
