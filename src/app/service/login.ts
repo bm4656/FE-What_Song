@@ -33,7 +33,6 @@ export const loginApis = {
 		return res;
 	},
 	getUserInfo: async () => {
-		// const res = await client.get('/api/v1/members/me');
 		const res = await client.get('/api/v1/members/me ', {
 			baseURL: '/server/',
 			withCredentials: true,
