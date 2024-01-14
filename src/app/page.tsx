@@ -5,12 +5,12 @@ import Rooms from '@/components/home/Rooms';
 import StoriesPreview from '@/components/home/StoriesPreview';
 import UserRooms from '@/components/home/UserRooms';
 
-export default function Home() {
+export default function HomePage() {
 	return (
 		<section className="overflow-y-auto absolute w-full h-full pb-32">
 			<TitleHeader title="What Song" notification />
 			<StoriesPreview />
-			<h2 className="text-3xl font-bold mx-5 pl-4">친구들의 방</h2>
+			<h2 className="text-3xl font-bold mx-5 pl-4">둘러보기</h2>
 			<Rooms />
 			<h2 className="text-3xl font-bold mx-5 mt-2 pl-4">내가 생성한 방</h2>
 			<UserRooms />

@@ -16,10 +16,10 @@ export default function Navbar({ tab }: Props) {
 				{tab === 'music' ? Icons.musicFill : Icons.music}
 				<span className={tab === 'music' ? 'text-primary' : ''}>뮤직</span>
 			</Link>
-			<Link className="text-xl flex flex-col items-center" href="/dm">
+			{/* <Link className="text-xl flex flex-col items-center" href="/dm">
 				{tab === 'dm' ? Icons.dmFill : Icons.dm}
 				<span className={tab === 'dm' ? 'text-primary' : ''}>DM</span>
-			</Link>
+			</Link> */}
 			<Link className="text-xl flex flex-col items-center" href="/profile">
 				{tab === 'profile' ? Icons.profileFill : Icons.profile}
 				<span className={tab === 'profile' ? 'text-primary' : ''}>프로필</span>
