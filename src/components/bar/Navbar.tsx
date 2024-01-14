@@ -8,7 +8,7 @@ type Props = {
 export default function Navbar({ tab }: Props) {
 	return (
 		<nav className="shadow-inner text-zinc-400  bg-white flex justify-around items-center h-28 fixed bottom-0 w-full max-w-[50rem]">
-			<Link className="text-xl flex flex-col items-center" href="/home">
+			<Link className="text-xl flex flex-col items-center" href="/">
 				{tab === 'home' ? Icons.homeFill : Icons.home}
 				<span className={tab === 'home' ? 'text-primary' : ''}>홈</span>
 			</Link>
