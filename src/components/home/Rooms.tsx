@@ -10,7 +10,7 @@ export default function Rooms() {
 	const { data, isLoading } = useQuery(
 		['rooms'],
 		() => {
-			return roomClients.getAllRooms();
+			return roomClients.getTop10Rooms();
 		},
 		{ staleTime: 1000 * 60 * 3 }
 	);

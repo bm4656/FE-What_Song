@@ -16,6 +16,11 @@ export const roomClients = {
 		const res = await client.get('/api/v1/check/all');
 		return res.data;
 	},
+	getTop10Rooms: async () => {
+		const res = await client.get('/api/v1/check/all');
+		const top10Rooms = res.data.slice(0, 10); // 상위 10개만 선택
+		return top10Rooms;
+	},
 	getUserRooms: async (userId: string) => {
 		const res = await client.get(`/api/v1/check/have?memberSeq=${userId}`);
 		return res.data;
