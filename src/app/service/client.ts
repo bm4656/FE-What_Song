@@ -22,17 +22,17 @@ client.interceptors.response.use(
 			config,
 			response: { status },
 		} = error;
-		// 토큰이 유효하지 않을 시 그리고 ouath관련 요청이 아닐시
+		// 토큰이 유효하지 않을 시 그리고 oauth관련 요청이 아닐시
 		if (status === 401 && !['/user/token/reissue', 'kakao', 'logout'].some((str) => config.url.includes(str))) {
 			try {
 				const originalRequest = config;
 				// token refresh 요청
 				const refreshToken = getCookie('refreshToken');
 				const res = await client.get('/user/token/reissue', {
-					headers: { refresh: refreshToken, Authorization: `Bearer ${''}` },
+					headers: { refresh: `Bearer ${refreshToken}`, Authorization: `Bearer ${''}` },
 				});
 				const newAccessToken = res?.headers['authorization']?.split(' ')[1];
-				const newRefreshToken = res?.headers['refresh'];
+				const newRefreshToken = res?.headers['refresh'].split(' ')[1];
 				if (newAccessToken && newRefreshToken) {
 					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 					client.defaults.headers.Authorization = `Bearer ${newAccessToken}`;

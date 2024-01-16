@@ -1,28 +1,23 @@
-'use client';
+import TitleHeader from '@/components/TitleHeader';
+import Navbar from '@/components/bar/Navbar';
+import PlusButton from '@/components/button/PlusButton';
+import Rooms from '@/components/home/Rooms';
+import StoriesPreview from '@/components/home/StoriesPreview';
+import UserRooms from '@/components/home/UserRooms';
 
-import { atom, useAtom } from 'jotai';
-import { darkModeAtom } from '../state/store';
-
-const countAtom = atom(0);
-
-export default function Home() {
-	const [darkMode, setDarkMode] = useAtom(darkModeAtom);
-	const [count, setCount] = useAtom(countAtom);
-
+export default function HomePage() {
 	return (
-		<div className={`h-[100vh] ${darkMode ? 'bg-black text-white' : 'bg-white text-black'}`}>
-			<div>
-				<h1 className="text-[1.4rem]">현재 {darkMode ? '다크' : '라이트'} 모드!</h1>
-				<button className="text-[1.4rem]" onClick={() => setDarkMode(!darkMode)}>
-					테마 변경
-				</button>
-			</div>
-			<div>
-				<h1 className="text-[1.4rem]">카운트: {count}</h1>
-				<button className="text-[1.4rem]" onClick={() => setCount(count + 1)}>
-					카운트 증가
-				</button>
-			</div>
-		</div>
+		<section className="overflow-y-auto absolute w-full h-full pb-32">
+			<TitleHeader title="What Song" notification />
+			<StoriesPreview />
+			<h2 className="text-3xl font-bold mx-5 pl-4">둘러보기</h2>
+			<Rooms />
+			<h2 className="text-3xl font-bold mx-5 mt-2 pl-4">내가 생성한 방</h2>
+			<UserRooms />
+			<h2 className="text-3xl font-bold mx-5 mt-2 pl-4">최근 방문 목록</h2>
+			<Rooms />
+			<PlusButton />
+			<Navbar tab="home" />
+		</section>
 	);
 }
