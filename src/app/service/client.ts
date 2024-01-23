@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
 import { SERVICE_URL } from '@/constants/ServiceUrl';
 import { getCookie, removeCookie, setCookie } from '@/constants/cookie';
 import { accessExpires, refreshExpires } from '@/utils/login';
@@ -9,8 +9,13 @@ const client = axios.create({
 	headers: {
 		'Access-Control-Allow-Credentials': true,
 		'ngrok-skip-browser-warning': '69420',
-		Authorization: `Bearer ${getCookie('accessToken')}`,
 	},
+});
+
+client.interceptors.request.use((requestConfig: InternalAxiosRequestConfig) => {
+	// 모든 요청 시 accessToken 인가 받기
+	requestConfig.headers.Authorization = `Bearer ${getCookie('accessToken')}`;
+	return requestConfig;
 });
 
 client.interceptors.response.use(
