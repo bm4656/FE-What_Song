@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { InternalAxiosRequestConfig } from 'axios';
 import { SERVICE_URL } from '@/constants/ServiceUrl';
 import { getCookie, removeCookie, setCookie } from '@/constants/cookie';
 import { accessExpires, refreshExpires } from '@/utils/login';
@@ -9,8 +9,13 @@ const client = axios.create({
 	headers: {
 		'Access-Control-Allow-Credentials': true,
 		'ngrok-skip-browser-warning': '69420',
-		Authorization: `Bearer ${getCookie('accessToken')}`,
 	},
+});
+
+client.interceptors.request.use((requestConfig: InternalAxiosRequestConfig) => {
+	// 모든 요청 시 accessToken 인가 받기
+	requestConfig.headers.Authorization = `Bearer ${getCookie('accessToken')}`;
+	return requestConfig;
 });
 
 client.interceptors.response.use(
@@ -22,17 +27,17 @@ client.interceptors.response.use(
 			config,
 			response: { status },
 		} = error;
-		// 토큰이 유효하지 않을 시 그리고 ouath관련 요청이 아닐시
+		// 토큰이 유효하지 않을 시 그리고 oauth관련 요청이 아닐시
 		if (status === 401 && !['/user/token/reissue', 'kakao', 'logout'].some((str) => config.url.includes(str))) {
 			try {
 				const originalRequest = config;
 				// token refresh 요청
 				const refreshToken = getCookie('refreshToken');
 				const res = await client.get('/user/token/reissue', {
-					headers: { refresh: refreshToken, Authorization: `Bearer ${''}` },
+					headers: { refresh: `Bearer ${refreshToken}`, Authorization: `Bearer ${''}` },
 				});
 				const newAccessToken = res?.headers['authorization']?.split(' ')[1];
-				const newRefreshToken = res?.headers['refresh'];
+				const newRefreshToken = res?.headers['refresh'].split(' ')[1];
 				if (newAccessToken && newRefreshToken) {
 					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
 					client.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
