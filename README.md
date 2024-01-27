@@ -29,7 +29,7 @@
 
 ## **🛠️ Skills &Tools**
 
-**메인**: react, typeScript, next.js
+**메인**: React, TypeScript, Next.js
 
 **스타일**: tailwindCSS
 
