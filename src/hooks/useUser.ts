@@ -11,7 +11,7 @@ export default function useUser() {
 		onError: (error) => {
 			// console.log(error);
 		},
-		enabled: Boolean(getCookie('accessToken')) || Boolean(getCookie('refreshToken')),
+		// enabled: Boolean(getCookie('accessToken')) || Boolean(getCookie('refreshToken')),
 		staleTime: 1000 * 6 * 5,
 	});
 	return { data, refetch, isLoading };

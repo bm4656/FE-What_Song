@@ -45,9 +45,4 @@ export const loginApis = {
 		});
 		return res;
 	},
-	apiTest: async () => {
-		console.log('헬스 체크');
-		const res = await client.get('/api/test');
-		return res;
-	},
 };

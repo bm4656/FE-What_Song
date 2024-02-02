@@ -4,16 +4,14 @@ import { FiSettings } from 'react-icons/fi';
 import { useAtom } from 'jotai';
 import ProfileBar from './ProfileBar';
 import ProfileButton from './ProfileButton';
-import useUser from '@/hooks/useUser';
 import BottomSheetModal from '../modal/BottomSheetModal';
 import SearchFriend from './SearchFriend';
 import { modalAtom } from '@/state/store/modal';
+import { RawUser } from '@/types/user';
 
-export default function ProfileCard() {
+export default function ProfileCard({ user }: { user: RawUser }) {
 	const [modalOpen, setModalOpen] = useAtom(modalAtom);
-	const user = useUser().data;
 
-	if (!user) return null;
 	return (
 		<section className="w-full h-[25rem]">
 			<ProfileBar user={user} />
