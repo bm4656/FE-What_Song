@@ -34,7 +34,7 @@ export default function MusicRecord({ image, isHost, music, playStatus, player }
 					}`}
 				/>
 				<div className="w-96 h-[28rem] max-[390px]:scale-95 absolute rounded-[40px] shadow-2xl shadow-slate-700 overflow-hidden z-10">
-					<Image src={image} alt="이미지" fill className="object-cover" />
+					<Image src={image} alt="이미지" fill className="object-cover" priority />
 				</div>
 			</div>
 		</article>

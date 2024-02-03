@@ -18,8 +18,7 @@ export default function CallbackPage() {
 		() => loginApis.getLogin(new URL(document.location.toString()).searchParams.get('code') as string),
 		{
 			onSuccess: (res) => {
-				// 로그인 성공 응답 주석
-				console.log(res);
+				// 로그인 성공
 				const accessToken = res.headers['authorization']?.split(' ')[1];
 				const refreshToken = res.headers['refresh']?.split(' ')[1];
 

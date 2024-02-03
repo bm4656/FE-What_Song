@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { HiOutlineChevronUp, HiOutlineChevronDown } from 'react-icons/hi';
+import { HiOutlineChevronUp } from 'react-icons/hi';
 import Image from 'next/image';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Button from '@/components/button/Button';

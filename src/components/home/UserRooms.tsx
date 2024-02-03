@@ -17,7 +17,6 @@ export default function UserRooms() {
 			return roomClients.getUserRooms(memberSeq);
 		},
 		{
-			staleTime: 1000 * 60 * 3,
 			enabled: Boolean(memberSeq), // memberSeq가 있는 경우에만 쿼리를 실행하도록 설정
 		}
 	);
@@ -25,5 +24,6 @@ export default function UserRooms() {
 	if (loading) {
 		return <RoomsLoader />;
 	}
+
 	return <>{data[0] ? <MusicCarousel rooms={data} /> : <MusicCardNone type="user" />}</>;
 }
