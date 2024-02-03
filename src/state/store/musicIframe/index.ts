@@ -1,6 +1,6 @@
 import { CompatClient } from '@stomp/stompjs';
 import { atom } from 'jotai';
-import { MutableRefObject, useRef } from 'react';
+import { MutableRefObject } from 'react';
 import { YouTubePlayer } from 'react-youtube';
 
 type MusicControllerType = {

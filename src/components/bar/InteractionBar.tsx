@@ -1,7 +1,6 @@
 'use client';
 
-import { BsFire } from 'react-icons/bs';
-import { FaHeart, FaHandSparkles } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
 import { useState } from 'react';
 import InteractionView from '../InteractionView';
 

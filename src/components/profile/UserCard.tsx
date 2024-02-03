@@ -13,7 +13,7 @@ export default function UserCard({ user: { imgURL, nickname, email, memberSeq, a
 			<div className="w-[90%] h-28 px-4 flex items-center cursor-pointer">
 				<div className="absolute w-[5rem] h-[5rem] p-4">
 					<Image
-						src="/assets/cat-music.jpeg"
+						src={imgURL || '/assets/cat-music.jpeg'}
 						alt="프로필이미지"
 						fill
 						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

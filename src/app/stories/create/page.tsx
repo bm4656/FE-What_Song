@@ -38,7 +38,7 @@ export default function CreateStoryPage() {
 		focus.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 	};
 
-	const { mutate: createStoryMutate, isLoading } = useMutation(storyClients.postCreateStory, {
+	const { mutate: createStoryMutate } = useMutation(storyClients.postCreateStory, {
 		onSuccess: (res) => {
 			console.log(res);
 		},

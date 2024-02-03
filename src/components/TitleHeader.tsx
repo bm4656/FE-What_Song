@@ -1,4 +1,3 @@
-import { AiFillEye } from 'react-icons/ai';
 import PreviousButton from './button/PreviousButton';
 
 type Props = {

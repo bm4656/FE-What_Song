@@ -22,7 +22,7 @@ type createRoom = {
 export default function CreateRoomPage() {
 	// 뮤직룸 생성 mutation
 	const queryClient = useQueryClient();
-	const { mutate: createMusicRoomMutate, isLoading } = useMutation(roomClients.createMusicRoom, {
+	const { mutate: createMusicRoomMutate } = useMutation(roomClients.createMusicRoom, {
 		onSuccess: () => {
 			queryClient.invalidateQueries(['rooms']);
 		},

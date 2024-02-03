@@ -11,8 +11,8 @@ type Props = {
 export default async function MusicRoomPage({ params: { id } }: Props) {
 	// 뮤직룸 상세 정보
 	const {
-		have: { musicRoomSeq, roomName, roomCode, category, accessAuth },
-		extraInfo: { hostEmail, hostName, view },
+		have: { musicRoomSeq, roomName, roomCode },
+		extraInfo: { hostEmail, view },
 	} = await roomApis.getRoomData(Number(id));
 
 	return (

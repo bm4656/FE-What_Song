@@ -1,7 +1,6 @@
 'use client';
 
 import { FormEvent, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
 import { FiDelete } from 'react-icons/fi';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { youtubeApis } from '@/app/service/youtube';
