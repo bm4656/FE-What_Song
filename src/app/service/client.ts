@@ -36,6 +36,7 @@ client.interceptors.response.use(
 				const res = await client.get('/user/token/reissue', {
 					headers: { refresh: `Bearer ${refreshToken}`, Authorization: `Bearer ${''}` },
 				});
+				console.log('토큰 리프레쉬', res);
 				const newAccessToken = res?.headers['authorization']?.split(' ')[1];
 				const newRefreshToken = res?.headers['refresh'].split(' ')[1];
 				if (newAccessToken && newRefreshToken) {
