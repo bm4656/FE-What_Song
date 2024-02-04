@@ -4,13 +4,14 @@ import type { NextRequest } from 'next/server';
 // eslint-disable-next-line consistent-return
 export function middleware(request: NextRequest) {
 	const accessToken = request.cookies.get('accessToken')?.value;
-	if (accessToken) {
-		// 로그인 페이지 요청시 사용자 검증이 완료된 상태면 / 페이지로 강제 리다이렉트
-		if (request.nextUrl.pathname === '/login' || request.nextUrl.pathname.startsWith('/register')) {
-			return NextResponse.redirect(new URL('/', request.url));
-		}
-	} else if (!request.nextUrl.pathname.startsWith('/login') && !accessToken) {
-		// 일반 페이지 요청시 사용자 검증이 미완료된 상태라면 로그인 페이지로 강제 리다이렉트
+	const pathUrl = request.nextUrl.pathname;
+
+	// 로그인 된 사용자가 로그인 페이지 요청 시 / 페이지로 강제 리다이렉트
+	if (accessToken && pathUrl.startsWith('/login')) {
+		return NextResponse.redirect(new URL('/', request.url));
+	}
+	// 로그인 미완료된 사용자가 일반 페이지 요청 시 로그인 페이지로 강제 리다이렉트
+	if (!accessToken && !pathUrl.startsWith('/login')) {
 		return NextResponse.redirect(new URL('/login', request.url));
 	}
 }
