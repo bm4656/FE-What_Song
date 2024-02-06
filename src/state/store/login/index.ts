@@ -9,18 +9,16 @@ type User = null | {
 	oauthId: string;
 };
 
-type RegisterKakaoInfo = {
-	id: string;
-	kakao_account: {
-		email: string;
-	};
+export type RegisterKakaoInfo = {
+	refreshToken: string;
+	accessToken: string;
+	innerNickName?: string;
 };
 
 export const UserInfoAtom = atomWithStorage<User>('userInfo', null);
 
 export const registerInfo = atom<RegisterKakaoInfo>({
-	id: '',
-	kakao_account: {
-		email: '',
-	},
+	refreshToken: '',
+	accessToken: '',
+	innerNickName: '',
 });

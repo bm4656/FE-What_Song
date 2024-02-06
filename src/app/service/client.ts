@@ -28,37 +28,37 @@ client.interceptors.response.use(
 			response: { status },
 		} = error;
 		// 토큰이 유효하지 않을 시 그리고 oauth관련 요청이 아닐시
-		if (status === 401 && !['/user/token/reissue', 'kakao', 'logout'].some((str) => config.url.includes(str))) {
-			try {
-				const originalRequest = config;
-				// token refresh 요청
-				const refreshToken = getCookie('refreshToken');
-				const res = await client.get('/user/token/reissue', {
-					headers: { refresh: `Bearer ${refreshToken}`, Authorization: `Bearer ${''}` },
-				});
-				console.log('토큰 리프레쉬', res);
-				const newAccessToken = res?.headers['authorization']?.split(' ')[1];
-				const newRefreshToken = res?.headers['refresh'].split(' ')[1];
-				if (newAccessToken && newRefreshToken) {
-					originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
-					client.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
-					setCookie('accessToken', newAccessToken, {
-						path: '/',
-						expires: accessExpires,
-					});
-					setCookie('refreshToken', newRefreshToken, {
-						path: '/',
-						expires: refreshExpires,
-					});
-				}
-				return client(originalRequest);
-			} catch (refreshError) {
-				removeCookie('accessToken');
-				removeCookie('refreshToken');
-				window.location.href = SERVICE_URL.login;
-				return Promise.reject(refreshError);
-			}
-		}
+		// if (status === 401 && !['/user/token/reissue', 'kakao', 'logout'].some((str) => config.url.includes(str))) {
+		// 	try {
+		// 		const originalRequest = config;
+		// 		// token refresh 요청
+		// 		const refreshToken = getCookie('refreshToken');
+		// 		const res = await client.get('/user/token/reissue', {
+		// 			headers: { refresh: `Bearer ${refreshToken}`, Authorization: `Bearer ${''}` },
+		// 		});
+		// 		console.log('토큰 리프레쉬', res);
+		// 		const newAccessToken = res?.headers['authorization']?.split(' ')[1];
+		// 		const newRefreshToken = res?.headers['refresh'].split(' ')[1];
+		// 		if (newAccessToken && newRefreshToken) {
+		// 			originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+		// 			client.defaults.headers.Authorization = `Bearer ${newAccessToken}`;
+		// 			setCookie('accessToken', newAccessToken, {
+		// 				path: '/',
+		// 				expires: accessExpires,
+		// 			});
+		// 			setCookie('refreshToken', newRefreshToken, {
+		// 				path: '/',
+		// 				expires: refreshExpires,
+		// 			});
+		// 		}
+		// 		return client(originalRequest);
+		// 	} catch (refreshError) {
+		// 		removeCookie('accessToken');
+		// 		removeCookie('refreshToken');
+		// 		window.location.href = SERVICE_URL.login;
+		// 		return Promise.reject(refreshError);
+		// 	}
+		// }
 		return Promise.reject(error);
 	}
 );

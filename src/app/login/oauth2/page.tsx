@@ -7,7 +7,6 @@ import { SERVICE_URL } from '@/constants/ServiceUrl';
 import { setCookie } from '@/constants/cookie';
 import { loginApis } from '@/app/service/login';
 import { registerInfo } from '@/state/store/login';
-import { accessExpires, refreshExpires } from '@/utils/login';
 
 export default function CallbackPage() {
 	const router = useRouter();
@@ -19,24 +18,22 @@ export default function CallbackPage() {
 		{
 			onSuccess: (res) => {
 				// 로그인 성공
-				const accessToken = res.headers['authorization']?.split(' ')[1];
-				const refreshToken = res.headers['refresh']?.split(' ')[1];
-
+				console.log(res);
+				const accessToken = res.data.data.access_token;
+				const refreshToken = res.data.data.refresh_token;
 				// 회원일시 로그인 완료
-				if (accessToken && refreshToken) {
+				if (res.data.data.oauthId) {
 					setCookie('accessToken', accessToken, {
 						path: '/',
-						expires: accessExpires,
+						// expires: accessExpires,
 					});
 					setCookie('refreshToken', refreshToken, {
 						path: '/',
-						expires: refreshExpires,
 					});
 					router.push(`${SERVICE_URL.home}`);
 				} else {
 					// 회원이 아닐시 회원가입 페이지 이동
-					const kakaoUserInfo = res.data;
-					setRegisterInfo(kakaoUserInfo);
+					setRegisterInfo({ accessToken, refreshToken });
 					router.push(`${SERVICE_URL.register}?page=1`);
 				}
 			},

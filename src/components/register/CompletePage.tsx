@@ -2,13 +2,15 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { useAtom } from 'jotai';
 import Button from '@/components/button/Button';
 import { SERVICE_URL } from '@/constants/ServiceUrl';
 import registerComplete from '../../../public/lottie/registerComplete.json';
 import PageHeaderContent from '../PageHeaderContent';
 import LottieView from '../LottieView';
 import { loginApis } from '@/app/service/login';
-import client from '@/app/service/client';
+import { registerInfo } from '@/state/store/login';
+import { setCookie } from '@/constants/cookie';
 
 interface Props {
 	nickname: string;
@@ -16,6 +18,7 @@ interface Props {
 
 export default function CompletePage({ nickname }: Props) {
 	const router = useRouter();
+	const [registerData] = useAtom(registerInfo);
 
 	const { mutate: logoutMutate } = useMutation(loginApis.Logout, {
 		onSuccess: (res) => {
@@ -28,7 +31,14 @@ export default function CompletePage({ nickname }: Props) {
 			// error.response.status 440 이면 로그아웃 상태
 		},
 	});
-
+	const setCookies = () => {
+		setCookie('accessToken', registerData.accessToken, {
+			path: '/',
+		});
+		setCookie('refreshToken', registerData.refreshToken, {
+			path: '/',
+		});
+	};
 	return (
 		<div className="wrap">
 			<PageHeaderContent
@@ -36,7 +46,7 @@ export default function CompletePage({ nickname }: Props) {
 				mb="mb-[20%]"
 			/>
 			<LottieView file={registerComplete} />
-			<Button link={SERVICE_URL.home} content="함께하기" />
+			<Button clickFn={setCookies} link={SERVICE_URL.home} content="함께하기" />
 			{/* <Button clickFn={() => logoutMutate()} content="로그아웃 테스트" /> */}
 			{/* <Button
 				clickFn={async () => {

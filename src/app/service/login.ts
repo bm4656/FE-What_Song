@@ -1,17 +1,11 @@
+import { RegisterKakaoInfo } from '@/state/store/login';
 import client from './client';
 import { getCookie } from '@/constants/cookie';
-
-export type RegisterType = {
-	email: string;
-	nickname: string;
-	oauthId: string;
-	socialType?: 'KAKAO';
-};
 
 export const loginApis = {
 	// 카카오 로그인 인가코드 전송
 	getLogin: async (authCode: string) => {
-		const res = await client.get(`/user/kakao/callback?code=${authCode}`);
+		const res = await client.post('/oauth/callback', { code: authCode });
 		return res;
 	},
 	Logout: async () => {
@@ -28,8 +22,10 @@ export const loginApis = {
 		return res;
 	},
 	// 회원가입 데이터 전송
-	postRegister: async (body: RegisterType) => {
-		const res = await client.post('/user/login', { ...body });
+	postRegister: async (body: RegisterKakaoInfo) => {
+		const res = await client.post('/oauth/signup', {
+			...body,
+		});
 		return res;
 	},
 	getUserInfo: async () => {
