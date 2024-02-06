@@ -57,7 +57,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 	const [sockConnecting, setSockConnecting] = useState<boolean>(false);
 	const musicSock = useRef<CompatClient>();
 	const user = useUser();
-	const memberSeq = user.data?.memberSeq;
+	const memberSeq = user.data?.id;
 	const userEmail = user.data?.email;
 	const isOwner = userEmail === hostEmail;
 

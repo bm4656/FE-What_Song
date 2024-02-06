@@ -45,7 +45,7 @@ export default function CreateStoryPage() {
 		onError: (error) => console.log(error),
 	});
 	const user = useUser();
-	const userSeq = user.data?.memberSeq;
+	const userSeq = user.data?.id;
 
 	const onAddRoom = async () => {
 		if (!selectMusic) return;

@@ -17,7 +17,7 @@ export default function StoriesPreview() {
 	const setStoriesInfo = useSetAtom(storiesInfo);
 	const router = useRouter();
 	const user = useUser();
-	const userSeq = user.data?.memberSeq;
+	const userSeq = user.data?.id;
 
 	const { data: stories, isLoading } = useQuery(['stories'], () => storyClients.getStories(userSeq), {
 		onSuccess: (res) => {

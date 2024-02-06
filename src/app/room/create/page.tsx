@@ -38,7 +38,7 @@ export default function CreateRoomPage() {
 	};
 	// 유저 정보 GET
 	const user = useUser();
-	const userSeq = user.data?.memberSeq;
+	const userSeq = user.data?.id;
 	// 뮤직 방 생성 폼 데이터
 	const [data, setData] = useState<createRoom>({
 		memberSeq: userSeq,

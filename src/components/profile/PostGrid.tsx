@@ -8,7 +8,7 @@ import RoomsRoader from '../skeleton/RoomsLoader';
 
 export default function PostGrid() {
 	const user = useUser();
-	const memberSeq = user.data?.memberSeq;
+	const memberSeq = user.data?.id;
 
 	const { data, isLoading: loading } = useQuery(
 		['rooms', memberSeq],

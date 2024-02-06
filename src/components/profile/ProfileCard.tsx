@@ -7,9 +7,9 @@ import ProfileButton from './ProfileButton';
 import BottomSheetModal from '../modal/BottomSheetModal';
 import SearchFriend from './SearchFriend';
 import { modalAtom } from '@/state/store/modal';
-import { RawUser } from '@/types/user';
+import { UserMe } from '@/types/user';
 
-export default function ProfileCard({ user }: { user: RawUser }) {
+export default function ProfileCard({ user }: { user: UserMe }) {
 	const [modalOpen, setModalOpen] = useAtom(modalAtom);
 
 	return (
@@ -26,7 +26,7 @@ export default function ProfileCard({ user }: { user: RawUser }) {
 			</div>
 			{modalOpen && (
 				<BottomSheetModal>
-					<SearchFriend ownerSeq={user.memberSeq} />
+					<SearchFriend ownerSeq={user.id} />
 				</BottomSheetModal>
 			)}
 		</section>

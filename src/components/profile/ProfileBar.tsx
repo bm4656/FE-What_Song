@@ -2,17 +2,17 @@
 
 import Image from 'next/image';
 import { useQuery } from '@tanstack/react-query';
-import { RawUser } from '@/types/user';
+import { UserMe } from '@/types/user';
 import { friendApis } from '@/app/service/friend';
 
 type Props = {
-	user: RawUser;
+	user: UserMe;
 };
 
-export default function ProfileBar({ user: { nickname, email, imgURL, memberSeq } }: Props) {
+export default function ProfileBar({ user: { nickname, email, imgUrl, id } }: Props) {
 	// ImgURL 서버에서 디폴트 넣어줄 수 있는지?
-	const profileImg = imgURL || '/assets/cat-music.jpeg';
-	const { data: followData } = useQuery(['followData', memberSeq], () => friendApis.getFollowCount(memberSeq), {});
+	const profileImg = imgUrl || '/assets/cat-music.jpeg';
+	const { data: followData } = useQuery(['followData', id], () => friendApis.getFollowCount(id), {});
 	return (
 		<article className="flex w-full relative h-[15rem]">
 			<div className="absolute w-40 h-60 p-4 left-10 top-6">

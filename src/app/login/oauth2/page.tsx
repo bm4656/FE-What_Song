@@ -18,7 +18,6 @@ export default function CallbackPage() {
 		{
 			onSuccess: (res) => {
 				// 로그인 성공
-				console.log(res);
 				const accessToken = res.data.data.access_token;
 				const refreshToken = res.data.data.refresh_token;
 				// 회원일시 로그인 완료
