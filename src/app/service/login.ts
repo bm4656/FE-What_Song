@@ -1,6 +1,5 @@
 import { RegisterKakaoInfo } from '@/state/store/login';
 import client from './client';
-import { getCookie } from '@/constants/cookie';
 
 export const loginApis = {
 	// 카카오 로그인 인가코드 전송
@@ -8,17 +7,8 @@ export const loginApis = {
 		const res = await client.post('/oauth/callback', { code: authCode });
 		return res;
 	},
-	Logout: async () => {
-		const res = await client.get('/user/logout', {
-			baseURL: '/server/',
-			withCredentials: true,
-			headers: {
-				'Access-Control-Allow-Credentials': true,
-				'ngrok-skip-browser-warning': '69420',
-				Authorization: `Bearer ${getCookie('accessToken')}`,
-				refresh: getCookie('refreshToken'),
-			},
-		});
+	logout: async () => {
+		const res = await client.post('/oauth/logout');
 		return res;
 	},
 	// 회원가입 데이터 전송

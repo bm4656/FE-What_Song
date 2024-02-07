@@ -17,17 +17,21 @@ export default function CallbackPage() {
 		() => loginApis.getLogin(new URL(document.location.toString()).searchParams.get('code') as string),
 		{
 			onSuccess: (res) => {
+				// console.log(res);
 				// 로그인 성공
 				const accessToken = res.data.data.access_token;
 				const refreshToken = res.data.data.refresh_token;
+				const accessExpires = new Date(Date.now() + 1000 * res.data.data.expires_in);
+				const refreshExpires = new Date(Date.now() + 1000 * res.data.data.refresh_token_expires_in);
 				// 회원일시 로그인 완료
 				if (res.data.data.oauthId) {
 					setCookie('accessToken', accessToken, {
 						path: '/',
-						// expires: accessExpires,
+						expires: accessExpires,
 					});
 					setCookie('refreshToken', refreshToken, {
 						path: '/',
+						expires: refreshExpires,
 					});
 					router.push(`${SERVICE_URL.home}`);
 				} else {
