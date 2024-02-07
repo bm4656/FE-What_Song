@@ -11,7 +11,6 @@ import { SERVICE_URL } from '@/constants/ServiceUrl';
 export default function ProfilePage() {
 	const router = useRouter();
 	const user = useUser().data;
-
 	useEffect(() => {
 		if (!user) router.push(`${SERVICE_URL.login}`);
 	}, [user]);

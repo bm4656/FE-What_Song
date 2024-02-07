@@ -12,7 +12,11 @@ type Props = {
 export default function ProfileBar({ user: { nickname, email, imgUrl, id } }: Props) {
 	// ImgURL 서버에서 디폴트 넣어줄 수 있는지?
 	const profileImg = imgUrl || '/assets/cat-music.jpeg';
-	const { data: followData } = useQuery(['followData', id], () => friendApis.getFollowCount(id), {});
+	// const { data: followData } = useQuery(['followData', id], () => friendApis.getFollowCount(id), {});
+	const followData = {
+		followingCount: 0,
+		followerCount: 0,
+	};
 	return (
 		<article className="flex w-full relative h-[15rem]">
 			<div className="absolute w-40 h-60 p-4 left-10 top-6">
