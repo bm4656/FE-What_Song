@@ -56,8 +56,8 @@ client.interceptors.response.use(
 				}
 				return client(originalRequest);
 			} catch (refreshError) {
-				removeCookie('accessToken');
-				removeCookie('refreshToken');
+				removeCookie('accessToken', { path: '/' });
+				removeCookie('refreshToken', { path: '/' });
 				window.location.href = SERVICE_URL.login;
 				return Promise.reject(refreshError);
 			}

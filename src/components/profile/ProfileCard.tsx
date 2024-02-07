@@ -19,8 +19,8 @@ export default function ProfileCard({ user }: { user: UserMe }) {
 		onSuccess: (res) => {
 			console.log(res);
 			// 로그아웃 성공
-			removeCookie('accessToken');
-			removeCookie('refreshToken');
+			removeCookie('accessToken', { path: '/' });
+			removeCookie('refreshToken', { path: '/' });
 			window.location.href = SERVICE_URL.login;
 		},
 		onError: (error) => {
