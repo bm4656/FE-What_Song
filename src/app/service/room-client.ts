@@ -1,7 +1,6 @@
 import { QueueVideo, ResVideo } from '@/types/video';
 import client from './client';
 import { decodeTitle } from '@/utils/youtube/decode';
-import { getCookie } from '@/constants/cookie';
 
 export const roomClients = {
 	createMusicRoom: async (body: {
@@ -18,15 +17,7 @@ export const roomClients = {
 		return res.data;
 	},
 	getTop10Rooms: async () => {
-		const res = await client.get('/api/v1/check/all', {
-			baseURL: '/server/',
-			withCredentials: true,
-			headers: {
-				'Access-Control-Allow-Credentials': true,
-				'ngrok-skip-browser-warning': '69420',
-				Authorization: `Bearer ${getCookie('accessToken')}`,
-			},
-		});
+		const res = await client.get('/api/v1/check/all');
 		const top10Rooms = res.data.slice(0, 10); // 상위 10개만 선택
 		return top10Rooms;
 	},

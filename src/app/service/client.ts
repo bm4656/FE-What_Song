@@ -32,8 +32,8 @@ client.interceptors.response.use(
 				const originalRequest = config;
 				// token refresh 요청
 				const refreshToken = getCookie('refreshToken');
-				const res = await client.get('/oauth/reissue', {
-					headers: { Authorization_Refresh: `${refreshToken}` },
+				const res = await client.post('/oauth/reissue', {
+					Authorization_Refresh: `${refreshToken}`,
 				});
 				console.log('토큰이 만료되어 재발급 받았습니다.', res);
 				// 리프레쉬 토큰 기간(2달) 1달 이하일 시 리프레쉬 토큰 재발급, 아닐 시 엑세스 토큰만 재발급

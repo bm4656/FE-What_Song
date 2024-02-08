@@ -19,7 +19,11 @@ export default function StoriesPreview() {
 	const user = useUser();
 	const userSeq = user.data?.id;
 
-	const { data: stories, isLoading } = useQuery(['stories'], () => storyClients.getStories(userSeq), {
+	const {
+		data: stories,
+		isLoading,
+		isError,
+	} = useQuery(['stories'], () => storyClients.getStories(userSeq), {
 		onSuccess: (res) => {
 			setStoriesInfo(res.data);
 		},
@@ -30,7 +34,7 @@ export default function StoriesPreview() {
 		// select: (data) => data.data,
 	});
 
-	if (isLoading) {
+	if (isLoading || isError) {
 		return <StoriesLoader />;
 	}
 

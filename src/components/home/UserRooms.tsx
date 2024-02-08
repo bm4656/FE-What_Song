@@ -11,7 +11,7 @@ export default function UserRooms() {
 	const user = useUser();
 	const memberSeq = user.data?.id;
 
-	const { data, isLoading: loading } = useQuery(
+	const { data, isLoading, isError } = useQuery(
 		['rooms', memberSeq],
 		() => {
 			return roomClients.getUserRooms(memberSeq);
@@ -21,7 +21,7 @@ export default function UserRooms() {
 		}
 	);
 
-	if (loading) {
+	if (isLoading || isError) {
 		return <RoomsLoader />;
 	}
 
