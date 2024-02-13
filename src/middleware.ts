@@ -5,7 +5,6 @@ import type { NextRequest } from 'next/server';
 export function middleware(request: NextRequest) {
 	const accessToken = request.cookies.get('accessToken')?.value;
 	const pathUrl = request.nextUrl.pathname;
-
 	// 로그인 된 사용자가 로그인 페이지 요청 시 / 페이지로 강제 리다이렉트
 	if (accessToken && pathUrl.startsWith('/login')) {
 		return NextResponse.redirect(new URL('/', request.url));
