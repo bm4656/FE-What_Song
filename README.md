@@ -51,7 +51,6 @@
 
 ### 💡 **배포 상태**
 **메인**: [whatsong.vercel.app](https://whatsong.vercel.app/)
-**개발**: [dev-whatsong.vercel.app](https:/dev-whatsong.vercel.app/)
 
 
 
