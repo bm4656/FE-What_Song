@@ -24,7 +24,7 @@ export default function CreateRoomPage() {
 	const queryClient = useQueryClient();
 	const { mutate: createMusicRoomMutate } = useMutation(roomClients.createMusicRoom, {
 		onSuccess: () => {
-			queryClient.invalidateQueries(['rooms']);
+			queryClient.removeQueries(['rooms']);
 		},
 		onError: (error) => console.log(error),
 	});
