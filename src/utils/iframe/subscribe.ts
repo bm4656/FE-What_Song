@@ -4,7 +4,7 @@ import { CompatClient } from '@stomp/stompjs';
 
 type playingStatusInfo = {
 	timeStamp: string;
-	status: string;
+	status: 'PLAYING' | 'PAUSE';
 };
 
 // 플레이 리스트 업데이트 구독

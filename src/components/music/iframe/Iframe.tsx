@@ -77,14 +77,14 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 				enterSubscribe(roomCode, musicSock, setNewMemberList);
 				// 퇴장 멤버 리스트 구독
 				leaveSubscribe(roomCode, musicSock, setNewMemberList);
-
+				// 플레이 리스트 상태 구독
 				playlistStatusSend(roomCode, roomId, musicSock);
 			});
-			setSockConnecting(true);
+			setSockConnecting((prev) => !prev);
 		} catch (e: unknown) {
 			// TODO 에러 핸들링
 			alert(`소켓 연결 에러${e}`);
-			setSockConnecting(false);
+			setSockConnecting((prev) => prev);
 		}
 	};
 
@@ -157,13 +157,16 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 		clearInterval(intervalId);
 		setIntervalId(undefined);
 		setPlaying(playList[nextIndex].selectVideo.videoId);
+		// 다음 노래로 업데이트
+		// musicStatusUpdate(roomCode, musicSock, playing, 'PLAYING', 0);
+		// setPlayStatus('PLAYING');
 	};
-
 	useEffect(() => {
 		if (!sockConnecting && musicPlayer) {
 			wsConnectSubscribe();
 			// 입장
 		}
+		// console.log('입장?', sockConnecting, musicPlayer);
 		if (sockConnecting) {
 			enterSend(roomCode, musicSock);
 		}
@@ -173,15 +176,15 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 		return () => {
 			clearInterval(intervalId);
 			// 퇴장
-			if (sockConnecting) {
-				leaveSend(roomCode, musicSock);
-				musicSock.current!.disconnect();
-			}
+			console.log('퇴장----------');
+			leaveSend(roomCode, musicSock);
+			musicSock.current!.disconnect();
 		};
 	}, []);
 
 	// 이전 멤버와 새로운 멤버 비교, 새 맴버 있으면 시간 업데이트
 	useEffect(() => {
+		console.log('멤버 입장-------------');
 		if (newMemberList.length > memberList.length) {
 			if (isOwner) {
 				const { currentTime } = currentMusicInfo(musicPlayer);

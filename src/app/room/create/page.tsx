@@ -23,7 +23,8 @@ export default function CreateRoomPage() {
 	// 뮤직룸 생성 mutation
 	const queryClient = useQueryClient();
 	const { mutate: createMusicRoomMutate } = useMutation(roomClients.createMusicRoom, {
-		onSuccess: () => {
+		onSuccess: (res) => {
+			console.log(res);
 			queryClient.removeQueries(['rooms']);
 		},
 		onError: (error) => console.log(error),
