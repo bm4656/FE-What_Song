@@ -77,7 +77,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 				enterSubscribe(roomCode, musicSock, setNewMemberList);
 				// 퇴장 멤버 리스트 구독
 				leaveSubscribe(roomCode, musicSock, setNewMemberList);
-				// 플레이 리스트 상태 구독
+
 				playlistStatusSend(roomCode, roomId, musicSock);
 			});
 			setSockConnecting((prev) => !prev);
@@ -103,7 +103,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 		setPlayTime(currentPlayTime);
 	};
 
-	// 뮤직 점프
+	// 뮤직 점프 - 소켓에 시간변화 알려줌
 	const handleMouseUp = () => {
 		const duration = musicPlayer.getDuration();
 		const seekTime = (duration * progress) / 100;
@@ -116,15 +116,19 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 		clearInterval(intervalId);
 		setIntervalId(undefined);
 		setPlaying(music);
+		// musicPlayer.playVideo();
 	};
 
 	// iframe 재생 준비 완료
 	const onReady = (event: YouTubePlayer) => {
+		console.log('재생 준비완');
 		setMusicPlayer(event.target);
 	};
 
 	// iframe 재생 시
 	const onPlay = () => {
+		console.log('재생');
+
 		if (intervalId === undefined) {
 			const { currentTime } = currentMusicInfo(musicPlayer);
 			// 재생 시 뮤직 상태 send PLAYING
@@ -158,9 +162,11 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 		setIntervalId(undefined);
 		setPlaying(playList[nextIndex].selectVideo.videoId);
 		// 다음 노래로 업데이트
-		// musicStatusUpdate(roomCode, musicSock, playing, 'PLAYING', 0);
-		// setPlayStatus('PLAYING');
+		playlistStatusSend(roomCode, roomId, musicSock, 'NEXT');
+		musicPlayer.pauseVideo();
+		musicPlayer.playVideo();
 	};
+
 	useEffect(() => {
 		if (!sockConnecting && musicPlayer) {
 			wsConnectSubscribe();
@@ -177,14 +183,16 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 			clearInterval(intervalId);
 			// 퇴장
 			console.log('퇴장----------');
-			leaveSend(roomCode, musicSock);
+			if (sockConnecting) {
+				leaveSend(roomCode, musicSock);
+			}
 			musicSock.current!.disconnect();
 		};
 	}, []);
 
 	// 이전 멤버와 새로운 멤버 비교, 새 맴버 있으면 시간 업데이트
 	useEffect(() => {
-		console.log('멤버 입장-------------');
+		// console.log('멤버 입장-------------');
 		if (newMemberList.length > memberList.length) {
 			if (isOwner) {
 				const { currentTime } = currentMusicInfo(musicPlayer);

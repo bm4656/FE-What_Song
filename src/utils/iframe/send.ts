@@ -34,13 +34,10 @@ export const musicStatusUpdate = (
 	);
 };
 
-// 플레이 리스트  상태 확인
-export const playlistStatusSend = (roomCode: string, roomId: number, client: CompatClient | any) => {
-	client.current.send(
-		`/app/${roomCode}/playlist/current/new`,
-		SOCKET_HEADER,
-		JSON.stringify({
-			roomSeq: roomId,
-		})
-	);
+// 플레이 리스트 상태 확인
+export const playlistStatusSend = (roomCode: string, roomId: number, client: CompatClient | any, status?: string) => {
+	type RoomData = { roomSeq: number; controller?: string };
+	let data: RoomData = { roomSeq: roomId };
+	if (status) data = { roomSeq: roomId, controller: status };
+	client.current.send(`/app/${roomCode}/playlist/current/new`, SOCKET_HEADER, JSON.stringify(data));
 };
