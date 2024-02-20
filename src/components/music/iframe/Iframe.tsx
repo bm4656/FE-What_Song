@@ -255,7 +255,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 					min="0"
 					max="100"
 					value={progress}
-					disabled={playList.length <= 0}
+					disabled={playList.length <= 0 || !isOwner}
 					style={{
 						background: `linear-gradient(to right, #428EFF 0%, #428EFF ${progress}%, #d5d4d3 ${progress}%, #d5d4d3 100%)`,
 						width: '20rem',
