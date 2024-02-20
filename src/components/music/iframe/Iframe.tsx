@@ -77,10 +77,11 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 				enterSubscribe(roomCode, musicSock, setNewMemberList);
 				// 퇴장 멤버 리스트 구독
 				leaveSubscribe(roomCode, musicSock, setNewMemberList);
+				// 연결과 동시에 입장 알리기
+				enterSend(roomCode, musicSock);
 
 				playlistStatusSend(roomCode, roomId, musicSock);
 			});
-			setSockConnecting((prev) => !prev);
 		} catch (e: unknown) {
 			// TODO 에러 핸들링
 			alert(`소켓 연결 에러${e}`);
@@ -168,25 +169,27 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 	};
 
 	useEffect(() => {
+		// 입장 시
 		if (!sockConnecting && musicPlayer) {
+			console.log('소켓 연결');
 			wsConnectSubscribe();
-			// 입장
+			setSockConnecting((prev) => !prev);
 		}
-		// console.log('입장?', sockConnecting, musicPlayer);
+		// 소켓 연결 되어있고, 재생 중인 음악 변경 시
 		if (sockConnecting) {
+			console.log('새 노래로 업데이트');
 			enterSend(roomCode, musicSock);
 		}
 	}, [musicPlayer]);
-
+	// 퇴장
 	useEffect(() => {
 		return () => {
 			clearInterval(intervalId);
-			// 퇴장
-			console.log('퇴장----------');
-			if (sockConnecting) {
+			if (musicSock.current) {
+				console.log('퇴장----------');
 				leaveSend(roomCode, musicSock);
+				musicSock.current!.disconnect();
 			}
-			musicSock.current!.disconnect();
 		};
 	}, []);
 
