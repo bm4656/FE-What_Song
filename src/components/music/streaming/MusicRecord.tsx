@@ -1,21 +1,17 @@
 import Image from 'next/image';
 import { BsPauseFill, BsPlayFill } from 'react-icons/bs';
 import { YouTubePlayer } from 'react-youtube';
+import MusicRecordSkeleton from '@/components/skeleton/MusicRecordSkeleton';
 
 type Props = {
 	image: string;
 	isHost?: boolean;
-	music?: {
-		videoId: string;
-		title: string;
-		channelName: string;
-		thumbnailUrl: string;
-	};
 	playStatus?: string;
 	player?: YouTubePlayer;
 };
 
-export default function MusicRecord({ image, isHost, music, playStatus, player }: Props) {
+export default function MusicRecord({ image, isHost, playStatus, player }: Props) {
+	if (image === 'none') return <MusicRecordSkeleton />;
 	return (
 		<article className="w-full h-[40rem] flex justify-center items-center">
 			<div className="relative w-[75%] max-[390px]:w-[80%] h-[30rem] flex justify-center items-center">

@@ -225,7 +225,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 	return (
 		<>
 			<MusicRecord
-				image={playList.length > 0 ? playList[musicIndex]?.selectVideo.thumbnailUrl : '/assets/cover.jpeg'}
+				image={playList.length > 0 ? playList[musicIndex]?.selectVideo.thumbnailUrl : 'none'}
 				isHost={isOwner}
 				playStatus={playStatus}
 				player={musicPlayer}
