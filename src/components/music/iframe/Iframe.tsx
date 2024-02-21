@@ -18,6 +18,7 @@ import MusicRecord from '../streaming/MusicRecord';
 import useUser from '@/hooks/useUser';
 import StreamingBar from '@/components/bar/StreamingBar';
 import { SimpleUser } from '@/types/user';
+import VolumeProgressBar from './VolumeProgressBar';
 
 type Props = {
 	roomId: number;
@@ -247,6 +248,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 				/>
 			)}
 			<div className="flex items-center justify-center">
+				<VolumeProgressBar player={musicPlayer} />
 				<input
 					onChange={handleProgressBarChange}
 					onMouseUp={handleMouseUp}
@@ -261,7 +263,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 						width: '20rem',
 					}}
 				/>
-				<span className="ml-2 text-xl">{playTime}</span>
+				<span className="ml-2 text-xl w-12">{playTime}</span>
 			</div>
 			<StreamingBar
 				isOwner={isOwner}
