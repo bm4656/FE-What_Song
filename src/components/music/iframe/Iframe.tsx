@@ -18,6 +18,7 @@ import MusicRecord from '../streaming/MusicRecord';
 import useUser from '@/hooks/useUser';
 import StreamingBar from '@/components/bar/StreamingBar';
 import { SimpleUser } from '@/types/user';
+import VolumeProgressBar from './VolumeProgressBar';
 
 type Props = {
 	roomId: number;
@@ -77,14 +78,15 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 				enterSubscribe(roomCode, musicSock, setNewMemberList);
 				// 퇴장 멤버 리스트 구독
 				leaveSubscribe(roomCode, musicSock, setNewMemberList);
+				// 연결과 동시에 입장 알리기
+				enterSend(roomCode, musicSock);
 
 				playlistStatusSend(roomCode, roomId, musicSock);
 			});
-			setSockConnecting(true);
 		} catch (e: unknown) {
 			// TODO 에러 핸들링
 			alert(`소켓 연결 에러${e}`);
-			setSockConnecting(false);
+			setSockConnecting((prev) => prev);
 		}
 	};
 
@@ -103,7 +105,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 		setPlayTime(currentPlayTime);
 	};
 
-	// 뮤직 점프
+	// 뮤직 점프 - 소켓에 시간변화 알려줌
 	const handleMouseUp = () => {
 		const duration = musicPlayer.getDuration();
 		const seekTime = (duration * progress) / 100;
@@ -116,15 +118,19 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 		clearInterval(intervalId);
 		setIntervalId(undefined);
 		setPlaying(music);
+		// musicPlayer.playVideo();
 	};
 
 	// iframe 재생 준비 완료
 	const onReady = (event: YouTubePlayer) => {
+		console.log('재생 준비완');
 		setMusicPlayer(event.target);
 	};
 
 	// iframe 재생 시
 	const onPlay = () => {
+		console.log('재생');
+
 		if (intervalId === undefined) {
 			const { currentTime } = currentMusicInfo(musicPlayer);
 			// 재생 시 뮤직 상태 send PLAYING
@@ -157,23 +163,31 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 		clearInterval(intervalId);
 		setIntervalId(undefined);
 		setPlaying(playList[nextIndex].selectVideo.videoId);
+		// 다음 노래로 업데이트
+		playlistStatusSend(roomCode, roomId, musicSock, 'NEXT');
+		musicPlayer.pauseVideo();
+		musicPlayer.playVideo();
 	};
 
 	useEffect(() => {
+		// 입장 시
 		if (!sockConnecting && musicPlayer) {
+			console.log('소켓 연결');
 			wsConnectSubscribe();
-			// 입장
+			setSockConnecting((prev) => !prev);
 		}
+		// 소켓 연결 되어있고, 재생 중인 음악 변경 시
 		if (sockConnecting) {
+			console.log('새 노래로 업데이트');
 			enterSend(roomCode, musicSock);
 		}
 	}, [musicPlayer]);
-
+	// 퇴장
 	useEffect(() => {
 		return () => {
 			clearInterval(intervalId);
-			// 퇴장
-			if (sockConnecting) {
+			if (musicSock.current) {
+				console.log('퇴장----------');
 				leaveSend(roomCode, musicSock);
 				musicSock.current!.disconnect();
 			}
@@ -182,6 +196,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 
 	// 이전 멤버와 새로운 멤버 비교, 새 맴버 있으면 시간 업데이트
 	useEffect(() => {
+		// console.log('멤버 입장-------------');
 		if (newMemberList.length > memberList.length) {
 			if (isOwner) {
 				const { currentTime } = currentMusicInfo(musicPlayer);
@@ -210,7 +225,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 	return (
 		<>
 			<MusicRecord
-				image={playList.length > 0 ? playList[musicIndex]?.selectVideo.thumbnailUrl : '/assets/cover.jpeg'}
+				image={playList.length > 0 ? playList[musicIndex]?.selectVideo.thumbnailUrl : 'none'}
 				isHost={isOwner}
 				playStatus={playStatus}
 				player={musicPlayer}
@@ -233,6 +248,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 				/>
 			)}
 			<div className="flex items-center justify-center">
+				<VolumeProgressBar player={musicPlayer} />
 				<input
 					onChange={handleProgressBarChange}
 					onMouseUp={handleMouseUp}
@@ -241,13 +257,13 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 					min="0"
 					max="100"
 					value={progress}
-					disabled={playList.length <= 0}
+					disabled={playList.length <= 0 || !isOwner}
 					style={{
 						background: `linear-gradient(to right, #428EFF 0%, #428EFF ${progress}%, #d5d4d3 ${progress}%, #d5d4d3 100%)`,
 						width: '20rem',
 					}}
 				/>
-				<span className="ml-2 text-xl">{playTime}</span>
+				<span className="ml-2 text-xl w-12">{playTime}</span>
 			</div>
 			<StreamingBar
 				isOwner={isOwner}

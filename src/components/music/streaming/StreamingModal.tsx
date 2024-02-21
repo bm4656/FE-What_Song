@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CompatClient } from '@stomp/stompjs';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import SearchBar from '@/components/bar/SearchBar';
@@ -43,12 +43,18 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 	// MusicBars에서 일어나는 데이터 업데이트 쿼리에 알려줌
 	const updateQuery = async (listType: ListType) => {
 		if (listType === 'allList') {
-			await queryClient.invalidateQueries({ queryKey: ['queueList', roomId] });
-			await queryClient.invalidateQueries({ queryKey: ['playList', roomId] });
+			await queryClient.refetchQueries({ queryKey: ['queueList', roomId] });
+			await queryClient.refetchQueries({ queryKey: ['playList', roomId] });
 		} else {
-			await queryClient.invalidateQueries({ queryKey: [listType, roomId] });
+			await queryClient.refetchQueries({ queryKey: [listType, roomId] });
 		}
 	};
+	useEffect(() => {
+		console.log('refetch');
+		if (modalType === 'ACCEPT') {
+			queryClient.refetchQueries({ queryKey: ['queueList', roomId] });
+		}
+	}, []);
 
 	return (
 		<>
