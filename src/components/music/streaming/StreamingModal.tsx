@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CompatClient } from '@stomp/stompjs';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import SearchBar from '@/components/bar/SearchBar';
@@ -49,6 +49,12 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 			await queryClient.refetchQueries({ queryKey: [listType, roomId] });
 		}
 	};
+	useEffect(() => {
+		console.log('refetch');
+		if (modalType === 'ACCEPT') {
+			queryClient.refetchQueries({ queryKey: ['queueList', roomId] });
+		}
+	}, []);
 
 	return (
 		<>
