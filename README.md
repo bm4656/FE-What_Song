@@ -38,6 +38,7 @@
 
 
 ## **🛠️ Skills &Tools**
+<img width="948" alt="image" src="https://github.com/DY-WhatSong/FE-What_Song/assets/65716445/691aaf3d-266c-4417-95a2-5de8c9d56cf7">
 
 **메인**: React, TypeScript, Next.js
 
