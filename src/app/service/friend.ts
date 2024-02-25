@@ -22,9 +22,10 @@ export const friendApis = {
 		return res.data;
 	},
 	getFollowCount: async (ownerSeq: number) => {
-		const res = await client.get(`api/v1/friends/count?ownerSeq=${ownerSeq}`);
-		const { followerCount, followingCount } = res.data;
-		return { followerCount, followingCount };
+		const followingRes = await client.get(`/api/v1/friends/following?ownerSeq=${ownerSeq}&page=1&size=1`);
+		const followerRes = await client.get(`/api/v1/friends/follower?ownerSeq=${ownerSeq}&page=1&size=1`);
+		const followingCount = followingRes.data.followCount.followCount;
+		const followerCount = followerRes.data.followCount.followCount;
+		return { followingCount, followerCount };
 	},
-	// getFollowingList: async (params: type) => {},
 };
