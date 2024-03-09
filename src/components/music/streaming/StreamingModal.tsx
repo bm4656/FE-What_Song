@@ -50,7 +50,6 @@ export default function StreamingModal({ modalType, musicSock, roomCode, memberL
 		}
 	};
 	useEffect(() => {
-		console.log('refetch');
 		if (modalType === 'ACCEPT') {
 			queryClient.refetchQueries({ queryKey: ['queueList', roomId] });
 		}

@@ -3,6 +3,7 @@ import Jotai from '../state/Jotai';
 import ReactQuery from '../state/ReactQuery';
 import './styles/globals.css';
 import './styles/reset.css';
+import GoogleAnalytics from './lib/GoogleAnalytics';
 
 export const metadata = {
 	title: 'What Song',
@@ -21,6 +22,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 	return (
 		<html lang="ko">
 			<body className="max-w-[50rem] mx-auto">
+				{process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS ? (
+					<GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+				) : null}
 				<CookieProvider>
 					<Jotai>
 						<ReactQuery>
