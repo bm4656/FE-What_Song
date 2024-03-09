@@ -169,6 +169,7 @@ export default function Iframe({ roomId, roomCode, hostEmail }: Props) {
 		musicPlayer.playVideo();
 	};
 
+	// 토큰이 미처 저장되기도 전에 들어가질 때 !! useEffect로 확인해줄 것
 	useEffect(() => {
 		// 입장 시
 		if (!sockConnecting && musicPlayer) {
