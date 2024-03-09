@@ -1,12 +1,10 @@
 import { YouTubePlayer } from 'react-youtube';
-import { cookies } from 'next/headers';
 import { getCookie } from '@/constants/cookie';
 
 export const SOCKET_HEADER = {
 	'Access-Control-Allow-Credentials': true,
-	Authorization: `Bearer ${
-		getCookie('accessToken') == undefined ? cookies().get('accessToken')?.value : getCookie('accessToken')
-	}`,
+	// 토큰 늦게 불러와지는 오류 해결할 것.
+	Authorization: `Bearer ${getCookie('accessToken')}`,
 };
 
 export const currentMusicInfo = (musicPlayer: YouTubePlayer, jump: number | null = null) => {
