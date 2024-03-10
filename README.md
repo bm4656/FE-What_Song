@@ -53,7 +53,7 @@
 ### 💡 **배포 상태**
 **메인**: [whatsong.vercel.app](https://whatsong.vercel.app/)
 
-
+시연 영상: [youtube](https://www.youtube.com/watch?v=wz1cIz1ydNo)
 
 ## **🌱 Git**
 
